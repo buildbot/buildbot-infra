@@ -176,6 +176,7 @@ def get_github_prs(start_day, end_day):
     Get the last week's worth of tickets, where week ends through yesterday.
     """
     def summarize_github_prs(what, body_json):
+        padding = ' '*2
         opened_prs = []
         closed_prs = []
         body = json.loads(body_json)
@@ -188,9 +189,9 @@ def get_github_prs(start_day, end_day):
             if created.date() < start_day:
                 continue
             if pr['state'] == 'open':
-                pass
+                opened_prs.append(padding.join(pr_line))
             elif pr['state'] == 'closed':
-                pass
+                closed_prs.append(padding.join(pr_line))
 
 
     gh_api_url = ('%(api_url)s/repos/buildbot/buildbot/pulls?state=all')
