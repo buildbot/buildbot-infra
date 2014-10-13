@@ -200,6 +200,12 @@ def get_github_prs(start_day, end_day):
                     continue
                 closed_prs.append(padding.join(pr_line))
 
+        opened_overview = '\n'.join(['Opened Pull Requests', '-'*20,
+            '\n'.join(opened_prs)])
+        closed_overview = '\n'.join(['Closed Pull Requests', '-'*20,
+            '\n'.join(closed_prs)])
+        return '\n\n'.join([opened_overview, closed_overview])
+
 
     gh_api_url = ('%(api_url)s/repos/buildbot/buildbot/pulls?state=all')
     url_options = {'api_url': GITHUB_API_URL}
