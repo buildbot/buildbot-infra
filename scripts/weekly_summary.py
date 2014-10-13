@@ -174,19 +174,23 @@ def get_github_prs(start_day, end_day):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
     """
-    def format_github_prs(resp):
-        print dir(resp)
-        print resp.code
+    def summarize_github_prs(what, body_json):
+        opened_prs = []
+        closed_prs = []
+        body = json.loads(body_json)
+        for pr in body:
+            if pr['state'] == 'open':
+                pass
+            elif pr['state'] == 'closed':
+                pass
+
 
     gh_api_url = ('%(api_url)s/repos/buildbot/buildbot/pulls?state=all')
-    url_options = {
-        'api_url': GITHUB_API_URL,
-    }
+    url_options = {'api_url': GITHUB_API_URL}
     url = gh_api_url % (url_options)
-    print url
     agent = Agent(reactor)
     d = agent.request('GET', url, HTTP_HEADERS)
-    d.addCallback(format_github_prs)
+    d.addCallback(get_body('Github', summarize_github_prs))
     return d
 
 
@@ -199,8 +203,9 @@ def main():
     end_day = date.today() - timedelta(1)
     start_day = end_day - timedelta(6)
 
-    dl = defer.DeferredList([get_trac_tickets()])
-    #dl = defer.DeferredList([get_trac_tickets(), get_github_prs()])
+    #dl = defer.DeferredList([get_trac_tickets()])
+    dl = defer.DeferredList([get_trac_tickets(start_day, end_day),
+        get_github_prs(start_day, end_day)])
     dl.addCallback(summary)
     reactor.run()
 
