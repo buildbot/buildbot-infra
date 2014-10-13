@@ -177,20 +177,27 @@ def get_github_prs(start_day, end_day):
     """
     def summarize_github_prs(what, body_json):
         padding = ' '*2
+        # I don't know a good way to parse the time zone. Github returns
+        # ISO8601 in UTC.
+        gh_time_format = '%Y-%m-%dT%H:%M:%SZ'
         opened_prs = []
         closed_prs = []
         body = json.loads(body_json)
         for pr in body:
             pr_line = [str(pr['number']), pr['title'], pr['url']]
-            # I don't know a good way to parse the time zone. Github returns
-            # ISO8601 in UTC.
-            created = datetime.strptime(pr['created_at'], '%Y-%m-%dT%H:%M:%SZ')
-            # If this pull request was created before the start day, skip it.
-            if created.date() < start_day:
-                continue
             if pr['state'] == 'open':
+                # If this pull request was created outside of the summary
+                # period, skip it.
+                created = datetime.strptime(pr['created_at'], gh_time_format)
+                if created.date() < start_day or created.date() > end_day:
+                    continue
                 opened_prs.append(padding.join(pr_line))
             elif pr['state'] == 'closed':
+                # If this pull request was closed outside of the summary
+                # period, skip it.
+                closed = datetime.strptime(pr['closed_at'], gh_time_format)
+                if closed.date() < start_day or closed.date() > end_day:
+                    continue
                 closed_prs.append(padding.join(pr_line))
 
 
