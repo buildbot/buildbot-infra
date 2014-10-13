@@ -182,23 +182,27 @@ def get_github_prs(start_day, end_day):
         gh_time_format = '%Y-%m-%dT%H:%M:%SZ'
         opened_prs = []
         closed_prs = []
+        merged_prs = []
         body = json.loads(body_json)
+        categories = [('open', 'created_at', opened_prs),
+            ('closed', 'merged_at', merged_prs),
+            ('closed', 'closed_at', closed_prs)]
         for pr in body:
             pr_line = [str(pr['number']), pr['title'], pr['url']]
-            if pr['state'] == 'open':
-                # If this pull request was created outside of the summary
-                # period, skip it.
-                created = datetime.strptime(pr['created_at'], gh_time_format)
-                if created.date() < start_day or created.date() > end_day:
-                    continue
-                opened_prs.append(padding.join(pr_line))
-            elif pr['state'] == 'closed':
-                # If this pull request was closed outside of the summary
-                # period, skip it.
-                closed = datetime.strptime(pr['closed_at'], gh_time_format)
-                if closed.date() < start_day or closed.date() > end_day:
-                    continue
-                closed_prs.append(padding.join(pr_line))
+            for group in categories:
+                state, when, pr_list = group
+                # Have to check if the when field is not None. The state is
+                # 'closed' for merged and unmerged pull requests. The merged
+                # tuple is first, so any pull request that is closed and has a
+                # merged_at date will be added there before checking the
+                # closed_at date.
+                if pr['state'] == state and pr[when] is not None:
+                    happened = datetime.strptime(pr[when], gh_time_format)
+                    # If this pull request was created outside of the summary
+                    # period, skip it.
+                    if happened.date() < start_day or happened.date() > end_day:
+                        continue
+                    pr_list.append(padding.join(pr_line))
 
         opened_overview = '\n'.join(['Opened Pull Requests', '-'*20,
             '\n'.join(opened_prs)])
