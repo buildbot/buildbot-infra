@@ -3,6 +3,7 @@
 import csv
 import json
 from datetime import date
+from datetime import datetime
 from datetime import timedelta
 from functools import partial
 from twisted.internet import defer
@@ -180,6 +181,12 @@ def get_github_prs(start_day, end_day):
         body = json.loads(body_json)
         for pr in body:
             pr_line = [str(pr['number']), pr['title'], pr['url']]
+            # I don't know a good way to parse the time zone. Github returns
+            # ISO8601 in UTC.
+            created = datetime.strptime(pr['created_at'], '%Y-%m-%dT%H:%M:%SZ')
+            # If this pull request was created before the start day, skip it.
+            if created.date() < start_day:
+                continue
             if pr['state'] == 'open':
                 pass
             elif pr['state'] == 'closed':
