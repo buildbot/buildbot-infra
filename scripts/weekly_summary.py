@@ -74,7 +74,7 @@ def tablify_dict(d, show_header=True, field_formatter=None, row_order=None, col_
         table.append(padding.join(filter(skip_nones, tr)))
     return '\n'.join(table)
 
-def get_trac_tickets():
+def get_trac_tickets(start_day, end_day):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
     """
@@ -144,8 +144,6 @@ def get_trac_tickets():
     trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
         '&changetime=%(start)s..%(end)s'
         '&col=id&col=summary&col=type&col=status&order=id')
-    end_day = date.today() - timedelta(1)
-    start_day = end_day - timedelta(6)
     url_options = {
         'trac_url': TRAC_BUILDBOT_URL,
         'start': start_day,
@@ -172,7 +170,7 @@ def get_trac_tickets():
     dl.addCallback(summarize_trac_tickets)
     return dl
 
-def get_github_prs():
+def get_github_prs(start_day, end_day):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
     """
@@ -198,6 +196,9 @@ def summary(results):
     reactor.stop()
 
 def main():
+    end_day = date.today() - timedelta(1)
+    start_day = end_day - timedelta(6)
+
     dl = defer.DeferredList([get_trac_tickets()])
     #dl = defer.DeferredList([get_trac_tickets(), get_github_prs()])
     dl.addCallback(summary)
