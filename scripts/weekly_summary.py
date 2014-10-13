@@ -179,6 +179,7 @@ def get_github_prs(start_day, end_day):
         closed_prs = []
         body = json.loads(body_json)
         for pr in body:
+            pr_line = [str(pr['number']), pr['title'], pr['url']]
             if pr['state'] == 'open':
                 pass
             elif pr['state'] == 'closed':
