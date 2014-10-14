@@ -110,9 +110,9 @@ def get_trac_tickets(start_day, end_day):
                     ticket_summary['Other'][what] += 1
                 ticket_summary['Total'][what] += 1
                 if what == 'Opened':
-                    opened[str(len(opened))] = t
+                    opened[len(opened)] = t
                 elif what == 'Closed':
-                    closed[str(len(closed))] = t
+                    closed[len(closed)] = t
         # Convert ticket summary to a table to start the weekly summary.
         row_order = ['Enhancements', 'Defects', 'Regressions', 'Tasks',
             'Undecideds', 'Other', 'Total']
@@ -126,15 +126,12 @@ def get_trac_tickets(start_day, end_day):
         # Left-justify every cell except the first column. Return None for the
         # first column to have it skipped.
         bug_list_formatter = lambda c, size, header: c.ljust(size) if header else None
-        int_sorter = lambda a, b: cmp(int(a), int(b))
         opened_table = tablify_dict(opened, show_header=False,
-            row_order=sorted(opened, int_sorter),
             col_order=col_order, col_padding=col_padding,
             field_formatter=bug_list_formatter)
         opened_overview = '\n'.join(['New/Reopened Tickets', '-'*20,
             opened_table])
         closed_table = tablify_dict(closed, show_header=False,
-            row_order=sorted(closed, int_sorter),
             col_order=col_order, col_padding=col_padding,
             field_formatter=bug_list_formatter)
         closed_overview = '\n'.join(['Closed Tickets', '-'*14, closed_table])
