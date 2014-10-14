@@ -55,7 +55,7 @@ def tablify_dict(d, show_header=True, field_formatter=None, row_order=None, col_
     # calls simple.
     col_widths = [len(c) for c in cols] + [0]
     for r in rows:
-        col_widths[-1] = max(col_widths[-1], len(r))
+        col_widths[-1] = max(col_widths[-1], len(str(r)))
         for i, c in enumerate(cols):
             col_widths[i] = max(col_widths[i], len(str(d[r][c])))
     padding = ' ' * col_padding
