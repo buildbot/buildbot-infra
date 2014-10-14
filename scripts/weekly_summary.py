@@ -224,8 +224,19 @@ def get_github_prs(start_day, end_day):
 
 
 def summary(results):
+    message = (
+        "Trac Tickets\n"
+        "============\n"
+        "%(trac)s\n"
+        "\n\n"
+        "GitHub Pull Requests\n"
+        "====================\n"
+        "%(github)s")
+    message_parts = {}
     for success, value in results:
-        print value
+        part, msg = value
+        message_parts[part] = msg
+    print message % message_parts
     reactor.stop()
 
 def main():
