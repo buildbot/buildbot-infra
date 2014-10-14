@@ -177,9 +177,9 @@ def get_github_prs(start_day, end_day):
         # I don't know a good way to parse the time zone. Github returns
         # ISO8601 in UTC.
         gh_time_format = '%Y-%m-%dT%H:%M:%SZ'
-        opened_prs = []
-        closed_prs = []
-        merged_prs = []
+        opened_prs = {}
+        closed_prs = {}
+        merged_prs = {}
         body = json.loads(body_json)
         categories = [('Opened', 'open', 'created_at', opened_prs),
             ('Merged', 'closed', 'merged_at', merged_prs),
@@ -187,7 +187,7 @@ def get_github_prs(start_day, end_day):
         for pr in body:
             pr_line = [str(pr['number']), pr['title'], pr['url']]
             for group in categories:
-                _, state, when, pr_list = group
+                _, state, when, pr_dict = group
                 # Have to check if the when field is not None. The state is
                 # 'closed' for merged and unmerged pull requests. The merged
                 # tuple is first, so any pull request that is closed and has a
@@ -199,14 +199,18 @@ def get_github_prs(start_day, end_day):
                     # period, skip it.
                     if happened.date() < start_day or happened.date() > end_day:
                         continue
-                    pr_list.append(padding.join(pr_line))
+                    pr_dict[len(pr_dict)] = pr
 
         overviews = []
+        bug_list_formatter = lambda c, size, header: c.ljust(size) if header else None
         for group in categories:
-            what, _, _, pr_list = group
+            what, _, _, pr_dict = group
             title = what + ' Pull Requests'
             title_h2 = '-'*len(title)
-            overviews.append('\n'.join([title, title_h2, '\n'.join(pr_list)]))
+            table = tablify_dict(pr_dict, show_header=False,
+                col_order=['number', 'title', 'html_url'],
+                col_padding=2, field_formatter=bug_list_formatter)
+            overviews.append('\n'.join([title, title_h2, table]))
         return '\n\n'.join(overviews)
 
 
