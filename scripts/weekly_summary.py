@@ -208,6 +208,7 @@ def get_github_prs(start_day, end_day):
             title = what + ' Pull Requests'
             title_h2 = '-'*len(title)
             table = tablify_dict(pr_dict, show_header=False,
+                row_order=sorted(pr_dict.keys(), lambda a,b: cmp(b, a)),
                 col_order=['number', 'title', 'html_url'],
                 col_padding=2, field_formatter=bug_list_formatter)
             overviews.append('\n'.join([title, title_h2, table]))
