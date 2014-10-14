@@ -184,13 +184,13 @@ def get_github_prs(start_day, end_day):
         closed_prs = []
         merged_prs = []
         body = json.loads(body_json)
-        categories = [('open', 'created_at', opened_prs),
-            ('closed', 'merged_at', merged_prs),
-            ('closed', 'closed_at', closed_prs)]
+        categories = [('Opened', 'open', 'created_at', opened_prs),
+            ('Merged', 'closed', 'merged_at', merged_prs),
+            ('Closed', 'closed', 'closed_at', closed_prs)]
         for pr in body:
             pr_line = [str(pr['number']), pr['title'], pr['url']]
             for group in categories:
-                state, when, pr_list = group
+                _, state, when, pr_list = group
                 # Have to check if the when field is not None. The state is
                 # 'closed' for merged and unmerged pull requests. The merged
                 # tuple is first, so any pull request that is closed and has a
@@ -204,11 +204,13 @@ def get_github_prs(start_day, end_day):
                         continue
                     pr_list.append(padding.join(pr_line))
 
-        opened_overview = '\n'.join(['Opened Pull Requests', '-'*20,
-            '\n'.join(opened_prs)])
-        closed_overview = '\n'.join(['Closed Pull Requests', '-'*20,
-            '\n'.join(closed_prs)])
-        return '\n\n'.join([opened_overview, closed_overview])
+        overviews = []
+        for group in categories:
+            what, _, _, pr_list = group
+            title = what + ' Pull Requests'
+            title_h2 = '-'*len(title)
+            overviews.append('\n'.join([title, title_h2, '\n'.join(pr_list)]))
+        return '\n\n'.join(overviews)
 
 
     gh_api_url = ('%(api_url)s/repos/buildbot/buildbot/pulls?state=all')
