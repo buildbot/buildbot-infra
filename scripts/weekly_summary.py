@@ -137,7 +137,7 @@ def get_trac_tickets(start_day, end_day):
         closed_overview = '\n'.join(['Closed Tickets', '-'*14, closed_table])
 
         trac_summary = [ticket_overview, opened_overview, closed_overview]
-        return '\n\n'.join(trac_summary)
+        return ('trac', '\n\n'.join(trac_summary))
 
     trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
         '&changetime=%(start)s..%(end)s'
@@ -211,7 +211,7 @@ def get_github_prs(start_day, end_day):
                 col_order=['number', 'title', 'html_url'],
                 col_padding=2, field_formatter=bug_list_formatter)
             overviews.append('\n'.join([title, title_h2, table]))
-        return '\n\n'.join(overviews)
+        return ('github', '\n\n'.join(overviews))
 
 
     gh_api_url = ('%(api_url)s/repos/buildbot/buildbot/pulls?state=all')
