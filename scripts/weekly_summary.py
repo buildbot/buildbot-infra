@@ -6,6 +6,7 @@ from datetime import date
 from datetime import datetime
 from datetime import timedelta
 from functools import partial
+from twisted.python import log
 from twisted.internet import defer
 from twisted.internet import reactor
 from twisted.web.client import Agent
@@ -16,11 +17,6 @@ TRAC_BUILDBOT_URL = 'http://trac.buildbot.net'
 TRAC_BUILDBOT_TICKET_URL = TRAC_BUILDBOT_URL + '/ticket/%(ticket)s'
 GITHUB_API_URL = 'https://api.github.com'
 HTTP_HEADERS = Headers({'User-Agent': ['buildbot.net weekly summary']})
-
-def fetch_failure(resp):
-    print dir(resp)
-    print resp.code
-    print resp.headers
 
 def get_body(what, f):
     def cb(resp):
@@ -164,7 +160,7 @@ def get_trac_tickets(start_day, end_day):
     d.addCallback(get_body('Closed', format_trac_tickets))
     fetches.append(d)
 
-    dl = defer.DeferredList(fetches)
+    dl = defer.DeferredList(fetches, fireOnOneErrback=True, consumeErrors=True)
     dl.addCallback(summarize_trac_tickets)
     return dl
 
@@ -234,20 +230,26 @@ def summary(results):
         "====================\n"
         "%(github)s")
     message_parts = {}
+    print results
     for success, value in results:
+        if not success:
+            continue
         part, msg = value
         message_parts[part] = msg
     print message % message_parts
-    reactor.stop()
 
 def main():
     end_day = date.today() - timedelta(1)
     start_day = end_day - timedelta(6)
 
     #dl = defer.DeferredList([get_trac_tickets()])
-    dl = defer.DeferredList([get_trac_tickets(start_day, end_day),
-        get_github_prs(start_day, end_day)])
+    dl = defer.DeferredList([
+        get_trac_tickets(start_day, end_day),
+        get_github_prs(start_day, end_day),
+    ], fireOnOneErrback=True, consumeErrors=True)
     dl.addCallback(summary)
+    dl.addErrback(log.err)
+    dl.addCallback(lambda _: reactor.stop())
     reactor.run()
 
 
