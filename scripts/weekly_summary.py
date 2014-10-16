@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+# Direct Requirements:
+#  Twisted
+#  PyOpenSSL
+#  service_identity
+
 import csv
 import json
 from datetime import date
@@ -230,7 +235,6 @@ def summary(results):
         "====================\n"
         "%(github)s")
     message_parts = {}
-    print results
     for success, value in results:
         if not success:
             continue
