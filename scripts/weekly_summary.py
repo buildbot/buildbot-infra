@@ -174,7 +174,6 @@ def get_github_prs(start_day, end_day):
     Get the last week's worth of tickets, where week ends through yesterday.
     """
     def summarize_github_prs(what, body_json):
-        padding = ' '*2
         # I don't know a good way to parse the time zone. Github returns
         # ISO8601 in UTC.
         gh_time_format = '%Y-%m-%dT%H:%M:%SZ'
@@ -186,7 +185,6 @@ def get_github_prs(start_day, end_day):
             ('Completed', 'closed', 'closed_at', closed_prs),
         ]
         for pr in body:
-            pr_line = [str(pr['number']), pr['title'], pr['url']]
             for group in categories:
                 _, state, when, pr_dict = group
                 # Have to check if the when field is not None. The state is
