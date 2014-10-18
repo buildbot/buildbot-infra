@@ -180,11 +180,11 @@ def get_github_prs(start_day, end_day):
         gh_time_format = '%Y-%m-%dT%H:%M:%SZ'
         opened_prs = {}
         closed_prs = {}
-        merged_prs = {}
         body = json.loads(body_json)
-        categories = [('Opened', 'open', 'created_at', opened_prs),
-            ('Merged', 'closed', 'merged_at', merged_prs),
-            ('Closed', 'closed', 'closed_at', closed_prs)]
+        categories = [
+            ('Opened', 'open', 'created_at', opened_prs),
+            ('Completed', 'closed', 'closed_at', closed_prs),
+        ]
         for pr in body:
             pr_line = [str(pr['number']), pr['title'], pr['url']]
             for group in categories:
