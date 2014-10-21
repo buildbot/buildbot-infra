@@ -141,7 +141,7 @@ def get_trac_tickets(start_day, end_day):
         return ('trac', '\n\n'.join(trac_summary))
 
     trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
-        '&changetime=%(start)s..%(end)s'
+        '&time=%(start)s..%(end)s'
         '&col=id&col=summary&col=type&col=status&order=id')
     url_options = {
         'trac_url': TRAC_BUILDBOT_URL,
