@@ -17,3 +17,21 @@ Reverse:
 --------
 
 128-255.10.211.140.in-addr.arpa. 1799 IN SOA    ns1.rtems.org.  abuse.rtems.org. 7 10800 3600 604800 600
+
+Topology
+========
+
+The other item about our setup is we currently live within the RTEMS protected
+infrastructure.
+
+That setup has dual redundant CISCO switches that are clustered and two
+redundant firewalls running FreeBSD and PF.  They are using failover with
+RSTP.
+
+Each server in our network has one cable to each switch.  The firewalls have 4
+ports to the OSL then two cables to each switch -- cross connected.  This way
+we can lose one firewall and one switch (random!) and still have connectivity.
+It also allows us to upgrade both without losing anything.
+
+The network has been setup so Buildbot can move outside of the infrastructure
+without losing anything.  We just move our cables and we're done.
