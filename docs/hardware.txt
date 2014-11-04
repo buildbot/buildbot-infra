@@ -1,0 +1,34 @@
+Hardware
+========
+
+service1
+--------
+ix1104 with one quad-core Xeon E3 3.3GHz CPU, 16GB RAM, 100GB SSD
+
+Hosting:
+ * mx.buildbot.net (MTA)
+
+service2
+--------
+ix1104 with one quad-core Xeon E3 3.3GHz CPU, 16GB RAM, 100GB SSD
+
+Hosting:
+ * trac.buildbot.net
+ * lists.buildbot.net
+ * bot.buildbot.net
+ * www.buildbot.net
+ * ftp.buildbot.net
+
+service3
+--------
+ix1104 with one quad-core Xeon E3 3.3GHz CPU, 32GB RAM, 100GB SSD
+
+Hosting:
+ * mysql.int.buildbot.net
+
+vm1
+---
+ixR1204 with two six-core Xeon 2.1GHz, 32GB RAM, and four 100GB SSDs
+
+Hosting:
+ * For VMs (dual six core machine)
