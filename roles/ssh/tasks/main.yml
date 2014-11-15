@@ -1,0 +1,7 @@
+---
+- name: sshd configuration
+  template: src=sshd_config.j2 dest=/etc/ssh/sshd_config
+  notify: restart sshd
+
+- name: enable sshd
+  service: name=sshd enabled=true state=running

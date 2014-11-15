@@ -1,0 +1,5 @@
+---
+- hosts: servicehosts
+  roles:
+  - base
+  - ssh

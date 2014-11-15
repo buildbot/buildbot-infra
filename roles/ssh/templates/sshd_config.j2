@@ -1,0 +1,8 @@
+{# only non-default sshd configuration #}
+
+{# ssh only listens on hosts' default (public) IPs #}
+ListenAddress {{ ansible_default_ipv4.address }}
+PasswordAuthentication no
+
+# Required: Ansible uses this to transfer modules to the remote host
+Subsystem       sftp    /usr/libexec/sftp-server

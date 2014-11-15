@@ -1,0 +1,8 @@
+- name: install ansible
+  # note: cached is just useful on the plane
+  pkgng: name=ansible state=present cached=true
+- name: configure root
+  user: name=root
+- name: configure users
+  user: name={{ item }}
+  with_items: admin_users

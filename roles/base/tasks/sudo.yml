@@ -1,0 +1,6 @@
+---
+- name: install sudo
+  pkgng: name=sudo state=present
+
+- name: configure sudo
+  template: src=sudoers.j2 dest=/usr/local/etc/sudoers validate='visudo -cf %s'
