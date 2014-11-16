@@ -141,7 +141,7 @@ def get_trac_tickets(start_day, end_day):
         return ('trac', '\n\n'.join(trac_summary))
 
     trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
-        '&time=%(start)s..%(end)s'
+        '&%(time_arg)s=%(start)s..%(end)s'
         '&col=id&col=summary&col=type&col=status&order=id')
     url_options = {
         'trac_url': TRAC_BUILDBOT_URL,
@@ -154,12 +154,14 @@ def get_trac_tickets(start_day, end_day):
     # Need to make two queries: one to get the new/reopened tickets and a
     # second to get the closed tickets.
     url_options['status'] = 'status=new&status=reopened'
+    url_options['time_arg'] = 'time'
     new_url = trac_query_url % (url_options)
     d = agent.request('GET', new_url, HTTP_HEADERS)
     d.addCallback(get_body('Opened', format_trac_tickets))
     fetches.append(d)
 
     url_options['status'] = 'status=closed'
+    url_options['time_arg'] = 'changetime'
     closed_url = trac_query_url % (url_options)
     d = agent.request('GET', closed_url, HTTP_HEADERS)
     d.addCallback(get_body('Closed', format_trac_tickets))
