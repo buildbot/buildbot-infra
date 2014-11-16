@@ -1,0 +1,2 @@
+[servicehosts]
+service[1:3].buildbot.net ansible_python_interpreter=python2

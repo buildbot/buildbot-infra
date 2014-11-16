@@ -1,0 +1,5 @@
+---
+# install Python so that ansible works
+- name: install python
+  pkgng: name=python state=present
+

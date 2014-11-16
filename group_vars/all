@@ -1,0 +1,20 @@
+---
+
+# admin users have administrative access to all systems (but they know better
+# than to change things by hand).  They will be added to the 'wheel' group.
+#
+# Note that SSH keys are in roles/base/files/authorized_keys
+#
+# WARNING: do not remove entries from this list; just mark them 'state: absent'
+
+admin_users:
+- username: john
+  state: absent
+- username: jim
+  state: absent
+- username: dustin
+  state: present
+- username: amar
+  state: present
+- username: mss
+  state: present
