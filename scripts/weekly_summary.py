@@ -169,7 +169,7 @@ def get_trac_tickets(start_day, end_day):
     dl.addCallback(summarize_trac_tickets)
     return dl
 
-def get_github_prs(start_day, end_day):
+def get_github_prs(project, start_day, end_day):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
     """
@@ -211,11 +211,11 @@ def get_github_prs(start_day, end_day):
                 col_order=['number', 'title', 'html_url'],
                 col_padding=2, field_formatter=bug_list_formatter)
             overviews.append('\n'.join([title, title_h2, table]))
-        return ('github', '\n\n'.join(overviews))
+        return ('github/' + project, '\n\n'.join(overviews))
 
 
-    gh_api_url = ('%(api_url)s/repos/buildbot/buildbot/pulls?state=all')
-    url_options = {'api_url': GITHUB_API_URL}
+    gh_api_url = ('%(api_url)s/repos/%(project)s/pulls?state=all')
+    url_options = {'api_url': GITHUB_API_URL, 'project': project}
     url = gh_api_url % (url_options)
     agent = Agent(reactor)
     d = agent.request('GET', url, HTTP_HEADERS)
@@ -229,9 +229,13 @@ def summary(results):
         "============\n"
         "%(trac)s\n"
         "\n\n"
-        "GitHub Pull Requests\n"
+        "Buildbot Pull Requests\n"
         "====================\n"
-        "%(github)s")
+        "%(github/buildbot/buildbot)s"
+        "\n\n"
+        "Buildbot-Infra Pull Requests\n"
+        "====================\n"
+        "%(github/buildbot/buildbot-infra)s")
     message_parts = {}
     for success, value in results:
         if not success:
@@ -247,7 +251,8 @@ def main():
     #dl = defer.DeferredList([get_trac_tickets()])
     dl = defer.DeferredList([
         get_trac_tickets(start_day, end_day),
-        get_github_prs(start_day, end_day),
+        get_github_prs('buildbot/buildbot', start_day, end_day),
+        get_github_prs('buildbot/buildbot-infra', start_day, end_day),
     ], fireOnOneErrback=True, consumeErrors=True)
     dl.addCallback(summary)
     dl.addErrback(log.err)
