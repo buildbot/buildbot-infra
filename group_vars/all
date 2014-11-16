@@ -8,13 +8,13 @@
 # WARNING: do not remove entries from this list; just mark them 'state: absent'
 
 admin_users:
-- username: john
-  state: absent
-- username: jim
+- username: jim  # kept as an example..
   state: absent
 - username: dustin
   state: present
 - username: amar
   state: present
 - username: mss
+  state: present
+- username: sean
   state: present
