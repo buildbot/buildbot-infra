@@ -7,6 +7,11 @@
 
 import csv
 import json
+import textwrap
+import smtplib
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
@@ -23,6 +28,16 @@ TRAC_BUILDBOT_TICKET_URL = TRAC_BUILDBOT_URL + '/ticket/%(ticket)s'
 GITHUB_API_URL = 'https://api.github.com'
 HTTP_HEADERS = Headers({'User-Agent': ['buildbot.net weekly summary']})
 
+email = textwrap.dedent("""\
+    <html>
+    <head
+    </head>
+    <body>
+    %(body)s
+    </body>
+    </html>
+    """)
+
 def get_body(what, f):
     def cb(resp):
         d = readBody(resp)
@@ -30,21 +45,23 @@ def get_body(what, f):
         return d
     return cb
 
-def tablify_dict(d, show_header=True, field_formatter=None, row_order=None, col_order=None, col_padding=1):
-    # Allow custom formatting of the fields. Default to right-justifying
-    # everything but the "''" (i.e. first) column.
-    if field_formatter is None:
-        format_cell = lambda c, size, header: c.rjust(size) if header else c.ljust(size)
-    else:
-        format_cell = field_formatter
-    # Allow the custom formatter to return None for a field. Add a function
-    # that will iterate over each row to filter out the None cells before
-    # joining. 
-    skip_nones = lambda c: c is not None
+def tablify_dict(d, show_header=True, row_order=None, col_order=None,
+                 link_field=None, link_url_field=None):
+    def format_cell(cell, is_header):
+        elt = 'th' if is_header else 'td'
+        pattern = '<%s style="padding: 1px 8px; text-align: left;">%s</%s>'
+        return pattern % (elt, cell, elt)
+    def linkify(r, c):
+        if c == link_field:
+            url = d[r][link_url_field]
+            return '<a href="%s">%s</a>' % (url, d[r][c])
+        return d[r][c]
+
     if row_order is None:
         rows = sorted(d.keys())
     else:
         rows = row_order
+
     # All values of the dict should have the same keys.
     if col_order is None:
         cols = sorted(d[rows[0]].keys())
@@ -59,22 +76,21 @@ def tablify_dict(d, show_header=True, field_formatter=None, row_order=None, col_
         col_widths[-1] = max(col_widths[-1], len(str(r)))
         for i, c in enumerate(cols):
             col_widths[i] = max(col_widths[i], len(str(d[r][c])))
-    padding = ' ' * col_padding
+
     # The first row of the table is the header.
     if show_header:
-        th_row = ([format_cell('', col_widths[-1], '')] + 
-            [format_cell(c, col_widths[i], c) for i, c in enumerate(cols)])
-        th = padding.join(filter(skip_nones, th_row))
-        table = [th]
+        th_row = [format_cell(c, True) for c in cols]
+        th = ''.join(th_row)
+        table = ['<tr>' + th + '</tr>']
     else:
         table = []
     for r in rows:
-        tr = [format_cell(r, col_widths[-1], '')]
+        tr = []
         for i, c in enumerate(cols):
-            value = d[r][c]
-            tr.append(format_cell(str(value), col_widths[i], c))
-        table.append(padding.join(filter(skip_nones, tr)))
-    return '\n'.join(table)
+            value = linkify(r, c)
+            tr.append(format_cell(str(value), False))
+        table.append('<tr>' + ''.join(tr) + '</tr')
+    return '<table>\n' + '\n'.join(table) + '\n</table>\n'
 
 def get_trac_tickets(start_day, end_day):
     """
@@ -91,7 +107,6 @@ def get_trac_tickets(start_day, end_day):
         return (what, summary)
 
     def summarize_trac_tickets(results):
-        col_padding = 2
         each_type = {'Opened': 0, 'Closed': 0}
         ticket_summary = {'Enhancements': each_type.copy(),
             'Defects': each_type.copy(), 'Tasks': each_type.copy(),
@@ -117,25 +132,24 @@ def get_trac_tickets(start_day, end_day):
         # Convert ticket summary to a table to start the weekly summary.
         row_order = ['Enhancements', 'Defects', 'Regressions', 'Tasks',
             'Undecideds', 'Other', 'Total']
-        col_order = ['Opened', 'Closed']
+        for r in row_order:
+            ticket_summary[r]['Type'] = r
+        col_order = ['Type', 'Opened', 'Closed']
         ticket_table = tablify_dict(ticket_summary, row_order=row_order,
-                col_order=col_order, col_padding=col_padding)
-        ticket_overview = '\n'.join(['Ticket Summary', '-'*14, ticket_table])
+                col_order=col_order)
+        ticket_overview = '\n'.join(['<h2>Ticket Summary</h2>', ticket_table])
 
         # Also include a list of every new/reopened and closed tickets.
-        col_order = ['id', 'type', 'summary', 'url']
+        col_order = ['id', 'type', 'summary']
         # Left-justify every cell except the first column. Return None for the
         # first column to have it skipped.
-        bug_list_formatter = lambda c, size, header: c.ljust(size) if header else None
         opened_table = tablify_dict(opened, show_header=False,
-            col_order=col_order, col_padding=col_padding,
-            field_formatter=bug_list_formatter)
-        opened_overview = '\n'.join(['New/Reopened Tickets', '-'*20,
+            col_order=col_order, link_field='id', link_url_field='url')
+        opened_overview = '\n'.join(['<h2>New/Reopened Tickets</h2>',
             opened_table])
         closed_table = tablify_dict(closed, show_header=False,
-            col_order=col_order, col_padding=col_padding,
-            field_formatter=bug_list_formatter)
-        closed_overview = '\n'.join(['Closed Tickets', '-'*14, closed_table])
+            col_order=col_order, link_field='id', link_url_field='url')
+        closed_overview = '\n'.join(['<h2>Closed Tickets</h2>', closed_table])
 
         trac_summary = [ticket_overview, opened_overview, closed_overview]
         return ('trac', '\n\n'.join(trac_summary))
@@ -203,16 +217,14 @@ def get_github_prs(project, start_day, end_day):
                     pr_dict[len(pr_dict)] = pr
 
         overviews = []
-        bug_list_formatter = lambda c, size, header: c.ljust(size) if header else None
         for group in categories:
             what, _, _, pr_dict = group
-            title = what + ' Pull Requests'
-            title_h2 = '-'*len(title)
+            title = '<h2>%s Pull Requests</h2>' % (what,)
             table = tablify_dict(pr_dict, show_header=False,
                 row_order=sorted(pr_dict.keys(), lambda a,b: cmp(b, a)),
-                col_order=['number', 'title', 'html_url'],
-                col_padding=2, field_formatter=bug_list_formatter)
-            overviews.append('\n'.join([title, title_h2, table]))
+                col_order=['number', 'title'],
+                link_field='number', link_url_field='html_url')
+            overviews.append('\n'.join([title, table]))
         return ('github/' + project, '\n\n'.join(overviews))
 
 
@@ -225,26 +237,32 @@ def get_github_prs(project, start_day, end_day):
     return d
 
 
-def summary(results):
-    message = (
-        "Trac Tickets\n"
-        "============\n"
-        "%(trac)s\n"
-        "\n\n"
-        "Buildbot Pull Requests\n"
-        "====================\n"
-        "%(github/buildbot/buildbot)s"
-        "\n\n"
-        "Buildbot-Infra Pull Requests\n"
-        "====================\n"
-        "%(github/buildbot/buildbot-infra)s")
-    message_parts = {}
+def make_html(results):
+    body = (
+        '<h1>Trac Tickets</h1>\n'
+        '%(trac)s\n'
+        '\n\n'
+        '<h1 style="padding-top: 1em;">Buildbot Pull Requests</h1>\n'
+        '%(github/buildbot/buildbot)s' 
+        '\n\n'
+        '<h1 style="padding-top: 1em;">Buildbot-Infra Pull Requests</h1>\n'
+        '%(github/buildbot/buildbot-infra)s')
+    body_parts = {}
     for success, value in results:
         if not success:
             continue
         part, msg = value
-        message_parts[part] = msg
-    print message % message_parts
+        body_parts[part] = msg
+    return email % dict(body=body % body_parts)
+
+def send_email(html):
+    msg = MIMEText(html, 'html')
+    msg['Subject'] = "Buildbot Weekly Summary"
+    msg['From'] = 'dustin@v.igoro.us'
+    msg['To'] = 'buildbot-devel@lists.sourceforge.net'
+    s = smtplib.SMTP('localhost')
+    s.sendmail(msg['From'], msg['To'], msg.as_string())
+    s.quit()
 
 def main():
     end_day = date.today() - timedelta(1)
@@ -256,7 +274,8 @@ def main():
         get_github_prs('buildbot/buildbot', start_day, end_day),
         get_github_prs('buildbot/buildbot-infra', start_day, end_day),
     ], fireOnOneErrback=True, consumeErrors=True)
-    dl.addCallback(summary)
+    dl.addCallback(make_html)
+    dl.addCallback(send_email)
     dl.addErrback(log.err)
     dl.addCallback(lambda _: reactor.stop())
     reactor.run()
