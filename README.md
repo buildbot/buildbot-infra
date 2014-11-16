@@ -4,7 +4,7 @@ Run `ansible-playbook -i prod-hosts -s site.yml` to configure the production sit
 
 ## Development
 
-During development, you may create a `dev-hosts` file containing your test hosts, an an unencrypted `dev-secrets.yml` file containing any necessary (cleartext) secrets.
+During development, you may create a `dev-hosts` file containing your test hosts, and an unencrypted `dev-secrets.yml` file containing any necessary (cleartext) secrets.
 Then run `ansible-playbook -s site.yml` to test your changes.
 
 ## Secrets
