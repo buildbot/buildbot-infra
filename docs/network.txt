@@ -1,9 +1,9 @@
 IP Space
 ========
 
-140.211.10.128/25
+Public IP space is 140.211.10.128/25, in a single VLAN
 
-Shared with RTEMS
+Shared with RTEMS; buildbot is allocated a /27 out of that
 
 DNS
 ===
