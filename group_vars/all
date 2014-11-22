@@ -23,3 +23,13 @@ admin_users:
   state: present
 - username: sean
   state: present
+
+# TODO: make use of these
+# Utility packages are the ones that must be installed on service host only (at
+# least, at the moment).
+# The original list is based on http://trac.buildbot.net/ticket/3036
+utility_packages:
+- bash
+- git
+- screen
+- vim-lite  # we probably do not want to bring all the stuff
