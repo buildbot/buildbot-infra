@@ -24,12 +24,20 @@ admin_users:
 - username: sean
   state: present
 
+service_account: bbinfra
+
+# Mandatory packages are the ones that must be installed on every host.
+# Ansible installation is taken care of depending on what kind of host is that
+# (service host, jail, vm)
+mandatory_packages:
+- sudo
+- git       # this is a mandatory package since we rely on ansible-pull
+
 # TODO: make use of these
 # Utility packages are the ones that must be installed on service host only (at
 # least, at the moment).
 # The original list is based on http://trac.buildbot.net/ticket/3036
 utility_packages:
 - bash
-- git
 - screen
 - vim-lite  # we probably do not want to bring all the stuff

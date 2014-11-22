@@ -1,0 +1,63 @@
+# Playbook to bootstrap new service hosts
+#
+# Prerequisites:
+# * basic system is installed (FreeBSD 10.0+) on the target machines
+# * there's only root account that allows to connect to those machines
+# * root passwords are known for all target machines so we can connect as root
+# * ssh access for 'root' is enabled (`PermitRootLogin yes`)
+#
+# Outcome:
+# * machine has basic infrastructure so it can be managed by Ansible:
+#   * user "{{ service_account }}" is created
+#   * this user is granted passwordless sudo right (added to wheel group)
+#   * a crontab entry for running ansible-pull is added
+---
+- name: perform initial bootstrap of service hosts
+  hosts: servicehosts
+  gather_facts: no
+  # we do not have admin users on the target hosts yet, hence using root
+  # directly
+  remote_user: root
+
+  tasks:
+  # This is the only task that requires 'raw' module
+  - name: install ansible
+    raw: "env ASSUME_ALWAYS_YES=YES pkg install ansible"
+
+  - name: install mandatory packages
+    pkgng:
+      name: "{{item}}"
+      state: present
+    with_items: mandatory_packages
+
+  - name: add service account
+    user:
+      name: "{{ service_account }}"
+      comment: Buildbot Service Account
+      state: present
+      groups: wheel
+
+  - name: enable sudo modular configuration
+    lineinfile:
+      dest: "/usr/local/etc/sudoers"
+      line: "#includedir /usr/local/etc/sudoers.d"
+      state: present
+      validate: "visudo -cf %s"
+
+  - name: enable passwordless sudo for members of the wheel group
+    copy:
+      src: "files/sudoers-wheel"
+      dest: "/usr/local/etc/sudoers.d/sudoers-wheel"
+
+  # As Sean suggested, this could be an item for periodic(8)
+  # Things to decide/understand:
+  # * how to run the things under correct user
+  # * how to make sure the environment is correct (e.g. PATH)
+  # * whether to send a mail or keep things in a log or both
+  # * how often this needs to be run (Misha: daily sounds reasonable with an
+  #   option to force deployment when neccessary)
+  - name: add crontab entry to run ansible-pull
+    debug:
+      msg: "We will!"
+
+# vim:ft=yaml:nosi:noai:ts=2:sw=2

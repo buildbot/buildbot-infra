@@ -1,0 +1,18 @@
+#! /bin/sh
+#
+# This script invokes bootstrap.yml while settings special parameters
+#
+# Usage: ./bootstrap [-i <inventory>] -k <ansible-playbook-options>
+#
+# -i <inventory> is needed when you deploy on hosts other than listed in 'dev-hosts'
+# 
+# Note: `-k` option would require a sshpass program.  For some reason, this
+# approach hangs on Dustin and Mikhail.  As a workaround, the `ControlPersist`
+# parameter below is set to 10m, so ssh would keep the connection after the
+# first authentication.
+#
+
+export ANSIBLE_HOST_KEY_CHECKING=False
+export ANSIBLE_SSH_ARGS="-o PreferredAuthentications=password,keyboard-interactive -o ControlPersist=10m"
+
+exec ansible-playbook bootstrap.yml $*
