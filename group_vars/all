@@ -1,3 +1,4 @@
+# This file defines all kind of global parameters and defaults
 ---
 
 # admin users have administrative access to all systems (but they know better
