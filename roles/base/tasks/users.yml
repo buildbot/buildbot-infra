@@ -10,3 +10,10 @@
   with_items: admin_users
   # only operate on present users; absent users don't have a homedir in /etc/passwd anymore
   when: item.state == 'present'
+
+- name: add service account
+  user:
+    name: "{{ service_account }}"
+    comment: Buildbot Service Account
+    state: present
+    groups: wheel

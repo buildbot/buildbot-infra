@@ -30,13 +30,6 @@
       state: present
     with_items: mandatory_packages
 
-  - name: add service account
-    user:
-      name: "{{ service_account }}"
-      comment: Buildbot Service Account
-      state: present
-      groups: wheel
-
   - name: enable sudo modular configuration
     lineinfile:
       dest: "/usr/local/etc/sudoers"
