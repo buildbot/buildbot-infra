@@ -30,18 +30,6 @@
       state: present
     with_items: mandatory_packages
 
-  - name: enable sudo modular configuration
-    lineinfile:
-      dest: "/usr/local/etc/sudoers"
-      line: "#includedir /usr/local/etc/sudoers.d"
-      state: present
-      validate: "visudo -cf %s"
-
-  - name: enable passwordless sudo for members of the wheel group
-    copy:
-      src: "files/sudoers-wheel"
-      dest: "/usr/local/etc/sudoers.d/sudoers-wheel"
-
   # As Sean suggested, this could be an item for periodic(8)
   # Things to decide/understand:
   # * how to run the things under correct user
