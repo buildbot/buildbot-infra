@@ -1,0 +1,5 @@
+---
+- name: ezjail config
+  template:
+    src: ezjail.conf
+    dest: /usr/local/etc/ezjail.conf
