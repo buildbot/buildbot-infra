@@ -30,15 +30,4 @@
       state: present
     with_items: mandatory_packages
 
-  # As Sean suggested, this could be an item for periodic(8)
-  # Things to decide/understand:
-  # * how to run the things under correct user
-  # * how to make sure the environment is correct (e.g. PATH)
-  # * whether to send a mail or keep things in a log or both
-  # * how often this needs to be run (Misha: daily sounds reasonable with an
-  #   option to force deployment when neccessary)
-  - name: add crontab entry to run ansible-pull
-    debug:
-      msg: "We will!"
-
 # vim:ft=yaml:nosi:noai:ts=2:sw=2
