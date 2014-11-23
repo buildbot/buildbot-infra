@@ -1,5 +1,4 @@
 ---
 - include: secrets.yml
-- include: python.yml
 - include: sudo.yml
 - include: users.yml
