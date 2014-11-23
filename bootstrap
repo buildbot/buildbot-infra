@@ -2,7 +2,7 @@
 #
 # This script invokes bootstrap.yml while settings special parameters
 #
-# Usage: ./bootstrap [host-pattern] [-i <inventory>] <ansible-playbook-options>
+# Usage: ./bootstrap <host-pattern> [-i <inventory>] [<ansible-playbook-options>]
 #
 # host-pattern specifies the host to bootstrap; in most cases this should be a single
 # hostname, but for bootstrapping a set of hosts this can be any Ansible pattern.
