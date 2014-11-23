@@ -1,4 +1,9 @@
+# This file defines all kind of global parameters and defaults
 ---
+# Use non-fully qualified name of python2
+# On FreeBSD machines it's available as /usr/local/bin/python2, on most Linux
+# machines it's available as /usr/bin/python2
+ansible_python_interpreter: python2
 
 # admin users have administrative access to all systems (but they know better
 # than to change things by hand).  They will be added to the 'wheel' group.
@@ -18,3 +23,21 @@ admin_users:
   state: present
 - username: sean
   state: present
+
+service_account: bbinfra
+
+# Mandatory packages are the ones that must be installed on every host.
+# Ansible installation is taken care of depending on what kind of host is that
+# (service host, jail, vm)
+mandatory_packages:
+- sudo
+- git       # this is a mandatory package since we rely on ansible-pull
+
+# TODO: make use of these
+# Utility packages are the ones that must be installed on service host only (at
+# least, at the moment).
+# The original list is based on http://trac.buildbot.net/ticket/3036
+utility_packages:
+- bash
+- screen
+- vim-lite  # we probably do not want to bring all the stuff

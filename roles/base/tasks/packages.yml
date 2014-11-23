@@ -1,0 +1,11 @@
+- name: install mandatory packages
+  pkgng:
+    name: "{{item}}"
+    state: present
+  with_items: mandatory_packages
+
+- name: install utility packages
+  pkgng:
+    name: "{{item}}"
+    state: present
+  with_items: utility_packages
