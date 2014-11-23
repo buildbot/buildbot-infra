@@ -1,5 +1,39 @@
-Hardware
-========
+At Flosoft
+==========
+
+ds0210.flosoft-servers.net
+--------------------------
+
+This is a rather ancient server that belongs to Mike Taylor (bear).
+
+It is maintained by hand.
+We need to migrate off of this server soon.
+
+Hosting:
+ * buildbot.net -- now just the www page, but with lots of redirects for old
+   URLs
+ * www.buildbot.net buildbot.org www.buildbot.org -- redirect to buildbot.net
+ * buildbot.buildbot.net -- the metabuildbot
+ * docs.buildbot.net
+ * meetings.buildbot.net + supybot
+ * rc.buildbot.net
+ * a metabuildslave
+
+At Amazon
+=========
+
+nine.buildbot.buildbot.net
+--------------------------
+
+This is an m3.medium that Dustin supports, running an older version of nine.
+
+Hosting:
+ * nine.buildbot.buildbot.net
+
+At OSUOSL
+=========
+
+This is Buildbot's own hardware
 
 service1
 --------
