@@ -1,7 +1,4 @@
 ---
-- name: install sudo
-  pkgng: name=sudo state=present
-
 - name: enable sudo modular configuration
   lineinfile:
     dest: "/usr/local/etc/sudoers"

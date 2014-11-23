@@ -24,10 +24,4 @@
   - name: install ansible
     raw: "env ASSUME_ALWAYS_YES=YES pkg install ansible"
 
-  - name: install mandatory packages
-    pkgng:
-      name: "{{item}}"
-      state: present
-    with_items: mandatory_packages
-
 # vim:ft=yaml:nosi:noai:ts=2:sw=2
