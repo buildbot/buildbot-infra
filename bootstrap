@@ -16,3 +16,4 @@ export ANSIBLE_HOST_KEY_CHECKING=False
 export ANSIBLE_SSH_ARGS="-o PreferredAuthentications=password,keyboard-interactive -o ControlPersist=10m"
 
 exec ansible-playbook bootstrap.yml $*
+exec ansible-playbook site.yml -u root $*
