@@ -2,18 +2,27 @@
 #
 # This script invokes bootstrap.yml while settings special parameters
 #
-# Usage: ./bootstrap [-i <inventory>] -k <ansible-playbook-options>
+# Usage: ./bootstrap [host-pattern] [-i <inventory>] <ansible-playbook-options>
+#
+# host-pattern specifies the host to bootstrap; in most cases this should be a single
+# hostname, but for bootstrapping a set of hosts this can be any Ansible pattern.
 #
 # -i <inventory> is needed when you deploy on hosts other than listed in 'dev-hosts'
-# 
-# Note: `-k` option would require a sshpass program.  For some reason, this
-# approach hangs on Dustin and Mikhail.  As a workaround, the `ControlPersist`
-# parameter below is set to 10m, so ssh would keep the connection after the
-# first authentication.
 #
+# The `ControlPersist` parameter below is set to 10m, so ssh would keep the
+# connection after the first authentication.
+
+set -e
+
+hostpattern=$1
+shift
+if [ -z "$hostpattern" ]; then
+    echo "hostpattern is required"
+    exit 1
+fi
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 export ANSIBLE_SSH_ARGS="-o PreferredAuthentications=password,keyboard-interactive -o ControlPersist=10m"
 
-exec ansible-playbook bootstrap.yml $*
-exec ansible-playbook site.yml -u root $*
+ansible-playbook bootstrap.yml -l $hostpattern $*
+ansible-playbook site.yml -u root -l $hostpattern $*
