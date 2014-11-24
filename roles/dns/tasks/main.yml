@@ -4,3 +4,10 @@
   pkgng:
     name: bind910
     state: present
+
+- name: create rndc key
+  shell: "rndc-confgen -a -A hmac-sha256 -u bind"
+  args:
+    creates: "/usr/local/etc/namedb/rndc.key"
+
+# vim:ft=yaml:nosi:noai:ts=2:sw=2
