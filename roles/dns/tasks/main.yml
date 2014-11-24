@@ -1,2 +1,6 @@
 # Configure Buildbot DNS service
 ---
+- name: install BIND v9.10
+  pkgng:
+    name: bind910
+    state: present
