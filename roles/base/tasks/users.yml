@@ -1,6 +1,10 @@
 ---
 - name: add/remove administrative users
-  user: name="{{ item.username }}" groups=wheel remove=true state={{ item.state }}
+  user:
+    name: "{{ item.username }}"
+    groups: wheel
+    remove: true
+    state: "{{ item.state }}"
   with_items: admin_users
 
 - name: add administrative users' SSH keys
