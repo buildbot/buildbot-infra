@@ -1,0 +1,37 @@
+; buildbot.net Dumped Thu Nov 20 08:53:34 2014
+;
+buildbot.net.	86400	IN	SOA	ns1.he.net. hostmaster.he.net. (
+					2014110307	;serial
+					10800		;refresh
+					1800		;retry
+					604800		;expire
+					86400	)	;minimum
+buildbot.net.	7200	IN	NS	ns1.he.net.
+buildbot.net.	7200	IN	NS	ns2.he.net.
+buildbot.net.	7200	IN	NS	ns3.he.net.
+buildbot.net.	7200	IN	NS	ns4.he.net.
+buildbot.net.	7200	IN	NS	ns5.he.net.
+buildbot.net.	7200	IN	A	63.245.223.35
+buildbot.buildbot.net.	7200	IN	CNAME	ds0210.flosoft-servers.net.
+docs.buildbot.net.	7200	IN	CNAME	ds0210.flosoft-servers.net.
+nine.buildbot.net.	7200	IN	TXT	"demo server - Pierre Tardy"
+www.buildbot.net.	7200	IN	CNAME	buildbot.net.
+xy2dwhhhx5d4.trac.buildbot.net.	7200	IN	CNAME	gv-d47fzorbndt4i4.dv.googlehosted.com.
+meetings.buildbot.net.	43200	IN	CNAME	ds0210.flosoft-servers.net.
+mx.buildbot.net.	86400	IN	A	140.211.10.235
+buildbot.net.	86400	IN	MX	10 mx.buildbot.net.
+lists.buildbot.net.	86400	IN	A	140.211.10.241
+trac.buildbot.net.	86400	IN	A	140.211.10.240
+rc.buildbot.net.	86400	IN	CNAME	ds0210.flosoft-servers.net.
+nine.buildbot.buildbot.net.	86400	IN	A	54.243.62.208
+ftp.buildbot.net.	86400	IN	A	140.211.10.243
+bot.buildbot.net.	86400	IN	A	140.211.10.242
+service1.buildbot.net.	86400	IN	A	140.211.10.230
+service2.buildbot.net.	86400	IN	A	140.211.10.231
+service3.buildbot.net.	86400	IN	A	140.211.10.232
+vm1.buildbot.net.	86400	IN	A	140.211.10.233
+mac1.buildbot.net.	86400	IN	A	140.211.10.234
+git.buildbot.net.	86400	IN	A	140.211.10.236
+docs-new.buildbot.net.	86400	IN	A	140.211.10.237
+www-new.buildbot.net.	86400	IN	A	140.211.10.238 
+
