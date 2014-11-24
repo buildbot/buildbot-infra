@@ -1,14 +1,12 @@
-@       86400   IN      SOA     ns1.he.net. hostmaster.he.net. (
+@       86400   IN      SOA     {{ secondaries[0] }} {{ hostmaster }} (
                                         2014110307      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
                                         86400   )       ;minimum
-@               7200    IN      NS      ns1.he.net.
-@               7200    IN      NS      ns2.he.net.
-@               7200    IN      NS      ns3.he.net.
-@               7200    IN      NS      ns4.he.net.
-@               7200    IN      NS      ns5.he.net.
+{% for secondary in secondaries %}
+@               7200    IN      NS      {{ secondary }}
+{% endfor %}
 @               7200    IN      A       63.245.223.35
 buildbot        7200    IN      CNAME   ds0210.flosoft-servers.net.
 docs            7200    IN      CNAME   ds0210.flosoft-servers.net.
