@@ -1,0 +1,16 @@
+acl "buildbot.net-upstream" {
+    // slave address -- slave.dns.he.net
+    // per dns.he.net documentation
+    216.218.133.2;
+};
+
+zone "buildbot.net" {
+    type master;
+    file "{{ namedb_dir }}/master/buildbot.net";
+    allow-transfer {
+        "buildbot.net-upstream";
+    };
+    notify yes;
+};
+
+// vim:ft=named

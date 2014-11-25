@@ -1,0 +1,19 @@
+// All file and path names are relative to the chroot directory,
+// if any, and should be fully qualified.
+directory   "{{ namedb_dir }}/working";
+pid-file    "/var/run/named/pid";
+dump-file   "/var/dump/named_dump.db";
+statistics-file "/var/stats/named.stats";
+
+listen-on {
+    any;
+};
+
+// When we have IPv6 enabled on this system, uncomment this option.
+//  listen-on-v6    { any };
+
+// These zones are already covered by the empty zones listed below.  If you
+// remove the related empty zones in named.conf.rfcs, comment these lines out.
+disable-empty-zone "255.255.255.255.IN-ADDR.ARPA";
+disable-empty-zone "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.IP6.ARPA";
+disable-empty-zone "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.IP6.ARPA";
