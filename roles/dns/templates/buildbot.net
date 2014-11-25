@@ -1,5 +1,5 @@
 @       86400   IN      SOA     {{ secondaries[0] }} {{ hostmaster }} (
-                                        2014110307      ;serial
+                                        2014112501      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -27,6 +27,6 @@ service2        86400   IN      A       140.211.10.231
 service3        86400   IN      A       140.211.10.232
 vm1             86400   IN      A       140.211.10.233
 mac1            86400   IN      A       140.211.10.234
-git             86400   IN      A       140.211.10.236
+ns1             86400   IN      A       140.211.10.236
 docs-new        86400   IN      A       140.211.10.237
 www-new         86400   IN      A       140.211.10.238

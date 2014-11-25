@@ -16,7 +16,7 @@
       key: "{{ansible_hostname}}"
 
 - name: configure newhope
-  hosts: ns
+  hosts: ns1
   gather_facts: no
   connection: local
   sudo: yes
