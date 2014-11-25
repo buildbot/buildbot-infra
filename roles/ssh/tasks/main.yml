@@ -1,9 +1,31 @@
 ---
-- name: sshd configuration
-  template:
-    src: "sshd_config.j2"
+- name: disable root login via SSH
+  lineinfile:
     dest: "/etc/ssh/sshd_config"
-  notify: restart sshd
+    regexp: "^(?i)PermitRootLogin"
+    line: "PermitRootLogin no"
+    state: present
+
+- name: disable password authentication
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^(?i)PasswordAuthentication"
+    line: "PasswordAuthentication no"
+    state: present
+
+- name: enable listening on hosts' default (public) IP only
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^(?i)ListenAddress"
+    line: "ListenAddress {{ ansible_default_ipv4.address }}"
+    state: present
+
+- name: enable sftp subsystem
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^(?i)Subsystem\\s+sftp"
+    line: "Subsystem sftp /usr/libexec/sftp-server"
+    state: present
 
 - name: enable sshd
   service:
