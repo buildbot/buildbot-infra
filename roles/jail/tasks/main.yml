@@ -3,3 +3,9 @@
   template:
     src: ezjail.conf
     dest: /usr/local/etc/ezjail.conf
+
+# Step 1, populate the base jail. This only needs to be done once.
+- name: Populate basejail
+  command: ezjail-admin install -p
+  args:
+    creates: /usr/local/jail/base
