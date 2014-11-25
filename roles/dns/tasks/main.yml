@@ -47,6 +47,7 @@
   - named.conf
   - named.conf.options
   - named.conf.zones
+  - named.conf.rfcs
   notify: reload named
 
 - name: enable and start named service
