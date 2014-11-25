@@ -41,6 +41,21 @@ ix1104 with one quad-core Xeon E3 3.3GHz CPU, 16GB RAM, 100GB SSD
 
 Hosting:
  * mx.buildbot.net (MTA)
+ * ns.buildbot.net
+ * syslog
+ * backup
+ * ldap
+
+'syslog' is for all syslog information from every server, jail and service to
+be forwarded to.
+
+'backup' is meant for an Amanda installation.  There is an extra 160GB SSD
+installed in that machine for fast backups and a DL Bluray (50gb/disc) burner
+in it.
+
+LDAP isn't something I was planning to setup for certain.  I'm doing it for
+RTEMS because we have so many services it's a PITA to maintain different
+accounts.  I'm going to be putting simple SSO software on register.rtems.org.
 
 service2
 --------
