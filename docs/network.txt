@@ -25,6 +25,7 @@ mx          = JailBuildbot(service1,    "140.211.10.235",   "192.168.80.235")
 syslog      = JailBuildbot(service1,    None,               "192.168.80.211")
 backup      = JailBuildbot(service1,    None,               "192.168.80.212")
 ldap        = JailBuildbot(service1,    None,               "192.168.80.214")
+ns1         = JailBuildbot(service1,    "140.211.10.236",   "192.168.80.236")
 
 www         = JailBuildbot(service2,    "140.211.10.238",   "192.168.80.238")
 trac        = JailBuildbot(service2,    "140.211.10.240",   "192.168.80.240")
