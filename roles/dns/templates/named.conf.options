@@ -9,28 +9,11 @@ listen-on {
     any;
 };
 
-// If you have IPv6 enabled on this system, uncomment this option for
-// use as a local resolver.  To give access to the network, specify
-// an IPv6 address, or the keyword "any".
-//  listen-on-v6    { ::1; };
+// When we have IPv6 enabled on this system, uncomment this option.
+//  listen-on-v6    { any };
 
-// These zones are already covered by the empty zones listed below.
-// If you remove the related empty zones below, comment these lines out.
+// These zones are already covered by the empty zones listed below.  If you
+// remove the related empty zones in named.conf.rfcs, comment these lines out.
 disable-empty-zone "255.255.255.255.IN-ADDR.ARPA";
 disable-empty-zone "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.IP6.ARPA";
 disable-empty-zone "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.IP6.ARPA";
-
-/*
-    Modern versions of BIND use a random UDP port for each outgoing
-    query by default in order to dramatically reduce the possibility
-    of cache poisoning.  All users are strongly encouraged to utilize
-    this feature, and to configure their firewalls to accommodate it.
-
-    AS A LAST RESORT in order to get around a restrictive firewall
-    policy you can try enabling the option below.  Use of this option
-    will significantly reduce your ability to withstand cache poisoning
-    attacks, and should be avoided if at all possible.
-
-    Replace NNNNN in the example with a number between 49160 and 65530.
-*/
-// query-source address * port NNNNN;
