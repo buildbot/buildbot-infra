@@ -1,0 +1,26 @@
+# This is a playbook to be run with ansible-pull (the usage will be described
+# when a particular cron task is installed).
+# To deploy a particular service manually:
+# * log into the target host
+# * run 'ansible-playbook -i localhost local.yml -K'
+---
+- name: test playbook
+  hosts: all
+  gather_facts: yes
+  connection: local
+
+  tasks:
+  # Use this to create "special" groups that will be used to setup a particular host.
+  # We use non-fqdn here so a staging/test setup could work as well.
+  - group_by:
+      key: "{{ansible_hostname}}"
+
+- name: configure newhope
+  hosts: ns
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - dns
+
+# vim:ts=2:sw=2:noai:nosi
