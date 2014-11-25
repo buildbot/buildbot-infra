@@ -8,5 +8,5 @@
 
 - name: enable passwordless sudo for members of the wheel group
   copy:
-    src: "files/sudoers-wheel"
+    src: "sudoers-wheel"
     dest: "/usr/local/etc/sudoers.d/sudoers-wheel"
