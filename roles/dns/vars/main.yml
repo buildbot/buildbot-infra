@@ -4,13 +4,8 @@
 namedb_dir: "/usr/local/etc/namedb"
 hostmaster: hostmaster.he.net.
 secondaries:
-- name: ns1.he.net.
-  ip: 216.218.130.2
-- name: ns2.he.net.
-  ip: 216.218.131.2
-- name: ns3.he.net.
-  ip: 216.218.132.2
-- name: ns4.he.net.
-  ip: 216.66.1.2
-- name: ns5.he.net.
-  ip: 216.66.80.18
+- ns1.he.net.
+- ns2.he.net.
+- ns3.he.net.
+- ns4.he.net.
+- ns5.he.net.

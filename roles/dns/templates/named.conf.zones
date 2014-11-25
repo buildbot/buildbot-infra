@@ -1,42 +1,14 @@
-// NB: Do not use the IP addresses below, they are faked, and only
-// serve demonstration/documentation purposes!
-//
-// Example slave zone config entries.  It can be convenient to become
-// a slave at least for the zone your own domain is in.  Ask
-// your network administrator for the IP address of the responsible
-// master name server.
-//
-// Do not forget to include the reverse lookup zone!
-// This is named after the first bytes of the IP address, in reverse
-// order, with ".IN-ADDR.ARPA" appended, or ".IP6.ARPA" for IPv6.
-//
-// Before starting to set up a master zone, make sure you fully
-// understand how DNS and BIND work.  There are sometimes
-// non-obvious pitfalls.  Setting up a slave zone is usually simpler.
-//
-// NB: Don't blindly enable the examples below. :-)  Use actual names
-// and addresses instead.
+acl "buildbot.net-upstream" {
+    216.218.133.2;
+};
 
-/* An example dynamic zone
-key "exampleorgkey" {
-	algorithm hmac-md5;
-	secret "sf87HJqjkqh8ac87a02lla==";
+zone "buildbot.net" {
+    type master;
+    file "{{ namedb_dir }}/master/buildbot.net";
+    allow-transfer {
+        "buildbot.net-upstream";
+    };
+    notify yes;
 };
-zone "example.org" {
-	type master;
-	allow-update {
-		key "exampleorgkey";
-	};
-	file "/usr/local/etc/namedb/dynamic/example.org";
-};
-*/
 
-/* Example of a slave reverse zone
-zone "1.168.192.in-addr.arpa" {
-	type slave;
-	file "/usr/local/etc/namedb/slave/1.168.192.in-addr.arpa";
-	masters {
-		192.168.1.1;
-	};
-};
-*/
+// vim:ft=named
