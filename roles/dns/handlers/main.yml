@@ -1,0 +1,6 @@
+# BIND related handlers
+---
+- name: reload named
+  service:
+    name: named
+    state: reloaded

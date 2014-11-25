@@ -10,4 +10,49 @@
   args:
     creates: "/usr/local/etc/namedb/rndc.key"
 
+- name: make sure necessary directories exist
+  file:
+    path: "{{ namedb_dir }}/{{item}}"
+    mode: "0755"
+    owner: bind
+    group: bind
+    state: directory
+  with_items:
+  - dynamic
+  - master
+  - slave
+  - working
+
+- name: make sure necessary master zones exist
+  copy:
+    src: "{{item}}"
+    dest: "{{ namedb_dir }}/master/{{ item }}"
+  with_items:
+  - empty.db
+  - localhost-forward.db
+  - localhost-reverse.db
+  notify: reload named
+
+- name: install buildbot.net zone
+  template:
+    src: "buildbot.net"
+    dest: "{{ namedb_dir }}/master/buildbot.net"
+  notify: reload named
+
+- name: install BIND configuration files
+  template:
+    src: "{{ item }}"
+    dest: "{{ namedb_dir }}/{{ item }}"
+  with_items:
+  - named.conf
+  - named.conf.options
+  - named.conf.zones
+  notify: reload named
+
+- name: enable and start named service
+  service:
+    name: named
+    enabled: true
+    state: running
+
 # vim:ft=yaml:nosi:noai:ts=2:sw=2

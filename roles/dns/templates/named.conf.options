@@ -1,6 +1,6 @@
 // All file and path names are relative to the chroot directory,
 // if any, and should be fully qualified.
-directory   "/usr/local/etc/namedb/working";
+directory   "{{ namedb_dir }}/working";
 pid-file    "/var/run/named/pid";
 dump-file   "/var/dump/named_dump.db";
 statistics-file "/var/stats/named.stats";

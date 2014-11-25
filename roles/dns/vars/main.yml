@@ -1,6 +1,7 @@
 # DNS specific variables
 # TODO: consider putting them in global group_vars/all
 ---
+namedb_dir: "/usr/local/etc/namedb"
 hostmaster: hostmaster.he.net.
 secondaries:
 - name: ns1.he.net.
