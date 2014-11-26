@@ -1,2 +1,9 @@
-[servicehosts]
+[jail-servicehosts]
 service[1:3].buildbot.net
+
+[vm-servicehosts]
+vm1.buildbot.net
+
+[servicehosts:children]
+jail-servicehosts
+vm-servicehosts
