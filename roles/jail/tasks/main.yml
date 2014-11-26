@@ -4,8 +4,29 @@
     src: ezjail.conf
     dest: /usr/local/etc/ezjail.conf
 
-# Step 1, populate the base jail. This only needs to be done once.
 - name: Populate basejail
   command: ezjail-admin install -p
   args:
     creates: /usr/local/jail/base
+
+- name: Create base flavour directories
+  file:
+    path: '/usr/local/jail/flavours/base/{{ item }}'
+    state: directory
+  with_items:
+      - etc
+
+- name: Set base flavour config
+  copy:
+    dest: '/usr/local/jail/flavours/{{ item }}'
+    src: 'flavours/{{ item }}'
+  with_items:
+    - base/ezjail.flavour
+    - base/etc/make.conf
+    - base/etc/periodic.conf
+    - base/etc/rc.conf
+
+- name: Install jail
+  command: ezjail-admin create -f base {{ name }} {{ ip_address|join(',') }}
+  args:
+    creates: '/usr/local/jail/{{ name }}'
