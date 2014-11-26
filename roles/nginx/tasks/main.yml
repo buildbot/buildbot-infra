@@ -4,6 +4,22 @@
     name: nginx
     state: present
 
+- name: make sure necessary directories exist
+  file:
+    path: "{{ nginx_conf_dir }}/{{item}}"
+    mode: "0755"
+    state: directory
+  with_items:
+  - conf.d
+  - sites-available
+  - sites-enabled
+
+- name: make sure log directory exists
+  file:
+    path: "{{ nginx_log_dir }}"
+    mode: "0755"
+    state: directory
+
 - name: install nginx.conf
   template:
     src: "nginx.conf"
