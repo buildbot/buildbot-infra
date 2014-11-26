@@ -22,7 +22,7 @@ if [ -z "$hostpattern" ]; then
 fi
 
 export ANSIBLE_HOST_KEY_CHECKING=False
-export ANSIBLE_SSH_ARGS="-o PreferredAuthentications=password,keyboard-interactive -o ControlPersist=10m"
+export ANSIBLE_SSH_ARGS="-o PreferredAuthentications=password,keyboard-interactive -o ControlPersist=10m -o ControlMaster=auto"
 
 ansible-playbook bootstrap.yml -l $hostpattern $*
 ansible-playbook site.yml -u root -l $hostpattern $*
