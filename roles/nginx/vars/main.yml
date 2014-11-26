@@ -1,0 +1,3 @@
+# Nginx role specific variables
+---
+nginx_conf_dir: "/usr/local/etc/nginx"

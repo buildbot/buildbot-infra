@@ -1,0 +1,17 @@
+---
+- name: install nginx package
+  pkgng:
+    name: nginx
+    state: present
+
+- name: install nginx.conf
+  template:
+    src: "nginx.conf"
+    dest: "{{ nginx_conf_dir }}/nginx.conf"
+  notify: reload nginx
+
+- name: enable and start nginx service
+  service:
+    name: nginx
+    enabled: true
+    state: running
