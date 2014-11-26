@@ -30,3 +30,9 @@
   command: ezjail-admin create -f base {{ name }} {{ ip_address|join(',') }}
   args:
     creates: '/usr/local/jail/{{ name }}'
+
+- name: Enable jails
+  lineinfile:
+    dest: /etc/rc.conf
+    line: 'jail_enable="YES"'
+    state: present
