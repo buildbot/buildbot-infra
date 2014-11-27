@@ -1,0 +1,27 @@
+{#-
+    Parameters:
+
+    service_name
+        service name (to be use with supervisorctl command)
+    service_dir
+        directory where the service resides
+    service_command
+        command to pass to the wrapper to actually run the service
+    service_user
+        user to run the command under
+ #}
+[program:{{service_name}}]
+command=/usr/local/bin/supervisor-wrapper {{service_command}}
+directory={{service_dir}}
+user={{service_user}}
+
+# [re]start behaviour
+autostart=true
+autorestart=true
+
+# output handling
+redirect_stderr=true
+stdout_logfile={{supervisor_log_dir}}/{{service_name}}.log
+{#-
+    vim:ft=htmldjango
+ #}

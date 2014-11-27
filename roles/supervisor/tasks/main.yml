@@ -1,0 +1,47 @@
+---
+- name: install supervisor package
+  pkgng:
+    name: py27-supervisor
+    state: present
+
+- name: make directories for supervisor
+  file:
+    path: "{{ item }}"
+    mode: "0755"
+    state: directory
+  with_items:
+  - "{{ supervisor_services_dir }}"
+  - "{{ supervisor_log_dir }}"
+
+- name: update supervisor configuration file
+  ini_file:
+    dest: "/usr/local/etc/supervisord.conf"
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+  - section: include
+    option: files
+    value: "{{ supervisor_services_dir }}/*.conf"
+  - section: unix_http_server
+    option: chown
+    value: "root:wheel"
+  - section: unix_http_server
+    option: chmod
+    value: "0770"
+  - section: supervisord
+    option: logfile
+    value: "{{ supervisor_log_dir }}/supervisord.log"
+  notify: restart supervisor
+
+- name: install the wrapper script
+  copy:
+    src: "supervisor-wrapper"
+    dest: "/usr/local/bin/supervisor-wrapper"
+    mode: "0755"
+
+- name: enable and start supervisor
+  service:
+    name: supervisord
+    enabled: true
+    state: running

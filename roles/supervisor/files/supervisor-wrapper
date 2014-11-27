@@ -1,0 +1,20 @@
+#! /bin/sh
+
+# Note: USER and HOME are not set by supervisor, so these are set, if they are
+# not provided in the `environment` parameter for the program.
+# See: http://supervisord.org/subprocess.html#subprocess-environment
+if [ -z "$USER" ]
+then
+    USER=`id -u -n`
+    export USER
+fi
+
+# Override HOME as it's set to '/' by supervisor(?)
+HOME="$(getent passwd ${USER} | cut -d: -f6)"
+export HOME
+
+# Overrid PATH as its value is not really clear
+PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
+export PATH
+
+exec "$@"
