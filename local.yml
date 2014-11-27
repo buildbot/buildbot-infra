@@ -14,6 +14,7 @@
   # We use non-fqdn here so a staging/test setup could work as well.
   - group_by:
       key: "{{ansible_hostname}}"
+    changed_when: False
 
 - name: configure ns1
   hosts: ns1
