@@ -1,5 +1,5 @@
 ---
 - hosts: servicehosts
   roles:
-  - base
+  - base-servicehost
   - ssh
