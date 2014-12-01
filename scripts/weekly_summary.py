@@ -10,7 +10,6 @@ import json
 import textwrap
 import smtplib
 
-from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import date
 from datetime import datetime
@@ -30,7 +29,7 @@ HTTP_HEADERS = Headers({'User-Agent': ['buildbot.net weekly summary']})
 
 email = textwrap.dedent("""\
     <html>
-    <head
+    <head>
     </head>
     <body>
     %(body)s
@@ -89,7 +88,7 @@ def tablify_dict(d, show_header=True, row_order=None, col_order=None,
         for i, c in enumerate(cols):
             value = linkify(r, c)
             tr.append(format_cell(str(value), False))
-        table.append('<tr>' + ''.join(tr) + '</tr')
+        table.append('<tr>' + ''.join(tr) + '</tr>')
     return '<table>\n' + '\n'.join(table) + '\n</table>\n'
 
 def get_trac_tickets(start_day, end_day):
