@@ -2,6 +2,10 @@
 - name: Jail test
   hosts: servicehosts
   roles:
-      - { role: jail, name: jailtest.buildbot.net, ip_address: ['vtnet0|192.168.122.16'] }
+    - role: jail
+      name: jailtest.buildbot.net
+      jid: 1
+      hostname: jailtest.buildbot.net
+      ip_address: ['vtnet0|192.168.122.16']
 
 # vim:ft=yaml:nosi:noai:ts=2:sw=2
