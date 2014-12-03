@@ -11,18 +11,18 @@
 - name: Populate basejail
   command: ezjail-admin install -p
   args:
-    creates: /usr/local/jail/base
+    creates: '{{ ezjail_jaildir }}/base'
 
 - name: Create base flavour directories
   file:
-    path: '/usr/local/jail/flavours/base/{{ item }}'
+    path: '{{ ezjail_jaildir }}/flavours/base/{{ item }}'
     state: directory
   with_items:
       - etc
 
 - name: Set base flavour config
   copy:
-    dest: '/usr/local/jail/flavours/{{ item }}'
+    dest: '{{ ezjail_jaildir }}/flavours/{{ item }}'
     src: 'flavours/{{ item }}'
   with_items:
     - base/ezjail.flavour
@@ -33,7 +33,7 @@
 - name: Install jail
   command: ezjail-admin create -f base {{ name }} {{ ip_address|join(',') }}
   args:
-    creates: '/usr/local/jail/{{ name }}'
+    creates: '{{ ezjail_jaildir }}/{{ name }}'
 
 - name: Enable jails
   lineinfile:
