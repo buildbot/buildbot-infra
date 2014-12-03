@@ -1,0 +1,32 @@
+{#-
+ A template for a static web site configuration.
+
+ Parameters:
+
+ server_name
+    server name (e.g. docs.buildbot.net)
+
+ server_root
+    directory where the static contents reside
+ #}
+server {
+    listen 80;
+    server_name {{server_name}};
+
+    access_log {{nginx_log_dir}}/{{server_name}}/access.log;
+    error_log {{nginx_log_dir}}/{{server_name}}/error.log;
+
+    location / {
+        root {{server_root}};
+        index index.html index.htm;
+    }
+
+    #error_page 404 /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page 500 502 503 504  /50x.html;
+    location = /50x.html {
+        root /usr/local/www/nginx-dist;
+    }
+}

@@ -11,14 +11,23 @@
     state: directory
   with_items:
   - conf.d
-  - sites-available
+  - sites-available     # XXX(sa2ajj): I am not sure about this item in our setup
   - sites-enabled
 
 - name: make sure log directory exists
   file:
-    path: "{{ nginx_log_dir }}"
+    path: "{{ item }}"
     mode: "0755"
     state: directory
+  with_items:
+  - "{{ nginx_log_dir }}"
+  - "{{ nginx_log_dir }}/{{ server_name }}"
+
+- name: install server configuration file
+  template:
+    src: "{{ nginx_template }}"
+    dest: "{{ nginx_conf_dir }}/sites-enabled/{{ server_name }}"
+  notify: reload nginx
 
 - name: install nginx.conf
   template:
