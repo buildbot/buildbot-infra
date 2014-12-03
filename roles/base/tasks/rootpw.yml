@@ -1,0 +1,5 @@
+---
+- name: set root password
+  user:
+    name: root
+    password: "{{crypted_root_pw}}"
