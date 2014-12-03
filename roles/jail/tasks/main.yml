@@ -39,6 +39,7 @@
 - name: Set jail safename
   shell: echo -n '{{ name }}' | tr -c '[:alnum:]' _
   register: jail_safename
+  changed_when: false
 
 - name: Install jail
   command: ezjail-admin create -f base {{ name }} {{ ip_address|join(',') }}
