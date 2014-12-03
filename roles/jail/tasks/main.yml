@@ -44,7 +44,7 @@
 - name: Install jail
   command: ezjail-admin create -f base {{ name }} {{ ip_address|join(',') }}
   args:
-    creates: '{{ ezjail_jaildir }}/{{ name }}'
+    creates: '/usr/local/etc/ezjail/{{ jail_safename.stdout }}'
 
 - name: Enable jails
   lineinfile:
