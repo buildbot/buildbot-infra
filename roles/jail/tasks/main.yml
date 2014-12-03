@@ -8,6 +8,11 @@
     src: ezjail.conf
     dest: /usr/local/etc/ezjail.conf
 
+- name: Create jail log directory
+  file:
+    path: '{{ jail_log_dir }}'
+    state: directory
+
 - name: Populate basejail
   command: ezjail-admin install -p
   args:
