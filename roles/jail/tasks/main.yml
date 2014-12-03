@@ -50,3 +50,11 @@
     dest: /etc/rc.conf
     line: 'jail_enable="YES"'
     state: present
+
+- name: Add jail to jail.conf
+  lineinfile:
+    line: '{{ jail_safename.stdout }} { host.hostname = "{{ hostname }}"; path = "{{ ezjail_jaildir }}/{{ name }}"; ip4.addr += "{{ ip_address|join(",") }}"; exec.clean; exec.system_user = "root"; exec.jail_user = "root"; exec.start += "/bin/sh /etc/rc"; exec.stop = ""; exec.consolelog = "/var/log/jail/{{ jail_safename.stdout }}"; mount.devfs; mount.fstab = "/etc/fstab.{{ jail_safename.stdout }}"; allow.set_hostname = 0; allow.sysvipc = 0; allow.raw_sockets = 0; jid = {{ jid }} ; }'
+    state: present
+    regexp: '^\s*{{ jail_safename.stdout }}\s*\{'
+    dest: /etc/jail.conf
+    create: yes
