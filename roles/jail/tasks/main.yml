@@ -48,10 +48,9 @@
     creates: '/usr/local/etc/ezjail/{{ jail_safename.stdout }}'
 
 - name: Enable jails
-  lineinfile:
-    dest: /etc/rc.conf
-    line: 'jail_enable="YES"'
-    state: present
+  service:
+    name: jail
+    enabled: true
 
 - name: Add jail to jail.conf
   lineinfile:
