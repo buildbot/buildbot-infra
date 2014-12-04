@@ -2,6 +2,7 @@
 - name: Install ezjail
   pkgng:
     name: ezjail
+    state: present
 
 - name: ezjail config
   template:
