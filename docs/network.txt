@@ -37,6 +37,7 @@ docs        = JailBuildbot(service2,    "140.211.10.237",   "192.168.80.237")
 
 buildbot    = JailBuildbot(service3,    "140.211.10.239",   "192.168.80.239")
 mysql       = JailBuildbot(service3,    None,               "192.168.80.215")
+pgsql       = JailBuildbot(service3,    None,               "192.168.80.216")
 
 DNS
 ===
