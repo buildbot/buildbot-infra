@@ -19,17 +19,6 @@ Hosting:
  * rc.buildbot.net
  * a metabuildslave
 
-At Amazon
-=========
-
-nine.buildbot.buildbot.net
---------------------------
-
-This is an m3.medium that Dustin supports, running an older version of nine.
-
-Hosting:
- * nine.buildbot.buildbot.net
-
 At OSUOSL
 =========
 
