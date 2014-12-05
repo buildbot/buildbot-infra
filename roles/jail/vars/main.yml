@@ -1,0 +1,3 @@
+---
+ezjail_jaildir: /usr/local/jail
+jail_log_dir: /var/log/jail
