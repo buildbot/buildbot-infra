@@ -24,7 +24,13 @@ admin_users:
 - username: sean
   state: present
 
+# This account is used to run `ansible-pull` and has passwordless sudo rights
+# on the host.
 service_account: bbinfra
+
+# This account is intended to be used for running non-privileged
+# services/tasks.
+worker_account: bbuser
 
 # Mandatory packages are the ones that must be installed on every host.
 # Ansible installation is taken care of depending on what kind of host is that
