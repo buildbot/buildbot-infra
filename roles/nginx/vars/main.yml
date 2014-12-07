@@ -2,3 +2,4 @@
 ---
 nginx_conf_dir: "/usr/local/etc/nginx"
 nginx_log_dir: "/var/log/nginx"
+nginx_spool_dir: "/var/spool/nginx"
