@@ -1,0 +1,12 @@
+---
+- name: create the user
+  user:
+    name: "{{ user_id }}"
+    comment: "{{ user_name }}"
+    state: present
+
+# NOTE: the information will only be available until the next use of `getent`
+- name: get user information
+  getent:
+    database: passwd
+    key: "{{ user_id }}"
