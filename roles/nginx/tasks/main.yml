@@ -1,0 +1,49 @@
+---
+- name: install nginx package
+  pkgng:
+    name: nginx
+    state: present
+
+- name: make sure necessary configuration directories exist
+  file:
+    path: "{{ nginx_conf_dir }}/{{item}}"
+    mode: "0755"
+    state: directory
+  with_items:
+  - conf.d
+  - sites
+
+- name: make sure log directory exists
+  file:
+    path: "{{ item }}"
+    mode: "0755"
+    state: directory
+  with_items:
+  - "{{ nginx_log_dir }}"
+  - "{{ nginx_log_dir }}/{{ server_name }}"
+
+- name: make sure spool exists
+  file:
+    path: "{{ nginx_spool_dir }}"
+    mode: "0755"
+    state: directory
+    owner: "www"
+    group: "www"
+
+- name: install server configuration file
+  template:
+    src: "{{ nginx_template }}"
+    dest: "{{ nginx_conf_dir }}/sites/{{ server_name }}"
+  notify: reload nginx
+
+- name: install nginx.conf
+  template:
+    src: "nginx.conf"
+    dest: "{{ nginx_conf_dir }}/nginx.conf"
+  notify: reload nginx
+
+- name: enable and start nginx service
+  service:
+    name: nginx
+    enabled: true
+    state: running

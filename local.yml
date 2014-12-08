@@ -4,7 +4,9 @@
 # * log into the target host
 # * run 'ansible-playbook -i localhost local.yml -K'
 ---
-- name: test playbook
+- include: "load-secrets.yml"
+
+- name: determine local host name
   hosts: all
   gather_facts: yes
   connection: local
