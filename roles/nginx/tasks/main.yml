@@ -11,7 +11,7 @@
     state: directory
   with_items:
   - conf.d
-  - sites-enabled
+  - sites
 
 - name: make sure log directory exists
   file:
@@ -33,7 +33,7 @@
 - name: install server configuration file
   template:
     src: "{{ nginx_template }}"
-    dest: "{{ nginx_conf_dir }}/sites-enabled/{{ server_name }}"
+    dest: "{{ nginx_conf_dir }}/sites/{{ server_name }}"
   notify: reload nginx
 
 - name: install nginx.conf
