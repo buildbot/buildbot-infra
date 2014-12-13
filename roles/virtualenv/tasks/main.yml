@@ -1,0 +1,28 @@
+---
+# This is mostly for pysqlite that needs to find locally installed sqlite3
+# headers and libraries.  But it might be needed for other modules as well.
+- name: prepare ~/.pydistutils.cfg
+  ini_file:
+    dest: "{{ venv_home_dir }}/.pydistutils.cfg"
+    section: "build_ext"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+    owner: "{{ venv_user }}"
+  with_items:
+  - option: include_dirs
+    value: "/usr/local/include"
+  - option: library_dirs
+    value: "/usr/local/lib"
+
+- name: install system packages
+  pkgng:
+    name: "{{item}}"
+    state: present
+  with_items: venv_packages
+
+- name: create the virtual environment
+  sudo_user: "{{ venv_user }}"
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
+  with_items: venv_python_packages

@@ -1,0 +1,70 @@
+# Create and configure a Buildbot master to watch changes in Buildbot's git
+# repo.
+---
+- name: Make sure we have an updated copy of Buildbot repository
+  sudo_user: "{{ bb_user }}"
+  git:
+    repo: "{{ buildbot_repo }}"
+    dest: "{{ bb_user_home }}/{{ buildbot_short }}"
+    update: yes
+    version: "{{bb_branch}}"
+    accept_hostkey: True
+  register: bb_repo_state
+
+- name: Install/upgrade build master
+  sudo_user: "{{ bb_user }}"
+  script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
+  when: "bb_repo_state|changed"
+
+- name: Create build master config
+  sudo_user: "{{ bb_user }}"
+  command: "{{ bb_env_dir }}/bin/buildbot create-master {{ bb_master_dir }}"
+  args:
+    creates: "{{ bb_master_dir }}/buildbot.tac"
+
+- name: Make sure we have an updated copy of metabbotcfg repository
+  sudo_user: "{{ bb_user }}"
+  git:
+    repo: "{{ metabbotcfg_repo }}"
+    dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}"
+    update: yes
+    version: "{{bb_config_branch}}"
+    accept_hostkey: True
+  register: mbb_repo_state
+
+- name: Make sure we have a symlink for the master.cfg
+  sudo_user: "{{ bb_user }}"
+  file:
+    src: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/master.cfg"
+    dest: "{{ bb_master_dir }}/master.cfg"
+    state: link
+
+- name: Make sure we have latest build slave passwords
+  sudo_user: "{{ bb_user }}"
+  copy:
+    dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item.key }}.pass"
+    content: "{{ item.key }}"
+    mode: "0600"
+  with_dict: "slave_passwords[bb_config_branch]"
+  # NOTE(sa2ajj): in case a password changes, a restart is also required, but
+  # this is for future improvements.
+
+- name: Remove passwords for obsolete slaves
+  sudo_user: "{{ bb_user }}"
+  file:
+    dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item }}.pass"
+    state: absent
+  with_items: "slave_passwords.obsolete"
+
+# It's important to get the config and passwords before trying to upgrade the database.
+- name: Ensure latest schema of the database
+  sudo_user: "{{ bb_user }}"
+  command: "{{ bb_env_dir }}/bin/buildbot upgrade-master {{ bb_master_dir }}"
+  when: "bb_repo_state|changed"
+
+- name: restart Supervisor service
+  shell: "supervisorctl restart {{ bb_service }}"
+  ignore_errors: True
+  when: "bb_repo_state|changed or mbb_repo_state|changed"
+
+# vim:ts=2:sw=2:noai:nosi

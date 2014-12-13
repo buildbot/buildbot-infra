@@ -1,0 +1,6 @@
+---
+- name: install supervisor services
+  template:
+    src: "service.conf.j2"
+    dest: "{{ supervisor_services_dir }}/{{ service_name }}.conf"
+  notify: restart supervisor

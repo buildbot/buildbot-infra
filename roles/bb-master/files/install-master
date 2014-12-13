@@ -1,0 +1,35 @@
+#! /bin/sh
+#
+# Helper script to install Bulidbot
+#
+# base_dir -- a git checkout of the Buildbot
+# env_dir -- target virtual environment
+
+base_dir="$1"
+env_dir="$2"
+
+if [ -z "${base_dir}" -o -z "${env_dir}" ]
+then
+    echo "Usage: $0 <base-dir> <env-dir>"
+    exit 1
+fi
+
+if [ ! -d ${base_dir} -o ! -d ${env_dir} ]
+then
+    echo "Specified directories must exist"
+    exit 2
+fi
+
+# This is needed for www/base since it executes 'buildbot dataspec'
+PATH=${env_dir}/bin:$PATH
+
+for name in master pkg www/base www/codeparameter www/console_view www/waterfall_view
+do
+    # Workaround for 0.8.x series
+    if [ ! -d ${base_dir}/${name} ]
+    then
+        continue
+    fi
+
+	pip install --upgrade -e ${base_dir}/${name}
+done
