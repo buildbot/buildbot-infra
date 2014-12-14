@@ -8,20 +8,13 @@
   user:
     name: "{{ service_account }}"
     groups: wheel
+    home: "/home/{{ service_account }}"
     state: present
-
-- name: create /var/ansible
-  file:
-    path: /var/ansible
-    mode: 0700
-    owner: "{{ service_account }}"
-    group: wheel
-    state: directory
 
 - name: install vault password
   copy:
     content: "{{ vault_password }}"
-    dest: /var/ansible/.vault-password
+    dest: "/home/{{ service_account }}/.vault-password"
     mode: 0600
     owner: "{{ service_account }}"
     group: wheel
@@ -32,14 +25,14 @@
   sudo_user: "{{ service_account }}"
   git:
     repo: "{{ ansible_git_repository }}"
-    dest: /var/ansible/repo
+    dest: "/home/{{ service_account }}/repo"
     accept_hostkey: yes
 
 - name: install ansible-pull crontask
   tags: ansible-pull
   cron:
     name: ansible-pull
-    job: "ansible-pull -C master -d /var/ansible/repo/ -m git -U {{ ansible_git_repository }} -o -s 3600 -i /var/ansible/repo/prod-hosts --vault-password-file=/var/ansible/.vault-password site.yml"
+    job: "ansible-pull -C master -d /home/{{ service_account }}/repo/ -m git -U {{ ansible_git_repository }} -o -s 3600 -i localhost --vault-password-file=/home/{{ service_account }}/.vault-password local.yml"
     user: "{{ service_account }}"
     minute: 0
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
