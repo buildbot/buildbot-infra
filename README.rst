@@ -1,13 +1,22 @@
 Ansible
 =======
 
-Run ``ansible-playbook -i prod-hosts -s site.yml`` to configure the production site.
+Production Runs
+---------------
+
+Production runs of Ansible take place on the host or jail to be configured, using a command line such as ::
+
+    ansible-playbook local.yml
+
+This playbook automatically determines which host it's runnning on based on the hostname and configures it accordingly.
+Supply host-specific variables in ``group_vars/$hostname``.
 
 Development
 -----------
 
-During development, you may create a ``dev-hosts`` file containing your test hosts.
-Then run ``ansible-playbook -s site.yml`` to test your changes.
+To develop a patch on a test system, set the system's base hostname to correspond to the host or jail you want to work on, and run the same command::
+
+    ansible-playbook local.yml
 
 To use development secrets (which may be unencrypted), create ``dev-secrets.yml`` and invoke Ansible with ``-e secrets_file=dev-secrets.yml``.
 
@@ -24,6 +33,8 @@ You can edit the secrets with ``ansible-vault edit secrets.yml``.
 
 Other files
 ===========
+
+This repository contains a few files unrelated to Ansible:
 
 -  buildbot.asc - Buildbot Release Team Keyring
 -  scripts/ - some scripts not under configuration management yet
