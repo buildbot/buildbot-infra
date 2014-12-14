@@ -4,7 +4,7 @@ Ansible
 Production Runs
 ---------------
 
-Production runs of Ansible take place on the host or jail to be configured, using a command line such as ::
+Production runs of Ansible take place on the host or jail to be configured, as the ``{{service_user}}``, with a command line such as ::
 
     ansible-playbook local.yml
 
