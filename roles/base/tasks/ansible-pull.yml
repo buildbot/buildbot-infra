@@ -19,25 +19,21 @@
     state: directory
 
 - name: install vault password
-  template:
-    src: vault-password.j2
+  copy:
+    content: "{{ vault_password }}"
     dest: /var/ansible/.vault-password
     mode: 0600
     owner: "{{ service_account }}"
     group: wheel
 
 # ansible-pull expects the inventory file to exist already, even before it
-# clones the repo, so we clone the repo explicitly.  The repo needs to be owned
-# by the service user, so it's cloned in a command rather than with the 'git'
-# module
+# clones the repo, so we clone the repo explicitly.
 - name: clone ansible git repository
-  shell: "git clone {{ ansible_git_repository }} /var/ansible/repo && chown -R {{ service_account }}:wheel /var/ansible/repo"
-  args:
-    creates: /var/ansible/repo
-
-- name: test
-  debug:
-    msg: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
+  sudo_user: "{{ service_account }}"
+  git:
+    repo: "{{ ansible_git_repository }}"
+    dest: /var/ansible/repo
+    accept_hostkey: yes
 
 - name: install ansible-pull crontask
   tags: ansible-pull
@@ -46,6 +42,6 @@
     job: "ansible-pull -C master -d /var/ansible/repo/ -m git -U {{ ansible_git_repository }} -o -s 3600 -i /var/ansible/repo/prod-hosts --vault-password-file=/var/ansible/.vault-password site.yml"
     user: "{{ service_account }}"
     minute: 0
-    state: "{{ 'present' if no_ansible_pull|default('false')|bool else 'absent' }}"
+    state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
 
 # vim:ft=yaml:nosi:noai:ts=2:sw=2
