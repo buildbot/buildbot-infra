@@ -1,5 +1,5 @@
 ---
 - include: packages.yml
 - include: sudo.yml
-- include: users.yml
 - include: rootpw.yml
+- include: ansible-pull.yml

@@ -47,3 +47,6 @@ utility_packages:
 - bash
 - screen
 - vim-lite  # we probably do not want to bring all the stuff
+
+# The upstream repository from which the service host crontask should pull
+ansible_git_repository: git://github.com/buildbot/buildbot-infra
