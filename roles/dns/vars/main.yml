@@ -9,3 +9,6 @@ secondaries:
 - ns3.he.net.
 - ns4.he.net.
 - ns5.he.net.
+# We do not want it to match the default one since 'rndc' produces annoying
+# warnings.
+rndc_key: "rndc-key"

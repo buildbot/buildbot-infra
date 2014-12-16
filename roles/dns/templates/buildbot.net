@@ -1,5 +1,5 @@
 @       86400   IN      SOA     {{ secondaries[0] }} {{ hostmaster }} (
-                                        2014112601      ;serial
+                                        2014121601      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
