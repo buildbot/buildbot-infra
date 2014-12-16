@@ -43,7 +43,7 @@
   sudo_user: "{{ bb_user }}"
   copy:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item.key }}.pass"
-    content: "{{ item.key }}"
+    content: "{{ item.value }}"
     mode: "0600"
   with_dict: "slave_passwords[bb_config_branch]"
   # NOTE(sa2ajj): in case a password changes, a restart is also required, but
