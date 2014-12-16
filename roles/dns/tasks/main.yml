@@ -6,9 +6,9 @@
     state: present
 
 - name: create rndc key
-  shell: "rndc-confgen -a -A hmac-sha256 -u bind"
+  shell: "rndc-confgen -a -A hmac-sha256 -u bind -c {{ namedb_dir }}/{{ rndc_key }}"
   args:
-    creates: "/usr/local/etc/namedb/rndc.key"
+    creates: "{{ namedb_dir }}/{{ rndc_key }}"
 
 - name: make sure necessary directories exist
   file:
@@ -44,6 +44,7 @@
     src: "{{ item }}"
     dest: "{{ namedb_dir }}/{{ item }}"
   with_items:
+  - rndc.conf
   - named.conf
   - named.conf.options
   - named.conf.zones
