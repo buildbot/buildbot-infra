@@ -26,6 +26,7 @@
   git:
     repo: "{{ ansible_git_repository }}"
     dest: "/home/{{ service_account }}/repo"
+    version: master
     accept_hostkey: yes
 
 - name: install ansible-pull crontask

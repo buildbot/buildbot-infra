@@ -26,7 +26,7 @@ SSH_ARGS="$SSH_ARGS -o ControlMaster=auto"
 ssh $SSH_ARGS $HOSTNAME env ASSUME_ALWAYS_YES=YES pkg install ansible git
 
 # Ansible only runs locally, so clone the repository there
-ssh $SSH_ARGS $HOSTNAME git clone --depth 1 git://github.com/buildbot/buildbot-infra repo
+ssh $SSH_ARGS $HOSTNAME git clone --depth 1 --branch master git://github.com/buildbot/buildbot-infra repo
 
 # Run local.yml.  This will take care of the real setup
 ssh $SSH_ARGS $HOSTNAME ansible-playbook --ask-vault-pass -i repo/localhost repo/local.yml
