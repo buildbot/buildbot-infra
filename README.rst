@@ -31,7 +31,7 @@ To develop a patch on a test system, set the system's base hostname to correspon
 
     ansible-playbook local.yml
 
-To avoid installing a the Ansible crontask, add ``-e no_ansible_pull=true``.
+To avoid installing the Ansible crontask, add ``-e no_ansible_pull=true``.
 
 To use development secrets (which may be unencrypted), create ``dev-secrets.yml`` and invoke Ansible with ``-e secrets_file=dev-secrets.yml``.
 
