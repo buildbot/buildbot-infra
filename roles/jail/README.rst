@@ -29,4 +29,5 @@ Example playbook
           name: jailtest.buildbot.net
           jid: 1
           hostname: jailtest.buildbot.net
-          ip_address: ['vtnet0|192.168.8.49']
+          ip_address:
+          - 'vtnet0|192.168.8.49'
