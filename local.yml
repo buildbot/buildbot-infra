@@ -42,12 +42,21 @@
   roles:
   - base-servicehost
 
+- name: configure vm1
+  hosts: vm1
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base-servicehost
+
 - name: configure ns1
   hosts: ns1
   gather_facts: no
   connection: local
   sudo: yes
   roles:
+  - base
   - dns
 
 - name: configure nine

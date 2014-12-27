@@ -1,0 +1,5 @@
+---
+- name: reload syslogd
+  service:
+    name: syslogd
+    state: reloaded
