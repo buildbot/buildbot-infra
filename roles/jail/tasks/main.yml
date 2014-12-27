@@ -12,6 +12,27 @@
     line: 'export jail_{{ name }}_hostname="{{ hostname }}"'
   when: jail_created|changed
 
+- name: start jail for bootstrapping
+  command: "ezjail-admin start {{ name }}"
+  when: jail_created|changed
+
+- name: prepare bootstrap script
+  template:
+    src: "templates/run-once"
+    dest: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
+    mode: "0700"
+  when: jail_created|changed
+
+- name: execute bootstrap script
+  command: "jexec {{ name }} root/run-once"
+  when: jail_created|changed
+
+- name: remove bootstrap script
+  file:
+    path: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
+    state: absent
+  when: jail_created|changed
+
 - name: check if the jail is running
   shell: "jls -j {{ name }} > /dev/null 2>&1"
   ignore_errors: True
