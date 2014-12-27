@@ -1,3 +1,10 @@
 ---
+# Directory where jails are created
 ezjail_jaildir: /usr/local/jail
-jail_log_dir: /var/log/jail
+# Directory where the ezjail-admin keeps jail configuration files
+ezjail_conf_dir: /usr/local/etc/ezjail
+# Main ezjail configuration file
+ezjail_conf_file: /usr/local/etc/ezjail.conf
+# NOTE: these two are different
+ezjail_base_jail: base
+ezjail_default_flavour: base

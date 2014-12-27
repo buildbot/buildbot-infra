@@ -7,34 +7,37 @@
 - name: ezjail config
   template:
     src: ezjail.conf
-    dest: /usr/local/etc/ezjail.conf
-
-- name: Create jail log directory
-  file:
-    path: '{{ jail_log_dir }}'
-    state: directory
+    dest: "{{ ezjail_conf_file }}"
+    mode: "0644"
 
 - name: Populate basejail
   command: ezjail-admin install
   args:
-    creates: '{{ ezjail_jaildir }}/base'
+    creates: "{{ ezjail_jaildir }}/{{ ezjail_base_jail }}"
 
 - name: Create base flavour directories
   file:
-    path: '{{ ezjail_jaildir }}/flavours/base/{{ item }}'
+    path: "{{ ezjail_jaildir }}/flavours/{{ ezjail_default_flavour }}/{{ item }}"
     state: directory
   with_items:
   - etc
 
 - name: Set base flavour config
   copy:
-    dest: '{{ ezjail_jaildir }}/flavours/{{ item }}'
-    src: 'flavours/{{ item }}'
+    dest: "{{ ezjail_jaildir }}/flavours/{{ item }}"
+    src: "flavours/{{ item }}"
   with_items:
-  - base/ezjail.flavour
-  - base/etc/make.conf
-  - base/etc/periodic.conf
-  - base/etc/rc.conf
+  - "{{ ezjail_default_flavour }}/etc/make.conf"
+  - "{{ ezjail_default_flavour }}/etc/periodic.conf"
+  - "{{ ezjail_default_flavour }}/etc/rc.conf"
+
+# TODO(sa2ajj): should it be done here or while creation of the actual jail?
+- name: Copy some host configuration files
+  copy:
+    dest: "{{ ezjail_jaildir }}/flavours/{{ ezjail_default_flavour }}/etc/{{ item }}"
+    src: "/etc/{{ item }}"
+  with_items:
+  - resolv.conf
 
 - name: Enable jails
   service:
