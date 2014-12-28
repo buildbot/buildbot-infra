@@ -12,6 +12,9 @@ The jail role requires four arguments to be used.
 ``ip_address``
     A list of interface and IP address pairs. Each address in the list should be of the form `interface|ip`.
 
+``jail_debug`` (optional)
+    set to true to dump the output of bootstrap script run in the jail
+
 .. note::
 
    JIDs are assigned automatically.  To address the jail use jail's name, for example::

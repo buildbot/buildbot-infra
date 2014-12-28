@@ -26,6 +26,12 @@
 - name: execute bootstrap script
   command: "jexec {{ name }} root/run-once"
   when: jail_created|changed
+  register: debug
+
+- name: print output of bootstrap script
+  debug:
+    var: debug.stdout_lines
+  when: jail_debug
 
 - name: remove bootstrap script
   file:
