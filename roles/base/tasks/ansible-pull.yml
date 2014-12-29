@@ -33,7 +33,7 @@
   tags: ansible-pull
   cron:
     name: ansible-pull
-    job: "/usr/local/bin/ansible-pull -C master -d /home/{{ service_account }}/repo/ -m git -U {{ ansible_git_repository }} -o -s 3600 -i localhost --vault-password-file=/home/{{ service_account }}/.vault-password local.yml"
+    job: "PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/home/bbinfra/bin ansible-pull -C master -d /home/{{ service_account }}/repo/ -m git -U {{ ansible_git_repository }} -o -s 3600 -i localhost --vault-password-file=/home/{{ service_account }}/.vault-password local.yml"
     user: "{{ service_account }}"
     minute: 0
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
