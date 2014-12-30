@@ -11,12 +11,11 @@ We need to migrate off of this server soon.
 
 Hosting:
  * buildbot.net -- now just the www page, but with lots of redirects for old
-   URLs
+   URLs (http://trac.buildbot.net/ticket/3043)
  * www.buildbot.net buildbot.org www.buildbot.org -- redirect to buildbot.net
- * buildbot.buildbot.net -- the metabuildbot
- * docs.buildbot.net
+ * buildbot.buildbot.net -- the metabuildbot (http://trac.buildbot.net/ticket/2850)
+ * docs.buildbot.net (http://trac.buildbot.net/ticket/2857)
  * meetings.buildbot.net + supybot
- * rc.buildbot.net
  * a metabuildslave
 
 At OSUOSL
@@ -30,7 +29,7 @@ ix1104 with one quad-core Xeon E3 3.3GHz CPU, 16GB RAM, 100GB SSD
 
 Hosting:
  * mx.buildbot.net (MTA)
- * ns.buildbot.net
+ * ns1.buildbot.net
  * syslog
  * backup
  * ldap
