@@ -3,8 +3,8 @@ Things to implement for cron task
 
 (based on discussion in https://github.com/buildbot/buildbot-infra/pull/12)
 
-* run under service account
-* ensure path does not depend on external configuration
-* run daily
+* run under service account [done]
+* ensure path does not depend on external configuration [done]
+* run daily [done] (actually, it now runs hourly)
 * document a way to "force" a run
 * collect logs and send a notification in case of errors
