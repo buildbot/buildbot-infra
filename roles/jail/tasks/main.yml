@@ -1,61 +1,51 @@
 ---
-- name: Install ezjail
-  pkgng:
-    name: ezjail
-    state: present
-
-- name: ezjail config
-  template:
-    src: ezjail.conf
-    dest: /usr/local/etc/ezjail.conf
-
-- name: Create jail log directory
-  file:
-    path: '{{ jail_log_dir }}'
-    state: directory
-
-- name: Populate basejail
-  command: ezjail-admin install -p
+- name: create jail
+  command: "ezjail-admin create -f {{ ezjail_default_flavour }} {{ name }} {{ ip_address|join(',') }}"
   args:
-    creates: '{{ ezjail_jaildir }}/base'
+    creates: "{{ ezjail_conf_dir }}/{{ name }}"
+  register: jail_created
 
-- name: Create base flavour directories
-  file:
-    path: '{{ ezjail_jaildir }}/flavours/base/{{ item }}'
-    state: directory
-  with_items:
-      - etc
-
-- name: Set base flavour config
-  copy:
-    dest: '{{ ezjail_jaildir }}/flavours/{{ item }}'
-    src: 'flavours/{{ item }}'
-  with_items:
-    - base/ezjail.flavour
-    - base/etc/make.conf
-    - base/etc/periodic.conf
-    - base/etc/rc.conf
-
-# Most bits on the file system use the safename instead of the full name.
-- name: Set jail safename
-  shell: echo -n '{{ name }}' | tr -c '[:alnum:]' _
-  register: jail_safename
-  changed_when: false
-
-- name: Install jail
-  command: ezjail-admin create -f base {{ name }} {{ ip_address|join(',') }}
-  args:
-    creates: '/usr/local/etc/ezjail/{{ jail_safename.stdout }}'
-
-- name: Enable jails
-  service:
-    name: jail
-    enabled: true
-
-- name: Add jail to jail.conf
+- name: set jail's hostname
   lineinfile:
-    line: '{{ jail_safename.stdout }} { host.hostname = "{{ hostname }}"; path = "{{ ezjail_jaildir }}/{{ name }}"; ip4.addr += "{{ ip_address|join(",") }}"; exec.clean; exec.system_user = "root"; exec.jail_user = "root"; exec.start += "/bin/sh /etc/rc"; exec.stop = ""; exec.consolelog = "/var/log/jail/{{ jail_safename.stdout }}"; mount.devfs; mount.fstab = "/etc/fstab.{{ jail_safename.stdout }}"; allow.set_hostname = 0; allow.sysvipc = 0; allow.raw_sockets = 0; jid = {{ jid }} ; }'
-    state: present
-    regexp: '^\s*{{ jail_safename.stdout }}\s*\{'
-    dest: /etc/jail.conf
-    create: yes
+    dest: "{{ ezjail_conf_dir }}/{{ name }}"
+    regexp: "^export jail_{{ name }}_hostname="
+    line: 'export jail_{{ name }}_hostname="{{ hostname }}"'
+  when: jail_created|changed
+
+- name: start jail for bootstrapping
+  command: "ezjail-admin start {{ name }}"
+  when: jail_created|changed
+
+- name: prepare bootstrap script
+  template:
+    src: "templates/run-once"
+    dest: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
+    mode: "0700"
+  when: jail_created|changed
+
+- name: execute bootstrap script
+  command: "jexec {{ name }} root/run-once"
+  when: jail_created|changed
+  register: debug
+
+- name: print output of bootstrap script
+  debug:
+    var: debug.stdout_lines
+  when: jail_debug
+
+- name: remove bootstrap script
+  file:
+    path: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
+    state: absent
+  when: jail_created|changed
+
+- name: check if the jail is running
+  shell: "jls -j {{ name }} > /dev/null 2>&1"
+  ignore_errors: True
+  register: jail_running
+
+- name: start the jail
+  command: "ezjail-admin start {{ name }}"
+  when: jail_running|failed
+
+# vim:ts=2:sw=2:noai:nosi

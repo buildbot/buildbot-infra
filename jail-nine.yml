@@ -1,0 +1,43 @@
+---
+- name: configure nine
+  hosts: nine
+  gather_facts: no
+  connection: local
+  sudo: yes
+  vars:
+    env_name: venv
+    web_host_name: "nine.buildbot.net"
+    master_service_name: "buildmaster"
+    master_dir: master
+
+  roles:
+  - base
+  - role: user
+    user_id: "{{ worker_account }}"
+    user_name: Buildbot Worker Account
+  - role: virtualenv
+    venv_user: "{{ worker_account }}"
+    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_name: "{{ env_name }}"   # Another possibility is to just define correct variable above
+    venv_packages:
+    - sqlite3
+    venv_python_packages:
+    - mock        # setup.py for www packages need to be fixed not to require mock at the very beginning.
+    - pysqlite
+  - role: bb-master
+    bb_user: "{{ worker_account }}"
+    bb_user_home: "{{ getent_passwd[worker_account].4 }}"
+    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}"  # Must match the one created above
+    bb_master_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
+    bb_branch: "master"       # A branch in buildbot.git
+    bb_config_branch: "nine"  # A branch in metabbotcfg.git
+    bb_service: "{{ master_service_name }}"
+  - role: supervisor-service
+    service_name: "{{ master_service_name }}"
+    service_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
+    service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildbot start --nodaemon"
+    service_user: "{{ worker_account }}"
+  - role: nginx
+    nginx_template: proxy
+    server_name: "{{ web_host_name }}"
+    upstream_url: 192.168.80.244:8010

@@ -1,0 +1,31 @@
+#! /bin/sh
+
+set -e
+
+# Some local names to prevent typos
+vault_password_file=~/.vault-password
+repo_dir=repo
+
+# Go to the home directory
+cd ~
+
+# Install prerequsite packages
+env ASSUME_ALWAYS_YES=YES pkg install ansible git
+
+# Ansible only runs locally, so clone the repository there
+git clone --depth 1 --branch master {{ ansible_git_repository }} ${repo_dir}
+
+# Prepare the vault password file (we do not want it to show in the 'ps'
+# output); make sure it's only readable by root.
+old_umask=$(umask)
+umask 077
+cat > ${vault_password_file} <<-'EOF'
+{{ vault_password }}
+EOF
+umask ${old_umask}
+
+# Run local.yml.  This will take care of the real setup
+(cd ${repo_dir}; ansible-playbook --vault-password-file=${vault_password_file} local.yml)
+
+# Undo the damage we caused
+rm -rf ${repo_dir} ${vault_password_file}

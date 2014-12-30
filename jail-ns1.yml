@@ -1,0 +1,9 @@
+---
+- name: configure ns1
+  hosts: ns1
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base
+  - dns

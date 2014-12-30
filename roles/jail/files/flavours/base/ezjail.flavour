@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# BEFORE: DAEMON
-#
-# ezjail flavour base
-
-# Everything is configured via Ansible.

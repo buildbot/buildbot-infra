@@ -1,0 +1,5 @@
+---
+# Be explicit about this
+allow_duplicates: no
+dependencies:
+- base-servicehost
