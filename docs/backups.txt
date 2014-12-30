@@ -1,3 +1,6 @@
 For backups, service1 has a Bluray burner that supports dual-write.  There is
 also a consumer grade (160gb) intel SSD on it to accept rapid backups from all
 our machines.
+
+Ticket about backups:
+    http://trac.buildbot.net/ticket/2859
