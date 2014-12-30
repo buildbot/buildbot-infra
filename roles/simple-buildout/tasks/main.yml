@@ -1,0 +1,20 @@
+---
+- name: Make sure we have an updated copy of the repository
+  sudo_user: "{{ target_user }}"
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ target_dir }}"
+    update: yes
+    version: "{{ repo_branch }}"
+    accept_hostkey: True
+  register: repo_state
+
+- name: Perform build
+  sudo_user: "{{ target_user }}"
+  command: "{{ item }}"
+  args:
+    chdir: "{{ target_dir }}"
+  with_items: target_commands
+  when: "repo_state|changed"
+
+# vim:ts=2:sw=2:noai:nosi
