@@ -1,0 +1,8 @@
+---
+- name: configure service2
+  hosts: service2
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base-servicehost

@@ -1,0 +1,8 @@
+---
+- name: configure vm1
+  hosts: vm1
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base-servicehost
