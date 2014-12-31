@@ -1,6 +1,11 @@
 ---
 # This is mostly for pysqlite that needs to find locally installed sqlite3
 # headers and libraries.  But it might be needed for other modules as well.
+- name: make sure we have virtualenv installed
+  pkgng:
+    name: "py27-virtualenv"
+    state: present
+
 - name: prepare ~/.pydistutils.cfg
   ini_file:
     dest: "{{ venv_home_dir }}/.pydistutils.cfg"
@@ -26,3 +31,5 @@
     name: "{{ item }}"
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
   with_items: venv_python_packages
+
+# vim:ts=2:sw=2:noai:nosi
