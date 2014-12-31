@@ -1,5 +1,5 @@
 @       86400   IN      SOA     {{ secondaries[0] }} {{ hostmaster }} (
-                                        2014121701      ;serial
+                                        2014123101      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -7,14 +7,14 @@
 {% for secondary in secondaries %}
 @               7200    IN      NS      {{ secondary }}
 {% endfor %}
-@               7200    IN      A       63.245.223.35
 buildbot        7200    IN      CNAME   ds0210.flosoft-servers.net.
 docs            7200    IN      CNAME   ds0210.flosoft-servers.net.
 meetings        43200   IN      CNAME   ds0210.flosoft-servers.net.
-www             7200    IN      CNAME   buildbot.net.
 xy2dwhhhx5d4    7200    IN      CNAME   gv-d47fzorbndt4i4.dv.googlehosted.com.
 mx              86400   IN      A       140.211.10.235
 @               86400   IN      MX      10 mx.buildbot.net.
+@               7200    IN      A       140.211.10.238
+www             7200    IN      CNAME   buildbot.net.
 lists           86400   IN      A       140.211.10.241
 trac            86400   IN      A       140.211.10.240
 ftp             86400   IN      A       140.211.10.243
@@ -26,5 +26,4 @@ vm1             86400   IN      A       140.211.10.233
 mac1            86400   IN      A       140.211.10.234
 ns1             86400   IN      A       140.211.10.236
 docs-new        86400   IN      A       140.211.10.237
-www-new         86400   IN      A       140.211.10.238
 nine            86400   IN      A       140.211.10.244

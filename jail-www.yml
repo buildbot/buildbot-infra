@@ -1,0 +1,42 @@
+---
+- name: configure www
+  hosts: www
+  gather_facts: no
+  connection: local
+  sudo: yes
+  vars:
+    web_host_name: buildbot.net
+    build_dir: site
+
+  roles:
+  - base
+  - role: packages
+    packages:
+    - node
+    - npm
+  - role: user
+    user_id: "{{ worker_account }}"
+    user_name: Buildbot Worker Account
+  - role: simple-buildout
+    repo_url: git://github.com/buildbot/buildbot-website.git
+    repo_branch: master
+    target_user: "{{ worker_account }}"
+    target_dir: "{{ getent_passwd[worker_account].4 }}/{{ build_dir }}"
+    target_commands:
+    - "npm install"
+    - "./node_modules/.bin/grunt prod"
+  - role: nginx
+    nginx_template: static
+    server_name: "{{ web_host_name }}"
+    server_root: "{{ getent_passwd[worker_account].4 }}/{{ build_dir }}/built"
+    extra_config_from: "files/www-redirects"
+  - role: nginx
+    nginx_template: domain-redirect
+    server_name: redirects
+    server_names:
+    - www.buildbot.net
+    - www.buildbot.org
+    - buildbot.org
+    target_url: "http://{{ web_host_name }}"
+
+# vim:ts=2:sw=2:noai:nosi

@@ -1,0 +1,6 @@
+server {
+    listen 80;
+    server_name {{ server_names|join(' ') }};
+
+    return 301 {{ target_url }}$request_uri;
+}

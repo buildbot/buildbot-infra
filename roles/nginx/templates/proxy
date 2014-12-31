@@ -1,14 +1,3 @@
-{#-
- A template for a simple reverse-proxy setup.
-
- Parameters:
-
- server_name
-    server name (e.g. nine.buildbot.net)
-
- upstream_url
-    <host>:<port> of the upstream
- #}
 server {
     listen 80;
     server_name {{server_name}};

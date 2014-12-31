@@ -12,7 +12,7 @@ We need to migrate off of this server soon.
 Hosting:
  * buildbot.net -- now just the www page, but with lots of redirects for old
    URLs (http://trac.buildbot.net/ticket/3043)
- * www.buildbot.net buildbot.org www.buildbot.org -- redirect to buildbot.net
+ * www.buildbot.net buildbot.org www.buildbot.org -- redirect to buildbot.net (part of the same ticket)
  * buildbot.buildbot.net -- the metabuildbot (http://trac.buildbot.net/ticket/2850)
  * docs.buildbot.net (http://trac.buildbot.net/ticket/2857)
  * meetings.buildbot.net + supybot
