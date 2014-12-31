@@ -17,7 +17,7 @@ Parameters:
 ``target_dir``
     Absolute path for the working copy directory.
 
-``target_commands``
+``target_commands`` (optional, default -- empty list)
     A list of commands suitable for `command` module.
 
 Example::
