@@ -6,16 +6,16 @@ The nginx role requires the following arguments:
 ``server_name``
     the fqdn of the server.
 
-    This will be used to name the configuration file as well as the server_name
-    parameter for nginx server section.
+    This will be used to name the configuration file as well as the server_name parameter for nginx server section.
 
 ``nginx_template``
-    The template to use to generate the configuration file.  Each template has
-    own parameters. The following templates are available (and no attempt to
-    validate the value is made):
+    The template to use to generate the configuration file.
+    Each template has own parameters.
+    The following templates are available (and no attempt to validate the value is made):
 
     ``static``
-        A template for static web site configuration.  Parameters:
+        A template for static web site configuration.
+        Parameters:
 
         ``server_root``
             directory where the static content reside
@@ -24,7 +24,8 @@ The nginx role requires the following arguments:
             the name of the file to include in the config (currently only used for www site redirects)
 
     ``proxy``
-        A template for a simple reverse-proxy setup.  Parameters:
+        A template for a simple reverse-proxy setup.
+        Parameters:
 
         ``upstream_url``
             <host>:<port> of the upstream
