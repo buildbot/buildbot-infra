@@ -12,8 +12,8 @@ The role should be used with the following parameters:
 ``venv_name``
     The name of the virtual environment
 
-``venv_packages``
+``venv_packages`` (default: empty list)
     packages to be installed using 'pkgng'
 
-``venv_python_packages``
+``venv_python_packages`` (default: empty list)
     Python packages to be installed using 'pip install'
