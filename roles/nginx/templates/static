@@ -4,6 +4,9 @@ server {
 
     access_log {{nginx_log_dir}}/{{server_name}}/access.log;
     error_log {{nginx_log_dir}}/{{server_name}}/error.log;
+    {% if extra_config_from is defined -%}
+    {{ lookup('file', extra_config_from)|indent }}
+    {%- endif %}
 
     location / {
         root {{server_root}};

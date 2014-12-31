@@ -20,6 +20,9 @@ The nginx role requires the following arguments:
         ``server_root``
             directory where the static content reside
 
+        ``extra_config_from``
+            the name of the file to include in the config (currently only used for www site redirects)
+
     ``proxy``
         A template for a simple reverse-proxy setup.  Parameters:
 
