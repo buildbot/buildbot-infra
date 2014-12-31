@@ -26,6 +26,20 @@ The nginx role requires the following arguments:
         ``upstream_url``
             <host>:<port> of the upstream
 
+    ``domain-redirect``
+        A template for redirecting traffic for the whole domain to another one.
+        Parameters:
+
+        ``server_names``
+            list of server names that should be redirected to another domain
+
+        ``target_url``
+            URL of the target server including scheme (e.g. http://buildbot.net)
+
+        .. note::
+
+           For this template, ``server_names`` gives the hostnames that nginx will redirect; the common ``server_name`` parameter is only used to name the configuration file.
+
 Examples
 --------
 
@@ -40,3 +54,13 @@ Proxy::
     - role: nginx
       server_name: test.buildbot.net
       upstream: 192.168.1.0:8010
+
+Domain Redirect::
+
+    - role: nginx
+      server_name: redirects
+      server_names:
+      - www.buildbot.net
+      - www.buildbot.org
+      - buildbot.org
+      target_url: http://buildbot.net
