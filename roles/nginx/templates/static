@@ -1,14 +1,3 @@
-{#-
- A template for a static web site configuration.
-
- Parameters:
-
- server_name
-    server name (e.g. docs.buildbot.net)
-
- server_root
-    directory where the static contents reside
- #}
 server {
     listen 80;
     server_name {{server_name}};
