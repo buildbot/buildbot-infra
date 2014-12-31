@@ -5,9 +5,7 @@
   connection: local
   sudo: yes
   vars:
-    # When it's used in production (buildbot.net points to this host) change to
-    # buildbot.net.
-    web_host_name: www-new.buildbot.net
+    web_host_name: buildbot.net
     build_dir: site
 
   roles:
