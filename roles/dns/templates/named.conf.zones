@@ -1,6 +1,7 @@
 acl "buildbot.net-upstream" {
     173.244.206.26;     /* a.transfer.buddyns.com */
     88.198.106.11;      /* b.transfer.buddyns.com */
+    78.46.95.154;       /* c.transfer.buddyns.com */
 };
 
 zone "buildbot.net" {
@@ -8,6 +9,11 @@ zone "buildbot.net" {
     file "{{ namedb_dir }}/master/buildbot.net";
     allow-transfer {
         "buildbot.net-upstream";
+    };
+    also-notify {
+        173.244.206.26;     /* a.transfer.buddyns.com */
+        88.198.106.11;      /* b.transfer.buddyns.com */
+        78.46.95.154;       /* c.transfer.buddyns.com */
     };
 };
 
