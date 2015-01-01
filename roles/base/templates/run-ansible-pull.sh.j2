@@ -1,0 +1,18 @@
+#! /bin/sh
+
+# set some environment variables that ansible-pull needs
+export HOME=/home/{{ service_account }}
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/home/{{ service_account }}/bin
+
+# run ansible-pull from the directory containing the repository (and, thus, the inventory file)
+cd /home/{{ service_account}}/repo
+ansible-pull \
+    -C master \
+    -d /home/{{ service_account }}/repo/ \
+    -m git \
+    -U {{ ansible_git_repository }} \
+    -o \
+    -s 3600 \
+    -i localhost \
+    --vault-password-file=/home/{{ service_account }}/.vault-password \
+    local.yml
