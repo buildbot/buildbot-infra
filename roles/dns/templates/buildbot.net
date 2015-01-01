@@ -1,5 +1,5 @@
 @       86400   IN      SOA     {{ secondaries[0] }} {{ hostmaster }} (
-                                        2014123101      ;serial
+                                        2014123102      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -15,6 +15,7 @@ mx              86400   IN      A       140.211.10.235
 @               86400   IN      MX      10 mx.buildbot.net.
 @               7200    IN      A       140.211.10.238
 www             7200    IN      CNAME   buildbot.net.
+www-new         7200    IN      CNAME   buildbot.net.
 lists           86400   IN      A       140.211.10.241
 trac            86400   IN      A       140.211.10.240
 ftp             86400   IN      A       140.211.10.243
