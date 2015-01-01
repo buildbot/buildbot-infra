@@ -13,6 +13,13 @@
     line: "PasswordAuthentication no"
     state: present
 
+- name: disable challenge-response authentication
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^(?i)ChallengeResponseAuthentication"
+    line: "ChallengeResponseAuthentication no"
+    state: present
+
 - name: enable listening on hosts' default (public) IP only
   lineinfile:
     dest: "/etc/ssh/sshd_config"
