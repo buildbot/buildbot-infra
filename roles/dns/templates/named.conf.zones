@@ -1,12 +1,6 @@
 acl "buildbot.net-upstream" {
-    // slave address -- slave.dns.he.net
-    // per dns.he.net documentation
-    216.218.130.2;
-    216.218.131.2;
-    216.218.132.2;
-    216.218.133.2;
-    216.66.1.2;
-    216.66.80.18;
+    173.244.206.26;     /* a.transfer.buddyns.com */
+    88.198.106.11;      /* b.transfer.buddyns.com */
 };
 
 zone "buildbot.net" {
@@ -14,15 +8,6 @@ zone "buildbot.net" {
     file "{{ namedb_dir }}/master/buildbot.net";
     allow-transfer {
         "buildbot.net-upstream";
-    };
-    notify explicit;
-    also-notify {
-        216.218.130.2;
-        216.218.131.2;
-        216.218.132.2;
-        216.218.133.2;
-        216.66.1.2;
-        216.66.80.18;
     };
 };
 
