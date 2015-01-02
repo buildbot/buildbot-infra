@@ -8,11 +8,12 @@
   # Restore once jails are moved to service{1,2,3}
   # - base-servicehost
   - role: jail
-    name: www
-    hostname: www.buildbot.net
+    name: buildbot
+    hostname: buildbot.buildbot.net
     ip_address:
-    - 'lagg0|140.211.10.238'
-    - 'vlan0|192.168.80.238'
+    - 'lo0|127.0.0.239'       # localhost, must be first
+    - 'lagg0|140.211.10.239'
+    - 'vlan0|192.168.80.239'
   - role: jail
     name: docs
     hostname: docs.buildbot.net
@@ -20,11 +21,10 @@
     - 'lagg0|140.211.10.237'
     - 'vlan0|192.168.80.237'
   - role: jail
-    name: buildbot
-    hostname: buildbot.buildbot.net
+    name: www
+    hostname: www.buildbot.net
     ip_address:
-    - 'lo0|127.0.0.239'       # localhost, must be first
-    - 'lagg0|140.211.10.239'
-    - 'vlan0|192.168.80.239'
+    - 'lagg0|140.211.10.238'
+    - 'vlan0|192.168.80.238'
 
 # vim:ts=2:sw=2:noai:nosi

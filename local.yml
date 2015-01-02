@@ -25,10 +25,10 @@
 - include: "host-vm1.yml"
 
 # Jails
-- include: "jail-ns1.yml"
-- include: "jail-nine.yml"
-- include: "jail-www.yml"
-- include: "jail-docs.yml"
 - include: "jail-buildbot.yml"
+- include: "jail-docs.yml"
+- include: "jail-nine.yml"
+- include: "jail-ns1.yml"
+- include: "jail-www.yml"
 
 # vim:ts=2:sw=2:noai:nosi
