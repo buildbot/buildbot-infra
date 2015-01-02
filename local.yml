@@ -28,5 +28,6 @@
 - include: "jail-ns1.yml"
 - include: "jail-nine.yml"
 - include: "jail-www.yml"
+- include: "jail-docs.yml"
 
 # vim:ts=2:sw=2:noai:nosi
