@@ -1,19 +1,20 @@
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015010115      ;serial
+                                        2015010201      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
                                         86400   )       ;minimum
-@               7200    IN      NS      d.ns.buddyns.com.
-@               7200    IN      NS      c.ns.buddyns.com.
-@               7200    IN      NS      f.ns.buddyns.com.
+@               7200    IN      NS      c.ns.buddyns.com.   ; germany
+@               7200    IN      NS      f.ns.buddyns.com.   ; india
+@               7200    IN      NS      ns1.he.net.         ; usa
+@               7200    IN      NS      ns2.he.net.         ; usa
+@               86400   IN      MX      10 mx.buildbot.net.
+@               7200    IN      A       140.211.10.238
 buildbot        7200    IN      CNAME   ds0210.flosoft-servers.net.
 docs            7200    IN      CNAME   ds0210.flosoft-servers.net.
 meetings        43200   IN      CNAME   ds0210.flosoft-servers.net.
 xy2dwhhhx5d4    7200    IN      CNAME   gv-d47fzorbndt4i4.dv.googlehosted.com.
 mx              86400   IN      A       140.211.10.235
-@               86400   IN      MX      10 mx.buildbot.net.
-@               7200    IN      A       140.211.10.238
 www             7200    IN      CNAME   buildbot.net.
 www-new         7200    IN      CNAME   buildbot.net.
 lists           86400   IN      A       140.211.10.241
