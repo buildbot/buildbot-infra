@@ -15,25 +15,25 @@ For a jail: Jail(<service machine>, <public>, <internal>
 
 Jail aren't bound to an NFS IP as the restriction is per-server.
 
+mac1       = ServerBuildbot("140.211.10.234",  "192.168.103.234", "192.168.80.234",   "192.168.90.234")
 service1   = ServerBuildbot("140.211.10.230",  "192.168.103.230", "192.168.80.230",   "192.168.90.230")
 service2   = ServerBuildbot("140.211.10.231",  "192.168.103.231", "192.168.80.231",   "192.168.90.231")
 service3   = ServerBuildbot("140.211.10.232",  "192.168.103.232", "192.168.80.232",   "192.168.90.232")
 vm1        = ServerBuildbot("140.211.10.233",  "192.168.103.233", "192.168.80.233",   "192.168.90.233")
-mac1       = ServerBuildbot("140.211.10.234",  "192.168.103.234", "192.168.80.234",   "192.168.90.234")
 
-mx          = JailBuildbot(service1,    "140.211.10.235",   "192.168.80.235")
-syslog      = JailBuildbot(service1,    None,               "192.168.80.211")
 backup      = JailBuildbot(service1,    None,               "192.168.80.212")
 ldap        = JailBuildbot(service1,    None,               "192.168.80.214")
+mx          = JailBuildbot(service1,    "140.211.10.235",   "192.168.80.235")
 ns1         = JailBuildbot(service1,    "140.211.10.236",   "192.168.80.236")
+syslog      = JailBuildbot(service1,    None,               "192.168.80.211")
 
-www         = JailBuildbot(service2,    "140.211.10.238",   "192.168.80.238")
-trac        = JailBuildbot(service2,    "140.211.10.240",   "192.168.80.240")
-lists       = JailBuildbot(service2,    "140.211.10.241",   "192.168.80.241")
 bot         = JailBuildbot(service2,    "140.211.10.242",   "192.168.80.242")
-ftp         = JailBuildbot(service2,    "140.211.10.243",   "192.168.80.243")
-nine        = JailBuildbot(service2,    "140.211.10.244",   "192.168.80.244")
 docs        = JailBuildbot(service2,    "140.211.10.237",   "192.168.80.237")
+ftp         = JailBuildbot(service2,    "140.211.10.243",   "192.168.80.243")
+lists       = JailBuildbot(service2,    "140.211.10.241",   "192.168.80.241")
+nine        = JailBuildbot(service2,    "140.211.10.244",   "192.168.80.244")
+trac        = JailBuildbot(service2,    "140.211.10.240",   "192.168.80.240")
+www         = JailBuildbot(service2,    "140.211.10.238",   "192.168.80.238")
 
 buildbot    = JailBuildbot(service3,    "140.211.10.239",   "192.168.80.239")
 mysql       = JailBuildbot(service3,    None,               "192.168.80.215")
