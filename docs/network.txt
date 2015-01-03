@@ -3,23 +3,27 @@ IP Space
 
 Public IP space is 140.211.10.128/25, in a single VLAN shared with RTEMS.
 
-Buildbot is allocated 140.211.10.224/27 out of that /25.
+Buildbot is allocated 140.211.10.224/27 out of that /25:
+    140.211.10.225 -- 140.211.10.254
+
+(Misha: it looks like we are given the whole /27, so 140.211.10.224 can also be used.)
 
 Allocations
 -----------
 
-(from email of Nov 25, 2014)
-
-The format is Server(<public>, <IPMI>, <Internal>, <NFS>)
-For a jail: Jail(<service machine>, <public>, <internal>
+(Based on Amar's email of Nov 25, 2014 and updated based on IRC/tickets.)
 
 Jail aren't bound to an NFS IP as the restriction is per-server.
+
+The format for service hosts is ServerBuildbot(<public>, <IPMI>, <Internal>, <NFS>):
 
 mac1       = ServerBuildbot("140.211.10.234",  "192.168.103.234", "192.168.80.234",   "192.168.90.234")
 service1   = ServerBuildbot("140.211.10.230",  "192.168.103.230", "192.168.80.230",   "192.168.90.230")
 service2   = ServerBuildbot("140.211.10.231",  "192.168.103.231", "192.168.80.231",   "192.168.90.231")
 service3   = ServerBuildbot("140.211.10.232",  "192.168.103.232", "192.168.80.232",   "192.168.90.232")
 vm1        = ServerBuildbot("140.211.10.233",  "192.168.103.233", "192.168.80.233",   "192.168.90.233")
+
+The format for jails is Jail(<service machine>, <public>, <internal>):
 
 backup      = JailBuildbot(service1,    None,               "192.168.80.212")
 ldap        = JailBuildbot(service1,    None,               "192.168.80.214")
