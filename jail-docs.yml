@@ -8,7 +8,7 @@
     # sphinx is installed into a separate virtual environment
     env_name: doctools
     # This needs to be changed to `docs.buildbot.net` together with DNS change.
-    web_host_name: "docs-new.buildbot.net"
+    web_host_name: "docs.buildbot.net"
     bbdocs_dir: "bbdocs"
 
   roles:
