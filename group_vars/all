@@ -51,9 +51,6 @@ utility_packages:
 # The upstream repository from which the service host crontask should pull
 ansible_git_repository: git://github.com/buildbot/buildbot-infra
 
-# syslog server to which all syslog messages should be forwarded
-global_syslog_server: 192.168.80.51
-
 # `hosts` declares ip addresses for _all_ machines and jails under Ansible
 # management.
 hosts:
@@ -62,5 +59,7 @@ hosts:
     # XXX(sa2ajj): we probably do not need the address below if we introduce
     # lo0 address (the latter will be even better from security point of view).
     vlan0: "192.168.80.236"
+  syslog:
+    vlan0: "192.168.80.211"
 
 # vim:ts=2:sw=2:noai:nosi
