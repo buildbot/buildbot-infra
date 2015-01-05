@@ -11,6 +11,11 @@
     accept_hostkey: True
   register: bb_repo_state
 
+- name: stop Supervisor service
+  shell: "supervisorctl stop {{ bb_service }}"
+  ignore_errors: True
+  when: "bb_repo_state|changed"
+
 - name: Install/upgrade build master
   sudo_user: "{{ bb_user }}"
   script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
