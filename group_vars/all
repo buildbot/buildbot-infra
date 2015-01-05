@@ -59,6 +59,7 @@ slave_master_allocations:
   nine:
   - knuth
   - buildbot-linux4
+  - bslave1
   master:
   - automan
   - bghimi4-2
