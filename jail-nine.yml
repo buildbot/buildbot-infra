@@ -40,4 +40,4 @@
   - role: nginx
     nginx_template: proxy
     server_name: "{{ web_host_name }}"
-    upstream_url: 192.168.80.244:8010
+    upstream_url: "{{ hosts.nine.vlan0 }}:8010"
