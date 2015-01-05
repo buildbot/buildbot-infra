@@ -5,10 +5,10 @@
     enabled: yes
     state: started
 
-- name: "syslog.conf - add configuration to send to global_syslog_server"
+- name: "syslog.conf - add configuration to send to global syslog server"
   tags: syslog
   lineinfile:
-    line: "*.* @{{ global_syslog_server }}"
+    line: "*.* @{{ hosts.syslog.vlan0 }}"
     regexp: "^\\*.\\* @"
     # insert after the header comment so we're not filtered
     # by any preceding programs (!) or hosts (+).

@@ -39,6 +39,7 @@
   - role: nginx
     nginx_template: proxy
     server_name: "{{ web_host_name }}"
-    upstream_url: 192.168.80.239:8010
+    # Actually we should use lo0 here
+    upstream_url: "{{ hosts.buildbot.vlan0 }}:8010"
 
 # vim:ts=2:sw=2:noai:nosi

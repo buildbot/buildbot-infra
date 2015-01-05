@@ -6,4 +6,5 @@
   sudo: yes
   roles:
   - base
-  - dns
+  - role: dns
+    internal_ip: "{{ hosts.ns1.vlan0 }}"
