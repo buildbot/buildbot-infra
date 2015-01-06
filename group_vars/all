@@ -45,6 +45,7 @@ mandatory_packages:
 # The original list is based on http://trac.buildbot.net/ticket/3036
 utility_packages:
 - bash
+- rsync
 - screen
 - vim-lite  # we probably do not want to bring all the stuff
 
