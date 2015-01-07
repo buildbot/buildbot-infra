@@ -54,3 +54,41 @@ ansible_git_repository: git://github.com/buildbot/buildbot-infra
 
 # syslog server to which all syslog messages should be forwarded
 global_syslog_server: 192.168.80.51
+
+# This structure refers to `build_slaves` in `secrets.yml`
+slave_master_allocations:
+  nine:
+  - knuth
+  - buildbot-linux4
+  - bslave1
+  master:
+  - automan
+  - bghimi4-2
+  - buildbot-linux4
+  - buildbot.net
+  - centos_5_python2_4
+  - debian
+  - freebsd_7
+  - knuth.r.igoro.us
+  - koobs-freebsd10
+  - koobs-freebsd9
+  - metrohm-win81
+  - minimata
+  - minime
+  - reed.tx.reedmedia.net
+  - tomprince-hermes-gentoo-1
+  - tomprince-socrates-winxp-1
+  - ubuntu810-64
+  - w7.kvm.r.igoro.us
+  - win7-cygwin
+  - xp-msysgit
+  obsolete:
+  - cm-bbot-leopard-001
+  - cm-bbot-leopard-002
+  - cm-bbot-leopard-003
+  - cm-bbot-linux-001
+  - cm-bbot-linux-002
+  - cm-bbot-linux-003
+  - cm-bbot-xp-001
+  - cm-bbot-xp-002
+  - cm-bbot-xp-003

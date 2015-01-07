@@ -25,6 +25,7 @@
 - include: "host-vm1.yml"
 
 # Jails
+- include: "jail-bslave1.yml"
 - include: "jail-buildbot.yml"
 - include: "jail-docs.yml"
 - include: "jail-nine.yml"
