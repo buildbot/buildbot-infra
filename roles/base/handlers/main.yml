@@ -3,3 +3,6 @@
   service:
     name: syslogd
     state: reloaded
+
+- name: newaliases
+  command: /usr/bin/newaliases
