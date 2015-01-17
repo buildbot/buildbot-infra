@@ -11,6 +11,14 @@
     - {option: "sendmail_outbound_enable", value: "YES"}
     - {option: "sendmail_msp_queue_enable", value: "YES"}
 
+- name: update root mail alias
+  lineinfile:
+    dest: "/etc/mail/aliases"
+    line: "root: {{root_email_destination}}"
+    regexp: "^#?root:"
+    state: present
+  notify: newaliases
+
 - name: start sendmail
   service:
     name: sendmail
