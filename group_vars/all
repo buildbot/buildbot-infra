@@ -53,7 +53,7 @@ utility_packages:
 ansible_git_repository: git://github.com/buildbot/buildbot-infra
 
 # syslog server to which all syslog messages should be forwarded
-global_syslog_server: 192.168.80.51
+global_syslog_server: 192.168.80.211
 
 # Alias for email to root (cronspam, etc.)
 root_email_destination: "sysadmin@buildbot.net"
