@@ -10,6 +10,7 @@
 
   roles:
   - base
+  - sendmail
   - role: packages
     packages:
     - node

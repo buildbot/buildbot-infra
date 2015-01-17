@@ -6,4 +6,5 @@
   sudo: yes
   roles:
   - base
+  - sendmail
   - dns

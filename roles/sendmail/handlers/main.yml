@@ -1,0 +1,5 @@
+---
+- name: reload sendmail
+  service:
+    name: sendmail
+    state: restarted

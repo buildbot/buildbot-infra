@@ -1,0 +1,18 @@
+# these sendmail options allow local mail submission; see #3131
+- name: set sendmail options
+  lineinfile:
+    dest: "/etc/rc.conf"
+    line: "{{item.option}}=\"{{item.value}}\""
+    regexp: "^{{item.option}}=.*"
+    state: present
+  notify: reload sendmail
+  with_items:
+    - {option: "sendmail_submit_enable", value: "NO"}
+    - {option: "sendmail_outbound_enable", value: "YES"}
+    - {option: "sendmail_msp_queue_enable", value: "YES"}
+
+- name: start sendmail
+  service:
+    name: sendmail
+    enabled: true
+    state: running
