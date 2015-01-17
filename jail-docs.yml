@@ -13,6 +13,7 @@
 
   roles:
   - base
+  - sendmail
   - role: user
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account
