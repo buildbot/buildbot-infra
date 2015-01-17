@@ -1,11 +1,17 @@
 #! /bin/sh
 
+set -e
+
 # set some environment variables that ansible-pull needs
 export HOME=/home/{{ service_account }}
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/home/{{ service_account }}/bin
 
+# set up to gather output
+OUTPUT=/tmp/ansible-pull.$$.log
+
 # run ansible-pull from the directory containing the repository (and, thus, the inventory file)
 cd /home/{{ service_account}}/repo
+set +e
 ansible-pull \
     -C master \
     -d /home/{{ service_account }}/repo/ \
@@ -15,4 +21,14 @@ ansible-pull \
     -s 3600 \
     -i localhost \
     --vault-password-file=/home/{{ service_account }}/.vault-password \
-    local.yml
+    local.yml >$OUTPUT 2>&1
+RESULT=$?
+set -e
+
+if [ $RESULT -ne 0 ]; then
+    echo "ansible-pull run on on "$(uname -n)" failed."
+    echo
+    cat $OUTPUT
+fi
+
+rm -f "$OUTPUT"
