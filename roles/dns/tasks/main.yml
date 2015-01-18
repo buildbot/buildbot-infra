@@ -33,10 +33,13 @@
   - localhost-reverse.db
   notify: reload named
 
-- name: install buildbot.net zone
+- name: install master zone files
   template:
-    src: "buildbot.net"
-    dest: "{{ namedb_dir }}/master/buildbot.net"
+    src: "{{ item }}"
+    dest: "{{ namedb_dir }}/master/{{ item }}"
+  with_items:
+    - buildbot.net
+    - 224-255.128-255.10.211.140.in-addr.arpa
   notify: reload named
 
 - name: install BIND configuration files
