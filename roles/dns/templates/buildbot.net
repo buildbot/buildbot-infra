@@ -1,5 +1,5 @@
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015010501      ;serial
+                                        2015011801      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -28,3 +28,20 @@ mac1            86400   IN      A       140.211.10.234
 ns1             86400   IN      A       140.211.10.236
 docs            86400   IN      A       140.211.10.237
 nine            86400   IN      A       140.211.10.244
+
+; Our "internal" addreses.  Note that we do not use split DNS. Also note that
+; there is no reverse resolution for these addresses.
+
+$ORIGIN int.buildbot.net.
+bslave1         86400   IN      A       192.168.80.226
+buildbot        86400   IN      A       192.168.80.239
+docs            86400   IN      A       192.168.80.237
+mx              86400   IN      A       192.168.80.235
+ns1             86400   IN      A       192.168.80.236
+syslog          86400   IN      A       192.168.80.211
+www             86400   IN      A       192.168.80.238
+trac            86400   IN      A       192.168.80.240
+lists           86400   IN      A       192.168.80.241
+bot             86400   IN      A       192.168.80.242
+ftp             86400   IN      A       192.168.80.243
+nine            86400   IN      A       192.168.80.244
