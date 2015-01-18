@@ -1,0 +1,8 @@
+---
+dependencies:
+- base
+- role: nginx
+  nginx_template: static
+  server_name: "{{ ftp_hostname }}"
+  server_root: "{{ ftp_root }}"
+  extra_config_from: "roles/ftp/files/ftp-nginx.conf"

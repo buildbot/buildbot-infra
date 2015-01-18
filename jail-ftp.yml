@@ -1,10 +1,16 @@
 ---
-# TODO: actually manage configuration (#3044)
 - name: configure ftp
   hosts: ftp
   gather_facts: no
   connection: local
   sudo: yes
+  vars:
+    ftp_root: /data/ftp
+    ftp_hostname: ftp.buildbot.net
   roles:
   - base
+  - role: ftp
+    ftp_root: "{{ ftp_root }}"
+    ftp_hostname: "{{ ftp_hostname }}"
 
+# vim:ts=2:sw=2:noai:nosi
