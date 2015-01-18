@@ -1,0 +1,36 @@
+# Configure Buildbot syslog aggregator
+---
+- name: disable and stop the syslogd service
+  service:
+    name: syslogd
+    enabled: false
+    state: stopped
+
+- name: install syslog-ng
+  pkgng:
+    name: syslog-ng
+    state: present
+
+- name: configure syslog-ng
+  template:
+    src: "{{ item }}.j2"
+    dest: "/usr/local/etc/{{ item }}"
+  with_items:
+    - syslog-ng-buildbot.conf
+    - syslog-ng.conf
+  notify: reload syslog-ng
+
+- name: install log cleanup crontask
+  cron:
+    name: log-cleanup
+    user: root
+    job: "find /data/log -mtime +28 -type f -exec ls {} \\;"
+    minute: 0
+    hour: 0
+    state: present
+
+- name: enable and start syslog-ng service
+  service:
+    name: syslog-ng
+    enabled: true
+    state: running

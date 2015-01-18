@@ -1,0 +1,29 @@
+# Aggregate inputs from hosts on the network, putting them in named files
+
+options {
+    create_dirs(yes);
+};
+
+source src_net {
+    udp();
+    tcp();
+};
+
+destination per_host {
+    file("/data/log/$HOST/$YEAR-$MONTH-$DAY.log"
+        owner(root)
+        group(root)
+        perm(0644)
+        dir_perm(0755)
+        create_dirs(yes));
+};
+
+log {
+    source(src_net);
+    destination(per_host);
+};
+
+log {
+    source(src_local);
+    destination(per_host);
+};
