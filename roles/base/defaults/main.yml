@@ -2,3 +2,7 @@
 # set this to False to skip configuring syslog (on a host with a special syslog
 # configuration)
 configure_syslog: True
+
+# set this to False to skip configuring sendmail (in cases where it is manually
+# configured or another MTA is in use)
+configure_sendmail: True

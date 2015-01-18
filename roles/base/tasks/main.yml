@@ -2,5 +2,6 @@
 - include: packages.yml
 - include: sudo.yml
 - include: syslog.yml
+- include: sendmail.yml
 - include: rootpw.yml
 - include: ansible-pull.yml
