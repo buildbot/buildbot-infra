@@ -5,5 +5,23 @@
   connection: local
   sudo: yes
   roles:
-  - base-servicehost
   - sendmail
+  - role: jail
+    name: syslog
+    hostname: syslog.int.buildbot.net
+    ip_address:
+    - 'vlan0|192.168.80.211'
+  - role: jail
+    name: mx
+    hostname: mx.buildbot.net
+    ip_address:
+    - 'lagg0|140.211.10.235'
+    - 'vlan0|192.168.80.235'
+  - role: jail
+    name: ns1
+    hostname: ns1.buildbot.net
+    ip_address:
+    - 'lagg0|140.211.10.236'
+    - 'vlan0|192.168.80.236'
+
+# vim:ts=2:sw=2:noai:nosi
