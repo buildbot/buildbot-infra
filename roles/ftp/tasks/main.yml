@@ -6,7 +6,7 @@
     owner: root
     mode: 0755
 
-# Set up some web-only stuff.  Note that nginx is configured as a dependency of this role.
+# Set up some web-only files
 - name: add favicon
   copy:
     src: "buildbot-favicon.ico"
