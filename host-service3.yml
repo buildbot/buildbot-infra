@@ -5,5 +5,11 @@
   connection: local
   sudo: yes
   roles:
-  - base-servicehost
   - sendmail
+  - role: jail
+    name: mysql
+    hostname: mysql.int.buildbot.net
+    ip_address:
+    - 'vlan0|192.168.80.215'
+
+# vim:ts=2:sw=2:noai:nosi
