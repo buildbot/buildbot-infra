@@ -5,7 +5,6 @@
   connection: local
   sudo: yes
   roles:
-  - sendmail
   - role: jail
     name: syslog
     hostname: syslog.int.buildbot.net

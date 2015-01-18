@@ -7,7 +7,6 @@
   roles:
   # Restore once jails are moved to service{1,2,3}
   # - base-servicehost
-  - sendmail
   - role: jail
     name: buildbot
     hostname: buildbot.buildbot.net
