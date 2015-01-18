@@ -30,5 +30,11 @@
     ip_address:
     - 'lagg0|140.211.10.241'
     - 'vlan0|192.168.80.241'
+  - role: jail
+    name: trac
+    hostname: trac.buildbot.net
+    ip_address:
+    - 'lagg0|140.211.10.240'
+    - 'vlan0|192.168.80.240'
 
 # vim:ts=2:sw=2:noai:nosi
