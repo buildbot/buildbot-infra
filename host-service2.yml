@@ -18,5 +18,11 @@
     ip_address:
     - 'lagg0|140.211.10.242'
     - 'vlan0|192.168.80.242'
+  - role: jail
+    name: ftp
+    hostname: ftp.buildbot.net
+    ip_address:
+    - 'lagg0|140.211.10.243'
+    - 'vlan0|192.168.80.243'
 
 # vim:ts=2:sw=2:noai:nosi
