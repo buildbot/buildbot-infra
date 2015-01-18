@@ -1,0 +1,9 @@
+---
+# TODO: actually manage configuration (#3046)
+- name: configure mx
+  hosts: mx
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base

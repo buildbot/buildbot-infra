@@ -1,0 +1,10 @@
+---
+# TODO: actually manage configuration (#3038)
+- name: configure trac
+  hosts: trac
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base
+

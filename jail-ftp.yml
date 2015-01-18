@@ -1,0 +1,10 @@
+---
+# TODO: actually manage configuration (#3044)
+- name: configure ftp
+  hosts: ftp
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base
+

@@ -18,18 +18,26 @@
       key: "{{ansible_hostname}}"
     changed_when: False
 
-# Service hosts
+# Service hosts and their jails
 - include: "host-service1.yml"
-- include: "host-service2.yml"
-- include: "host-service3.yml"
-- include: "host-vm1.yml"
+- include: "jail-ns1.yml"
+- include: "jail-mx.yml"
+- include: "jail-syslog.yml"
 
-# Jails
+- include: "host-service2.yml"
+- include: "jail-trac.yml"
+- include: "jail-lists.yml"
+- include: "jail-bot.yml"
+- include: "jail-ftp.yml"
+- include: "jail-nine.yml"
+
+- include: "host-service3.yml"
+- include: "jail-mysql.yml"
+
+- include: "host-vm1.yml"
 - include: "jail-bslave1.yml"
 - include: "jail-buildbot.yml"
 - include: "jail-docs.yml"
-- include: "jail-nine.yml"
-- include: "jail-ns1.yml"
 - include: "jail-www.yml"
 
 # vim:ts=2:sw=2:noai:nosi

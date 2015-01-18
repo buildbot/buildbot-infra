@@ -1,0 +1,13 @@
+---
+# TODO: actually manage configuration (#3135)
+- name: configure syslog
+  hosts: syslog
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+    - role: base
+      # don't add the base configuration for syslog here, as this host
+      # has its own syslog configuration
+      configure_syslog: False
+
