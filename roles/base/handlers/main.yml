@@ -4,5 +4,10 @@
     name: syslogd
     state: reloaded
 
+- name: reload sendmail
+  service:
+    name: sendmail
+    state: restarted
+
 - name: newaliases
   command: /usr/bin/newaliases

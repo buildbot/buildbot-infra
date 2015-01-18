@@ -14,7 +14,6 @@
   # to support them something "interesting" needs to be done.
   roles:
   - base
-  - sendmail
   - role: user
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account

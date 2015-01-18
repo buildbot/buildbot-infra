@@ -6,5 +6,5 @@
   connection: local
   sudo: yes
   roles:
-  - base
-
+  - role: base
+    configure_sendmail: False
