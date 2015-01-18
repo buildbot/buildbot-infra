@@ -4,6 +4,7 @@
     name: syslogd
     enabled: yes
     state: started
+  when: configure_syslog
 
 - name: "syslog.conf - add configuration to send to global_syslog_server"
   tags: syslog
@@ -15,3 +16,4 @@
     insertafter: "Consult the syslog.conf.5. manpage."
     dest: /etc/syslog.conf
   notify: reload syslogd
+  when: configure_syslog

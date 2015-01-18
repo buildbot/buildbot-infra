@@ -1,0 +1,10 @@
+---
+# TODO: actually manage configuration (#3040)
+- name: configure lists
+  hosts: lists
+  gather_facts: no
+  connection: local
+  sudo: yes
+  roles:
+  - base
+

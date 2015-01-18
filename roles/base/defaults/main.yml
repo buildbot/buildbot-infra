@@ -1,0 +1,5 @@
+---
+# set this to False to skip configuring syslog (on a host with a special syslog
+# configuration)
+configure_syslog: True
+
