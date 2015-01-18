@@ -10,7 +10,7 @@ source src_net {
 };
 
 destination per_host {
-    file("/data/log/$HOST/$YEAR-$MONTH-$DAY.log"
+    file("{{ log_root }}/$HOST/$YEAR-$MONTH-$DAY.log"
         owner(root)
         group(root)
         perm(0644)
