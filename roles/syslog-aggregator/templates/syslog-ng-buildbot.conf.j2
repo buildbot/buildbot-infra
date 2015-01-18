@@ -2,6 +2,9 @@
 
 options {
     create_dirs(yes);
+    # keep hostnames from log messages (since reverse DNS for private IPs
+    # doesn't work)
+    keep_hostname(yes);
 };
 
 source src_net {
