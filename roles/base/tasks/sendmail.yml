@@ -7,9 +7,12 @@
     state: present
   notify: reload sendmail
   with_items:
-    - {option: "sendmail_submit_enable", value: "NO"}
-    - {option: "sendmail_outbound_enable", value: "YES"}
-    - {option: "sendmail_msp_queue_enable", value: "YES"}
+  - option: "sendmail_submit_enable"
+    value: "NO"
+  - option: "sendmail_outbound_enable"
+    value: "YES"
+  - option: "sendmail_msp_queue_enable"
+    value: "YES"
   when: configure_sendmail
 
 - name: update root mail alias
