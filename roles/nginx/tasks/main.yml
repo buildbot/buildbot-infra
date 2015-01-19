@@ -40,6 +40,9 @@
   file:
     path: "{{ nginx_cert_dir }}"
     state: directory
+    mode: 0600
+    owner: root
+    group: wheel
   when: ssl
 
 - name: create ssl cert file
@@ -52,12 +55,18 @@
   copy:
     content: "{{ ssl_keys[server_name]['key'] }}"
     dest: "{{ nginx_cert_dir }}/{{ server_name }}.key"
+    mode: 0600
+    owner: root
+    group: wheel
   when: ssl
 
 - name: create DHE parameter file
   command: "/usr/bin/openssl dhparam -out {{ nginx_conf_dir }}/dhparam.pem 2048"
   args:
     creates: "{{ nginx_conf_dir }}/dhparam.pem"
+    mode: 0600
+    owner: root
+    group: wheel
 
 - name: install nginx.conf
   template:

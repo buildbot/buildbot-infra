@@ -15,12 +15,18 @@
   copy:
     content: "{{ ssl_keys[server_name]['cert'] }}"
     dest: "{{ ssl_cert_file }}"
+    mode: 0600
+    owner: root
+    group: wheel
   when: ssl
 
 - name: create ssl key file
   copy:
     content: "{{ ssl_keys[server_name]['key'] }}"
     dest: "{{ ssl_key_file }}"
+    mode: 0600
+    owner: root
+    group: wheel
   when: ssl
 
 - name: configure vsftpd
