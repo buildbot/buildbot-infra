@@ -18,7 +18,7 @@
     listen_address: "{{ internal_ip }}"
     extra_config: |
         Match User buildbot
-            ChrootDirectory /data/ftp/
+            ChrootDirectory {{ ftp_root }}
             ForceCommand internal-sftp
   - role: user
     user_id: buildbot
