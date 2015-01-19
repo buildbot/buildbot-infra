@@ -1,0 +1,18 @@
+---
+- name: create data directory
+  file:
+    path: "{{ ftp_root }}"
+    state: directory
+    owner: root
+    mode: 0755
+
+# Set up some web-only files
+- name: add favicon
+  copy:
+    src: "buildbot-favicon.ico"
+    dest: "{{ ftp_root }}/favicon.ico"
+
+- name: add robots.txt
+  copy:
+    src: "robots.txt"
+    dest: "{{ ftp_root }}/robots.txt"

@@ -1,0 +1,4 @@
+---
+# set this to the text of a public key to allow that key to authenticate
+# as this user
+authorized_key:

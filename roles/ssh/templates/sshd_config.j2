@@ -1,0 +1,13 @@
+Port {{ sshd_port }}
+ListenAddress {{ listen_address }}
+
+# these are always disabled
+PermitRootLogin no
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+
+Subsystem sftp /usr/libexec/sftp-server
+
+{% if extra_config %}
+{{ extra_config }}
+{% endif %}

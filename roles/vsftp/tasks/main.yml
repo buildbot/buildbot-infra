@@ -1,0 +1,43 @@
+---
+- name: install vsftpd
+  pkgng:
+    name: vsftpd-ssl
+    state: present
+  notify: restart vsftpd
+
+- name: create ssl dir
+  file:
+    path: "{{ ssl_dir }}"
+    state: directory
+  when: ssl
+
+- name: create ssl cert file
+  copy:
+    content: "{{ ssl_keys[server_name]['cert'] }}"
+    dest: "{{ ssl_cert_file }}"
+    mode: 0600
+    owner: root
+    group: wheel
+  when: ssl
+
+- name: create ssl key file
+  copy:
+    content: "{{ ssl_keys[server_name]['key'] }}"
+    dest: "{{ ssl_key_file }}"
+    mode: 0600
+    owner: root
+    group: wheel
+  when: ssl
+
+- name: configure vsftpd
+  template:
+    src: vsftpd.conf.j2
+    dest: "/usr/local/etc/vsftpd.conf"
+  notify: restart vsftpd
+
+- name: start vsftpd
+  service:
+    name: vsftpd
+    enabled: true
+    state: running
+

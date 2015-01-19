@@ -1,0 +1,3 @@
+---
+# don't configure SSL unless requested
+ssl: False

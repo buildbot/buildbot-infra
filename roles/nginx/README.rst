@@ -23,6 +23,9 @@ The nginx role requires the following arguments:
         ``extra_config_from``
             the name of the file to include in the config (currently only used for www site redirects)
 
+        ``ssl``
+            if True, serve the same site via HTTPS (using the key and certificate in secrets)
+
     ``proxy``
         A template for a simple reverse-proxy setup.
         Parameters:
