@@ -1,5 +1,6 @@
 # Nginx role specific variables
 ---
 nginx_conf_dir: "/usr/local/etc/nginx"
+nginx_cert_dir: "/usr/local/etc/nginx/certs"
 nginx_log_dir: "/var/log/nginx"
 nginx_spool_dir: "/var/spool/nginx"
