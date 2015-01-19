@@ -3,5 +3,3 @@
   service:
     name: vsftpd
     state: restarted
-
-
