@@ -42,9 +42,7 @@ www         = JailBuildbot(service2,    "140.211.10.238",   "192.168.80.238")
 buildbot    = JailBuildbot(service3,    "140.211.10.239",   "192.168.80.239")
 mysql       = JailBuildbot(service3,    None,               "192.168.80.215")
 pgsql       = JailBuildbot(service3,    None,               "192.168.80.216")
-
-# Used temporarily
-bslave1     = JailBuildbot(vm1,         None,               "192.168.80.226")
+bslave1     = JailBuildbot(service3,    None,               "192.168.80.226")
 
 DNS
 ===

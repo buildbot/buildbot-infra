@@ -17,5 +17,10 @@
     hostname: mysql.int.buildbot.net
     ip_address:
     - 'vlan0|192.168.80.215'
+  - role: jail
+    name: bslave1
+    hostname: bslave1.int.buildbot.net
+    ip_address:
+      - 'vlan0|192.168.80.226'
 
 # vim:ts=2:sw=2:noai:nosi

@@ -5,12 +5,6 @@
   connection: local
   sudo: yes
   roles:
-  # Restore once jails are moved to service{1,2,3}
-  # - base-servicehost
-  - role: jail
-    name: bslave1
-    hostname: bslave1.int.buildbot.net
-    ip_address:
-      - 'vlan0|192.168.80.226'
+  - base-servicehost
 
 # vim:ts=2:sw=2:noai:nosi
