@@ -43,14 +43,17 @@ secure_chroot_dir=/var/empty
 
 ftp_username=ftp
 
-#ssl_enable=YES
-#allow_anon_ssl=YES
-#ssl_tlsv1=YES
-#ssl_sslv2=NO
-#ssl_sslv3=NO
-#require_ssl_reuse=NO
-#ssl_ciphers=HIGH
+{% if ssl %}
+ssl_enable=YES
+allow_anon_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=NO
+ssl_sslv3=NO
+require_ssl_reuse=NO
+ssl_ciphers=HIGH
 
-#rsa_cert_file=/usr/local/etc/cert/ftp.buildbot.net.crt
-#rsa_private_key_file=/usr/local/etc/cert/ftp.buildbot.net.key
-
+rsa_cert_file={{ ssl_cert_file }}
+rsa_private_key_file={{ ssl_key_file }}
+{% else %}
+ssl_enable=NO
+{% endif %}

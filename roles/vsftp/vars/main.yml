@@ -1,0 +1,4 @@
+---
+ssl_dir: /usr/local/etc/cert
+ssl_cert_file: /usr/local/etc/cert/vsftp.crt
+ssl_key_file: /usr/local/etc/cert/vsftp.key

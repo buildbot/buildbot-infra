@@ -9,3 +9,4 @@ dependencies:
 - role: vsftp
   server_name: "{{ ftp_hostname }}"
   server_root: "{{ ftp_root }}"
+  ssl: True
