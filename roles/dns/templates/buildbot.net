@@ -1,5 +1,5 @@
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015011801      ;serial
+                                        2015011901      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
