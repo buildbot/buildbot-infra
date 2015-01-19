@@ -33,6 +33,7 @@ nine            86400   IN      A       140.211.10.244
 ; there is no reverse resolution for these addresses.
 
 $ORIGIN int.buildbot.net.
+backup          86400   IN      A       192.168.80.212
 bslave1         86400   IN      A       192.168.80.226
 buildbot        86400   IN      A       192.168.80.239
 docs            86400   IN      A       192.168.80.237
