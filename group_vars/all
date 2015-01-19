@@ -95,3 +95,16 @@ slave_master_allocations:
   - cm-bbot-xp-001
   - cm-bbot-xp-002
   - cm-bbot-xp-003
+
+# configuration for tracking configuration directories
+track_config:
+  # Directories to track.  It's OK if these don't exist
+  # everywhere -- they will only be tracked if they exist.
+  dirs:
+    - "/etc"
+    - "/usr/local/etc"
+    - "/usr/local/mailman/configs"
+  author_name: "Ansible"
+  author_email: "sysadmin@buildbot.net"
+  default_author_name: "Unknown"
+  default_author_email: "sysadmin@buildbot.net"

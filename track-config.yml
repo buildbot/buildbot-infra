@@ -1,0 +1,18 @@
+---
+# see #3162 for the background of this technique
+- name: track configuration locally
+  hosts: all
+  gather_facts: no
+  connection: local
+  sudo: yes
+  tasks:
+  - name: install track-config.sh
+    template:
+      src: "templates/track-config.sh"
+      dest: "/root/track-config.sh"
+      mode: 0755
+
+  - name: track configuration
+    command: "/root/track-config.sh {{ item }} '{{ commit_message }}'"
+    with_items: track_config['dirs']
+    changed_when: False

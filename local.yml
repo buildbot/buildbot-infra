@@ -18,6 +18,10 @@
       key: "{{ansible_hostname}}"
     changed_when: False
 
+- include: "track-config.yml"
+  vars:
+    commit_message: "pre-ansible checkin"
+
 # Service hosts and their jails
 - include: "host-service1.yml"
 - include: "jail-ns1.yml"
@@ -39,5 +43,9 @@
 - include: "jail-buildbot.yml"
 - include: "jail-docs.yml"
 - include: "jail-www.yml"
+
+- include: "track-config.yml"
+  vars:
+    commit_message: "post-ansible checkin"
 
 # vim:ts=2:sw=2:noai:nosi
