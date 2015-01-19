@@ -4,6 +4,12 @@
     name: nginx
     state: present
 
+# this seems to be needed, but not formally required, for nginx
+- name: install pcre package
+  pkgng:
+    name: pcre
+    state: present
+
 - name: make sure necessary configuration directories exist
   file:
     path: "{{ nginx_conf_dir }}/{{item}}"
