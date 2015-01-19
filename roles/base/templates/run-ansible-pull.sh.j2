@@ -24,7 +24,7 @@ ansible-pull \
 RESULT=$?
 set -e
 
-if [ $RESULT -ne 0 ]; then
+if [ $RESULT -eq 1 ]; then
     echo "ansible-pull run on on "$(uname -n)" failed."
     echo
     cat $OUTPUT
