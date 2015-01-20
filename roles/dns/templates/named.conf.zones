@@ -4,6 +4,7 @@ acl "buildbot.net-upstream" {
     78.46.95.154;       /* c.transfer.buddyns.com */
     216.218.133.2;      /* slave.dns.he.net */
     64.71.190.23;       /* ns1.darkbeer.org */
+    140.211.10.139;     /* ns1.rtems.org */
 };
 
 zone "buildbot.net" {
@@ -19,6 +20,7 @@ zone "buildbot.net" {
         78.46.95.154;       /* c.transfer.buddyns.com */
         216.218.130.2;      /* ns1.he.net */
         64.71.190.23;       /* ns1.darkbeer.org */
+        140.211.10.139;     /* ns1.rtems.org */
     };
 };
 
@@ -35,6 +37,7 @@ zone "224-255.128-255.10.211.140.in-addr.arpa" {
         78.46.95.154;       /* c.transfer.buddyns.com */
         216.218.130.2;      /* ns1.he.net */
         64.71.190.23;       /* ns1.darkbeer.org */
+        140.211.10.139;     /* ns1.rtems.org */
     };
 };
 
