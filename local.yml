@@ -29,20 +29,20 @@
 - include: "jail-syslog.yml"
 
 - include: "host-service2.yml"
-- include: "jail-trac.yml"
-- include: "jail-lists.yml"
 - include: "jail-bot.yml"
+- include: "jail-docs.yml"
 - include: "jail-ftp.yml"
+- include: "jail-lists.yml"
 - include: "jail-nine.yml"
+- include: "jail-trac.yml"
+- include: "jail-www.yml"
 
 - include: "host-service3.yml"
+- include: "jail-bslave1.yml"
+- include: "jail-buildbot.yml"
 - include: "jail-mysql.yml"
 
 - include: "host-vm1.yml"
-- include: "jail-bslave1.yml"
-- include: "jail-buildbot.yml"
-- include: "jail-docs.yml"
-- include: "jail-www.yml"
 
 - include: "track-config.yml"
   vars:
