@@ -1,22 +1,11 @@
-At Flosoft
+At Mozilla
 ==========
 
-ds0210.flosoft-servers.net
---------------------------
+buildbot-linux4.community.scl3.mozilla.com
+------------------------------------------
 
-This is a rather ancient server that belongs to Mike Taylor (bear).
-
-It is maintained by hand.
-We need to migrate off of this server soon.
-
-Hosting:
- * buildbot.net -- now just the www page, but with lots of redirects for old
-   URLs (http://trac.buildbot.net/ticket/3043)
- * www.buildbot.net buildbot.org www.buildbot.org -- redirect to buildbot.net (part of the same ticket)
- * buildbot.buildbot.net -- the metabuildbot (http://trac.buildbot.net/ticket/2850)
- * docs.buildbot.net (http://trac.buildbot.net/ticket/2857)
- * meetings.buildbot.net + supybot
- * a metabuildslave
+This host is running a buildslave, complete with configuration for testing
+databases.
 
 At OSUOSL
 =========
