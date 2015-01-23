@@ -1,13 +1,13 @@
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015011801      ;serial
+                                        2015012201      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
                                         86400   )       ;minimum
 @               7200    IN      NS      c.ns.buddyns.com.   ; germany
 @               7200    IN      NS      f.ns.buddyns.com.   ; india
-@               7200    IN      NS      ns1.he.net.         ; usa
-@               7200    IN      NS      ns2.he.net.         ; usa
+@               7200    IN      NS      ns1.rtems.org.      ; usa
+@               7200    IN      NS      ns1.darkbeer.org.   ; usa
 
 ;224
 ;225
