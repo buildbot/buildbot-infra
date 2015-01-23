@@ -1,3 +1,4 @@
 .*.swp
 dev-hosts
 dev-secrets.yml
+*.pyc
