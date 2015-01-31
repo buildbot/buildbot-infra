@@ -50,7 +50,7 @@
     name: ansible-pull
     job: "/home/{{ service_account }}/run-ansible-pull.sh"
     user: "{{ service_account }}"
-    minute: 0
+    minute: "{{ ansible_fqdn|seeded_range(60) }}"
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
 
 # vim:ft=yaml:nosi:noai:ts=2:sw=2

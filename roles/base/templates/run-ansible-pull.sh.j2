@@ -17,7 +17,6 @@ ansible-pull \
     -d /home/{{ service_account }}/repo/ \
     -m git \
     -U {{ ansible_git_repository }} \
-    -s 3600 \
     -i localhost \
     --vault-password-file=/home/{{ service_account }}/.vault-password \
     local.yml >$OUTPUT 2>&1

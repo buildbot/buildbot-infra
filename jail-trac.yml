@@ -7,4 +7,3 @@
   sudo: yes
   roles:
   - base
-
