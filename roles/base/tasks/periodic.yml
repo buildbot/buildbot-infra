@@ -1,0 +1,27 @@
+# configure periodic to not mail the admins too often
+- name: set periodic options
+  lineinfile:
+    dest: "/etc/periodic.conf"
+    line: "{{item.option}}=\"{{item.value}}\""
+    regexp: "^{{item.option}}=.*"
+    state: present
+    create: yes
+  with_items:
+    - option: daily_show_success
+      value: NO
+    - option: daily_show_info
+      value: NO
+    - option: daily_show_badconfig
+      value: YES
+    - option: weekly_show_success
+      value: NO
+    - option: weekly_show_info
+      value: NO
+    - option: weekly_show_badconfig
+      value: YES
+    - option: monthly_show_success
+      value: NO
+    - option: monthly_show_info
+      value: NO
+    - option: monthly_show_badconfig
+      value: YES
