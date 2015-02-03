@@ -3,11 +3,10 @@
 # Note: USER and HOME are not set by supervisor, so these are set, if they are
 # not provided in the `environment` parameter for the program.
 # See: http://supervisord.org/subprocess.html#subprocess-environment
-if [ -z "$USER" ]
-then
-    USER=`id -u -n`
-    export USER
-fi
+#
+# Override USER and HOME in case they are set.
+USER=`id -u -n`
+export USER
 
 # Override HOME as it's set to '/' by supervisor(?)
 HOME="$(getent passwd ${USER} | cut -d: -f6)"
