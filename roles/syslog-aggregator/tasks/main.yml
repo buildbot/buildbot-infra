@@ -24,7 +24,7 @@
   cron:
     name: log-cleanup
     user: root
-    job: "find {{ log_root }} -mtime +28 -type f -exec ls {} \\;"
+    job: "find {{ log_root }} -mtime +28 -type f -delete"
     minute: 0
     hour: 0
     state: present
