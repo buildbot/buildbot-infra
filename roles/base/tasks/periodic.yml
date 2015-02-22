@@ -7,6 +7,19 @@
     state: present
     create: yes
   with_items:
+    # send logs to local disk, not email
+    - option: daily_output
+      value: /var/log/daily.log
+    - option: weekly_output
+      value: /var/log/weekly.log
+    - option: monthly_output
+      value: /var/log/monthly.log
+    # include the security log with the daily log, rather
+    # than mailing separately
+    - option: daily_status_security_inline
+      value: YES
+    # and *try* not to log much (this doesn't completely
+    # eliminate the logging, though)
     - option: daily_show_success
       value: NO
     - option: daily_show_info
