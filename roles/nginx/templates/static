@@ -24,7 +24,7 @@ server {
 }
 {% if ssl %}
 server {
-    listen 443 ssl spdy;
+    listen 443 ssl;
     server_name {{server_name}};
 
     # based on https://wiki.mozilla.org/Security/Server_Side_TLS#Nginx
