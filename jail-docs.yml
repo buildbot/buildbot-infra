@@ -43,6 +43,7 @@
     nginx_template: static
     server_name: "{{ web_host_name }}"
     server_root: "{{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs"
+    ssl: True
   - role: nginx
     nginx_template: domain-redirect
     server_name: redirects
