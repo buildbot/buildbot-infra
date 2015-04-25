@@ -1,0 +1,41 @@
+Notes For Upgrading FreeBSD
+===========================
+
+Much of this document is based on the Handbook, section 24.6 Rebuilding World.
+That should be the primary source to use when upgrading.
+
+# Update /usr/src. It is a git clone of a mirror on github.
+
+# Start a script session to log everything for review.
+script /var/tmp/mw.out
+chflags -R noschg /usr/obj/*
+rm -rf /usr/obj
+
+cd /usr/src
+make -j8 buildworld
+make -j8 buildkernel KERNCONF=$kernel
+make installkernel KERNCONF=$kernel
+mergemaster -Fp
+make installworld
+mergemaster -iFU
+yes | make delete-old
+
+ezjail-admin update -i
+
+# For each jail directory:
+mergemaster -FU -D /path/to/jail
+
+reboot
+
+# Wait for machine to come back.
+
+# Resume script output from before.
+script -a /var/tmp/mw.out
+cd /usr/src
+make delete-old-libs
+
+pkg upgrade
+
+# For each jail directory:
+# CAVEAT: mailman (in the lists jail) MUST be upgraded via ports.
+jexec $jid pkg upgrade
