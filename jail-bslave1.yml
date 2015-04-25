@@ -9,6 +9,11 @@
     slave_dir: "bslave"
     bb_slave_name: "bslave1"
     slave_service_name: "buildslave"
+    buildbot_net:
+      env_name: venv
+      slave_dir: "bslave"
+      bb_slave_name: "buildbot.net"
+      slave_service_name: "buildslave-buildbot-net"
 
   # NOTE: FreeBSD does not have pythons other than 2.7 pre-packaged,
   # to support them something "interesting" needs to be done.
@@ -32,6 +37,24 @@
     service_name: "{{ slave_service_name }}"
     service_dir: "{{ getent_passwd[worker_account].4 }}/{{ slave_dir }}"
     service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildslave start --nodaemon"
+    service_user: "{{ worker_account }}"
+
+  # Slave for buildbot.buildbot.net.
+  - role: virtualenv
+    venv_user: "{{ worker_account }}"
+    venv_home_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}"
+    venv_name: "{{ env_name }}"
+    venv_python_packages:
+    - buildbot-slave    # Install the latest released version
+  - role: bb-slave
+    bb_user: "{{ worker_account }}"
+    bb_slave_name: "{{ buildbot_net.bb_slave_name }}"
+    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ env_name }}"
+    bb_slave_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.bb_slave_dir }}"
+  - role: supervisor-service
+  service_name: "{{ buildbot_net.slave_service_name }}"
+    service_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.bb_slave_dir }}"
+    service_command: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ env_name }}/bin/buildslave start --nodaemon"
     service_user: "{{ worker_account }}"
 
 # vim:ts=2:sw=2:noai:nosi
