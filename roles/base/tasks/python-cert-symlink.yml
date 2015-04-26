@@ -1,0 +1,5 @@
+- name: add /etc/ssl/cert.pem for Python-2.7.9's benefit
+  file:
+    path: /etc/ssl/cert.pem
+    state: link
+    src: /usr/local/etc/ssl/cert.pem
