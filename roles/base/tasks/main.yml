@@ -6,3 +6,4 @@
 - include: rootpw.yml
 - include: ansible-pull.yml
 - include: periodic.yml
+- include: python-cert-symlink.yml
