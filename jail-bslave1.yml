@@ -5,10 +5,11 @@
   connection: local
   sudo: yes
   vars:
-    env_name: venv
-    slave_dir: "bslave"
-    bb_slave_name: "bslave1"
-    slave_service_name: "buildslave"
+    bslave1:
+      env_name: venv
+      slave_dir: "bslave"
+      bb_slave_name: "bslave1"
+      slave_service_name: "buildslave-bslave1"
     buildbot_net:
       env_name: venv
       slave_dir: "bslave"
@@ -22,6 +23,8 @@
   - role: user
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account
+
+  # Slave for bslave1, connected to nine.buildbot.net.
   - role: virtualenv
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
@@ -30,13 +33,13 @@
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
     bb_user: "{{ worker_account }}"
-    # bb_slave_name value is set above
-    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}"
-    bb_slave_dir: "{{ getent_passwd[worker_account].4 }}/{{ slave_dir }}"
+    bb_slave_name: "{{ bslave1.bb_slave_name }}"
+    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.env_name }}"
+    bb_slave_dir: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.slave_dir }}"
   - role: supervisor-service
-    service_name: "{{ slave_service_name }}"
-    service_dir: "{{ getent_passwd[worker_account].4 }}/{{ slave_dir }}"
-    service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildslave start --nodaemon"
+    service_name: "{{ bslave1.slave_service_name }}"
+    service_dir: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.slave_dir }}"
+    service_command: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.env_name }}/bin/buildslave start --nodaemon"
     service_user: "{{ worker_account }}"
 
   # Slave for buildbot.net, connected to buildbot.buildbot.net.
