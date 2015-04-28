@@ -39,7 +39,7 @@
     service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildslave start --nodaemon"
     service_user: "{{ worker_account }}"
 
-  # Slave for buildbot.buildbot.net.
+  # Slave for buildbot.net, connected to buildbot.buildbot.net.
   - role: virtualenv
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}"
