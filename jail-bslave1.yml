@@ -45,8 +45,8 @@
   # Slave for buildbot.net, connected to buildbot.buildbot.net.
   - role: virtualenv
     venv_user: "{{ worker_account }}"
-    venv_home_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}"
-    venv_name: "{{ env_name }}"
+    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_name: "{{ buildbot_net.bb_slave_name }}/{{ env_name }}"
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
