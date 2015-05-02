@@ -46,18 +46,18 @@
   - role: virtualenv
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
-    venv_name: "{{ buildbot_net.bb_slave_name }}/{{ env_name }}"
+    venv_name: "{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}"
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
     bb_user: "{{ worker_account }}"
     bb_slave_name: "{{ buildbot_net.bb_slave_name }}"
-    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ env_name }}"
+    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}"
     bb_slave_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.bb_slave_dir }}"
   - role: supervisor-service
     service_name: "{{ buildbot_net.slave_service_name }}"
     service_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.bb_slave_dir }}"
-    service_command: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ env_name }}/bin/buildslave start --nodaemon"
+    service_command: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}/bin/buildslave start --nodaemon"
     service_user: "{{ worker_account }}"
 
 # vim:ts=2:sw=2:noai:nosi
