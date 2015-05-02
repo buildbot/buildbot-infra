@@ -49,6 +49,7 @@
     venv_name: "{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}"
     venv_packages:
       - python  # Install a 'python' wrapper.
+      - sqlite3
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
