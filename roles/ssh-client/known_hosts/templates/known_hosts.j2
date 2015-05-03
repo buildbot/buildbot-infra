@@ -1,0 +1,7 @@
+{% for ssh_host in ssh_client_hosts %}
+{% if ssh_host in ssh_host_keys %}
+{% for host_key in ssh_host_keys[ssh_host] %}
+{{ ssh_host }} {{ host_key }}
+{% endfor %}
+{% endif %}
+{% endfor %}

@@ -1,0 +1,6 @@
+---
+# Uses the ssh_client_hosts role variable and ssh_host_keys group variable.
+- name: Set host keys
+  template:
+    src: known_hosts.j2
+    dest: "{{ getent_passwd[worker_account].4 }}/.ssh/known_hosts"
