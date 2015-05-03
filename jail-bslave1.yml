@@ -24,6 +24,14 @@
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account
 
+  - role: ssh-client/key
+    ssh_private_key: "{{ ssh_keys['bslave1.int.buildbot.net'].private }}"
+    ssh_private_key_file: "{{ ssh_keys['bslave1.int.buildbot.net'].name }}"
+
+  - role: ssh-client/known_hosts
+    ssh_client_hosts:
+      - "[ftp.int.buildbot.net]:2200"
+
   # Slave for bslave1, connected to nine.buildbot.net.
   - role: virtualenv
     venv_user: "{{ worker_account }}"
