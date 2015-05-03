@@ -50,6 +50,8 @@
     venv_packages:
       - python  # Install a 'python' wrapper.
       - sqlite3
+      - node
+      - npm
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
