@@ -25,8 +25,8 @@
     user_name: Buildbot Worker Account
 
   - role: ssh-client/key
-    ssh_private_key: "{{ ssh_keys['bslave1.int.buildbot.net'].private }}"
-    ssh_private_key_file: "{{ ssh_keys['bslave1.int.buildbot.net'].name }}"
+    ssh_private_key: "{{ ssh_keys['bslave1.int.buildbot.net'][0].private }}"
+    ssh_private_key_file: "{{ ssh_keys['bslave1.int.buildbot.net'][0].name }}"
 
   - role: ssh-client/known_hosts
     ssh_client_hosts:
