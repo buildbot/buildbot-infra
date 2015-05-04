@@ -1,0 +1,5 @@
+---
+- name: Set ssh keys
+  copy:
+    content: "{{ ssh_private_key }}"
+    dest: "{{ getent_passwd[worker_account].4 }}/.ssh/{{ ssh_private_key_file }}"
