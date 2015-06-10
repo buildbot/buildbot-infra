@@ -10,7 +10,7 @@ repo_dir=repo
 cd ~
 
 # Install prerequsite packages
-env ASSUME_ALWAYS_YES=YES pkg install ansible git
+env ASSUME_ALWAYS_YES=YES pkg install ansible git sudo
 
 # Ansible only runs locally, so clone the repository there
 git clone --depth 1 --branch master {{ ansible_git_repository }} ${repo_dir}
