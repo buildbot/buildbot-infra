@@ -36,6 +36,7 @@
 - include: "jail-nine.yml"
 - include: "jail-trac.yml"
 - include: "jail-www.yml"
+- include: "jail-supybot.yml"
 
 - include: "host-service3.yml"
 - include: "jail-bslave1.yml"

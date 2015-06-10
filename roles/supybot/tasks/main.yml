@@ -1,0 +1,55 @@
+# Create and configure a Buildbot master to watch changes in Buildbot's git
+# repo.
+---
+- name: update supybot repository
+  sudo_user: "{{ supybot_user }}"
+  git:
+    repo: "{{ supybot_repo }}"
+    dest: "{{ supybot_user_home }}/repo"
+    update: yes
+    version: "{{supybot_branch}}"
+    accept_hostkey: True
+  register: supybot_repo_state
+
+- name: install supybot in virtualenv
+  # note that pip install -e appears not to work for this package; uninstall and re-install instead
+  shell: "{{ supybot_env_dir }}/bin/pip uninstall supybot; {{ supybot_env_dir }}/bin/pip install {{ supybot_user_home }}/repo"
+  when: "supybot_repo_state|changed"
+
+- name: create directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: "{{ supybot_user }}"
+  with_items:
+    - "{{ supybot_user_home }}/run"
+    - "{{ supybot_user_home }}/run/conf"
+    - "{{ supybot_user_home }}/run/data"
+    - "{{ supybot_user_home }}/run/data/tmp"
+    - "{{ supybot_user_home }}/run/logs"
+    - "{{ supybot_user_home }}/run/plugins"
+    - "{{ supybot_user_home }}/run/backup"
+
+- name: install config
+  copy:
+    dest: "{{ supybot_user_home }}/run/bb-supy.conf"
+    src: bb-supy.conf
+
+- name: set up dynamic config
+  file:
+    dest: "{{ supybot_user_home }}/conf/{{ item }}"
+    state: touch
+    owner: "{{ supybot_user }}"
+  with_items:
+    - channels.conf
+    - ignores.conf 
+    - userdata.conf
+    - users.conf
+
+# TODO: only when changed
+- name: restart Supervisor service
+  shell: "supervisorctl restart {{ supybot_service }}"
+  ignore_errors: True
+
+# vim:ts=2:sw=2:noai:nosi
+
