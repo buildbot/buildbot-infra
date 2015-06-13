@@ -31,6 +31,8 @@ service_account: bbinfra
 # This account is intended to be used for running non-privileged
 # services/tasks.
 worker_account: bbuser
+# Use the expanduser filter to expand ~bbuser to bbuser's home directory.
+worker_home_dir: "{{ ('~' + worker_account) | expanduser }}"
 
 # Mandatory packages are the ones that must be installed on every host.
 # Ansible installation is taken care of depending on what kind of host is that

@@ -18,7 +18,7 @@
     user_name: Buildbot Worker Account
   - role: virtualenv
     venv_user: "{{ worker_account }}"
-    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_home_dir: "{{ worker_home_dir }}"
     venv_name: "{{ env_name }}"
     venv_python_packages:
     - 'sphinx==1.2.2'
@@ -27,22 +27,22 @@
     repo_url: git://github.com/buildbot/bbdocs.git
     repo_branch: master
     target_user: "{{ worker_account }}"
-    target_dir: "{{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}"
+    target_dir: "{{ worker_home_dir }}/{{ bbdocs_dir }}"
   - role: simple-buildout
     repo_url: git://github.com/buildbot/buildbot.git
     repo_branch: master
     target_user: "{{ worker_account }}"
-    target_dir: "{{ getent_passwd[worker_account].4 }}/buildbot"
+    target_dir: "{{ worker_home_dir }}/buildbot"
     target_commands:
     # `command` module does not allow to set env variables, nor expands them,
     # so let's use make's variables.
-    - "make -C master/docs PATH:={{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin:$(PATH) VERSION=latest"
-    - "find master/docs/_build/html -name '*.html' -exec python2 {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/add-tracking.py {} ;"
-    - "ln -sf {{ getent_passwd[worker_account].4 }}/buildbot/master/docs/_build/html {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs/latest"
+    - "make -C master/docs PATH:={{ worker_home_dir }}/{{ env_name }}/bin:$(PATH) VERSION=latest"
+    - "find master/docs/_build/html -name '*.html' -exec python2 {{ worker_home_dir }}/{{ bbdocs_dir }}/add-tracking.py {} ;"
+    - "ln -sf {{ worker_home_dir }}/buildbot/master/docs/_build/html {{ worker_home_dir }}/{{ bbdocs_dir }}/docs/latest"
   - role: nginx
     nginx_template: static
     server_name: "{{ web_host_name }}"
-    server_root: "{{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs"
+    server_root: "{{ worker_home_dir }}/{{ bbdocs_dir }}/docs"
     ssl: True
   - role: nginx
     nginx_template: domain-redirect

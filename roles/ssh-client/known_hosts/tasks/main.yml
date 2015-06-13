@@ -3,4 +3,4 @@
 - name: Set host keys
   template:
     src: known_hosts.j2
-    dest: "{{ getent_passwd[worker_account].4 }}/.ssh/known_hosts"
+    dest: "{{ worker_home_dir }}/.ssh/known_hosts"
