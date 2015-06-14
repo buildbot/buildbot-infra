@@ -5,7 +5,7 @@
   sudo_user: "{{ supybot_user }}"
   git:
     repo: "{{ supybot_repo }}"
-    dest: "{{ supybot_user_home }}/repo"
+    dest: "{{ supybot_user_home }}/supybot-repo"
     update: yes
     version: "{{supybot_branch}}"
     accept_hostkey: True
@@ -13,8 +13,18 @@
 
 - name: install supybot in virtualenv
   # note that pip install -e appears not to work for this package; uninstall and re-install instead
-  shell: "{{ supybot_env_dir }}/bin/pip uninstall supybot; {{ supybot_env_dir }}/bin/pip install {{ supybot_user_home }}/repo"
+  shell: "{{ supybot_env_dir }}/bin/pip uninstall supybot; {{ supybot_env_dir }}/bin/pip install {{ supybot_user_home }}/supybot-repo"
   when: "supybot_repo_state|changed"
+
+- name: update meetbot repository
+  sudo_user: "{{ supybot_user }}"
+  git:
+    repo: "{{ meetbot_repo }}"
+    dest: "{{ supybot_user_home }}/meetbot-repo"
+    update: yes
+    version: "{{meetbot_branch}}"
+    accept_hostkey: True
+  register: meetbot_repo_state
 
 - name: create directories
   file:
@@ -30,10 +40,28 @@
     - "{{ supybot_user_home }}/run/plugins"
     - "{{ supybot_user_home }}/run/backup"
 
+- name: link meetbot into supybot
+  file:
+    dest: "{{ supybot_user_home }}/run/plugins/MeetBot"
+    src: "{{ supybot_user_home }}/meetbot-repo/MeetBot"
+    state: link
+
+- name: link ircmeeting into supybot virtualenv
+  file:
+    dest: "{{ supybot_env_dir }}/lib/python2.7/site-packages/ircmeeting"
+    src: "{{ supybot_user_home }}/meetbot-repo/ircmeeting"
+    state: link
+
 - name: install config
   copy:
+    # note that supybot is not allowed to write its config
     dest: "{{ supybot_user_home }}/run/bb-supy.conf"
     src: bb-supy.conf
+
+- name: install meetbot config
+  copy:
+    dest: "{{ supybot_user_home }}/run/meetingLocalConfig.py"
+    src: meetingLocalConfig.py
 
 - name: set up dynamic config
   file:

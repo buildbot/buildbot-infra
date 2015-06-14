@@ -27,8 +27,9 @@
     supybot_user: "{{ worker_account }}"
     supybot_user_home: "{{ getent_passwd[worker_account].4 }}"
     supybot_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}"  # Must match the one created above
-    supybot_branch: "master"       # A branch in buildbot.git
+    supybot_branch: "master"
     supybot_service: "{{ master_service_name }}"
+    meetbot_branch: "master"
   - role: supervisor-service
     service_name: supybot
     service_dir: "{{ getent_passwd[worker_account].4 }}/run"
