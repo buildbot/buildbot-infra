@@ -1,0 +1,37 @@
+---
+- name: configure supybot
+  hosts: supybot
+  gather_facts: no
+  connection: local
+  sudo: yes
+  vars:
+    env_name: venv
+    web_host_name: "supybot.buildbot.net"
+    master_service_name: "supybot"
+
+  roles:
+  - base
+  - role: user
+    user_id: "{{ worker_account }}"
+    user_name: Buildbot Worker Account
+  - role: virtualenv
+    venv_user: "{{ worker_account }}"
+    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_name: "{{ env_name }}"
+    venv_packages:
+    - sqlite3
+    venv_python_packages:
+    - python-dateutil
+    - feedparser
+  - role: supybot
+    supybot_user: "{{ worker_account }}"
+    supybot_user_home: "{{ getent_passwd[worker_account].4 }}"
+    supybot_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}"  # Must match the one created above
+    supybot_branch: "master"
+    supybot_service: "{{ master_service_name }}"
+    meetbot_branch: "master"
+  - role: supervisor-service
+    service_name: supybot
+    service_dir: "{{ getent_passwd[worker_account].4 }}/run"
+    service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/supybot bb-supy.conf"
+    service_user: "{{ worker_account }}"
