@@ -45,23 +45,27 @@
     dest: "{{ supybot_user_home }}/run/plugins/MeetBot"
     src: "{{ supybot_user_home }}/meetbot-repo/MeetBot"
     state: link
+  notify: restart supybot
 
 - name: link ircmeeting into supybot virtualenv
   file:
     dest: "{{ supybot_env_dir }}/lib/python2.7/site-packages/ircmeeting"
     src: "{{ supybot_user_home }}/meetbot-repo/ircmeeting"
     state: link
+  notify: restart supybot
 
 - name: install config
   copy:
     # note that supybot is not allowed to write its config
     dest: "{{ supybot_user_home }}/run/bb-supy.conf"
     src: bb-supy.conf
+  notify: restart supybot
 
 - name: install meetbot config
   copy:
     dest: "{{ supybot_user_home }}/run/meetingLocalConfig.py"
     src: meetingLocalConfig.py
+  notify: restart supybot
 
 - name: set up dynamic config
   file:
@@ -74,10 +78,4 @@
     - userdata.conf
     - users.conf
 
-# TODO: only when changed
-- name: restart Supervisor service
-  shell: "supervisorctl restart {{ supybot_service }}"
-  ignore_errors: True
-
 # vim:ts=2:sw=2:noai:nosi
-
