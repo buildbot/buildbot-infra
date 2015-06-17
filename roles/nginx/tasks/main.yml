@@ -84,6 +84,12 @@
     dest: "{{ nginx_conf_dir }}/nginx.conf"
   notify: reload nginx
 
+- name: install ssl configuration file
+  template:
+    src: "ssl.conf"
+    dest: "{{ nginx_conf_dir }}/conf.d/ssl.conf"
+  notify: reload nginx
+
 - name: enable and start nginx service
   service:
     name: nginx
