@@ -35,3 +35,8 @@
     service_dir: "{{ getent_passwd[worker_account].4 }}/run"
     service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/supybot bb-supy.conf"
     service_user: "{{ worker_account }}"
+  - role: nginx
+    nginx_template: static
+    server_name: supybot.buildbot.net
+    server_root: /home/bbuser/web
+    ssl: true
