@@ -5,5 +5,6 @@
   gather_facts: no
   connection: local
   sudo: yes
+  invalid: option
   roles:
   - base
