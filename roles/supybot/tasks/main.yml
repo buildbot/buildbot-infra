@@ -32,6 +32,8 @@
     state: directory
     owner: "{{ supybot_user }}"
   with_items:
+    - "{{ supybot_user_home }}/web"
+    - "{{ supybot_user_home }}/web/meetings"
     - "{{ supybot_user_home }}/run"
     - "{{ supybot_user_home }}/run/conf"
     - "{{ supybot_user_home }}/run/data"
@@ -77,5 +79,18 @@
     - ignores.conf 
     - userdata.conf
     - users.conf
+
+- name: install mkindex scripts
+  copy:
+    src: mkindex.sh
+    dest: "{{ supybot_user_home }}/web/meetings/mkindex.sh"
+
+- name: install mkindex cronscript
+  cron:
+    name: update-meetbot-indexes
+    job: "cd {{ supybot_user_home }}/web/meetings; sh mkindex.sh"
+    user: "{{ supybot_user }}"
+    minute: 5
+    
 
 # vim:ts=2:sw=2:noai:nosi
