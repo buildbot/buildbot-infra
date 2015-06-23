@@ -34,7 +34,7 @@ server {
     ssl_session_timeout 5m;
     ssl_session_cache shared:SSL:5m;
 
-    include conf.d/ssl.conf
+    include conf.d/ssl.conf;
 
     access_log {{nginx_log_dir}}/{{server_name}}/ssl-access.log;
     error_log {{nginx_log_dir}}/{{server_name}}/ssl-error.log;
