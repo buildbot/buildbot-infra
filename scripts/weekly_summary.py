@@ -257,10 +257,11 @@ def make_html(results):
 def send_email(html):
     msg = MIMEText(html, 'html')
     msg['Subject'] = "Buildbot Weekly Summary"
-    msg['From'] = 'dustin@v.igoro.us'
-    msg['To'] = 'buildbot-devel@lists.sourceforge.net'
+    msg['From'] = 'devel@buildbot.net'
+    recips = ['devel@buildbot.net', 'users@buildbot.net']
+    msg['To'] = ', '.join(recips)
     s = smtplib.SMTP('localhost')
-    s.sendmail(msg['From'], msg['To'], msg.as_string())
+    s.sendmail(msg['From'], recips, msg.as_string())
     s.quit()
 
 def main():
