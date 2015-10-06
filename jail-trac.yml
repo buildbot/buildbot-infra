@@ -1,5 +1,5 @@
 ---
-# TODO: actually manage configuration (#3038)
+# TODO: actually manage Trac configuration (#3038)
 - name: configure trac
   hosts: trac
   gather_facts: no
@@ -7,3 +7,30 @@
   sudo: yes
   roles:
   - base
+  - role: user
+    user_id: emailer
+    user_name: Email Sender
+  - role: virtualenv
+    venv_user: emailer
+    venv_home_dir: /home/emailer
+    venv_name: weekly-summary
+    venv_python_packages:
+    - Twisted
+    - PyOpenSSL
+    - service_identity
+  tasks:
+  - name: install weekly-summary script
+    copy:
+      src: files/weekly-summary.py
+      dest: /home/emailer/weekly-summary/weekly-summary.py
+      mode: 0777
+  
+  - name: install weekly-summary crontask
+    cron:
+      name: send-weekly-summary
+      job: "cd /home/emailer/weekly-summary/; bin/python weekly-summary.py"
+      user: emailer
+      # run a bit before the weekly meeting
+      minute: 0
+      hour: 15
+      weekday: 2
