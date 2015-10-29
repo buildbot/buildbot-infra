@@ -108,11 +108,6 @@ def get_trac_tickets(start_day, end_day):
         return (what, summary)
 
     def summarize_trac_tickets(results):
-        each_type = {'Opened': 0, 'Closed': 0}
-        ticket_summary = {'Enhancements': each_type.copy(),
-            'Defects': each_type.copy(), 'Tasks': each_type.copy(),
-            'Regressions': each_type.copy(), 'Undecideds': each_type.copy(),
-            'Other': each_type.copy(), 'Total': each_type.copy()}
         opened = {}
         closed = {}
         for success, value in results:
@@ -120,25 +115,11 @@ def get_trac_tickets(start_day, end_day):
                 continue
             what, tickets = value
             for t in tickets:
-                Type = t['type'].capitalize() + 's'
-                if Type in ticket_summary:
-                    ticket_summary[Type][what] += 1
-                else:
-                    ticket_summary['Other'][what] += 1
-                ticket_summary['Total'][what] += 1
                 if what == 'Opened':
                     opened[len(opened)] = t
                 elif what == 'Closed':
                     closed[len(closed)] = t
         # Convert ticket summary to a table to start the weekly summary.
-        row_order = ['Enhancements', 'Defects', 'Regressions', 'Tasks',
-            'Undecideds', 'Other', 'Total']
-        for r in row_order:
-            ticket_summary[r]['Type'] = r
-        col_order = ['Type', 'Opened', 'Closed']
-        ticket_table = tablify_dict(ticket_summary, row_order=row_order,
-                col_order=col_order)
-        ticket_overview = '\n'.join(['<h2>Ticket Summary</h2>', ticket_table])
 
         # Also include a list of every new/reopened and closed tickets.
         col_order = ['id', 'type', 'summary']
@@ -152,7 +133,7 @@ def get_trac_tickets(start_day, end_day):
             col_order=col_order, link_field='id', link_url_field='url')
         closed_overview = '\n'.join(['<h2>Closed Tickets</h2>', closed_table])
 
-        trac_summary = [ticket_overview, opened_overview, closed_overview]
+        trac_summary = [opened_overview, closed_overview]
         return ('trac', '\n\n'.join(trac_summary))
 
     trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
