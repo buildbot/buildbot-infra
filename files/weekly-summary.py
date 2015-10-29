@@ -29,6 +29,21 @@ HTTP_HEADERS = Headers({'User-Agent': ['buildbot.net weekly summary']})
 FROM = 'dustin@buildbot.net'
 RECIPIENTS = ['devel@buildbot.net', 'users@buildbot.net']
 
+WEEKLY_MEETING_TEXT = textwrap.dedent("""
+
+    <p>Buildbot has weekly meetings via irc, held at 16:30 UTC on Tuesdays.
+    That is about 90 minutes from now!
+
+    <p>Meetings are in #buildbot on Freenode, open to any and all participants.
+    They generally focus on organizational, rather than technical issues, but
+    are open to anything Buildbot-related.  To raise a topic, add it to "All
+    Other Business" in the <a
+    href="https://titanpad.com/buildbot-agenda">agenda</a>, or just speak up
+    during the meeting.
+
+    <p>Meeting minutes are available <a href="https://supybot.buildbot.net/meetings/">here</a>.
+    """)
+
 email = textwrap.dedent("""\
     <html>
     <head>
@@ -221,6 +236,8 @@ def get_github_prs(project, start_day, end_day):
 
 def make_html(results):
     body = (
+        '<h1>Weekly Meeting</h1>\n'
+        '%(weekly-meeting)s\n'
         '<h1>Trac Tickets</h1>\n'
         '%(trac)s\n'
         '\n\n'
@@ -235,6 +252,7 @@ def make_html(results):
             continue
         part, msg = value
         body_parts[part] = msg
+    body_parts['weekly-meeting'] = WEEKLY_MEETING_TEXT
     return email % dict(body=body % body_parts)
 
 def send_email(html):
