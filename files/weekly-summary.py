@@ -26,6 +26,8 @@ TRAC_BUILDBOT_URL = 'http://trac.buildbot.net'
 TRAC_BUILDBOT_TICKET_URL = TRAC_BUILDBOT_URL + '/ticket/%(ticket)s'
 GITHUB_API_URL = 'https://api.github.com'
 HTTP_HEADERS = Headers({'User-Agent': ['buildbot.net weekly summary']})
+FROM = 'dustin@buildbot.net'
+RECIPIENTS = ['devel@buildbot.net', 'users@buildbot.net']
 
 email = textwrap.dedent("""\
     <html>
@@ -257,11 +259,10 @@ def make_html(results):
 def send_email(html):
     msg = MIMEText(html, 'html')
     msg['Subject'] = "Buildbot Weekly Summary"
-    msg['From'] = 'dustin@buildbot.net'
-    recips = ['devel@buildbot.net', 'users@buildbot.net']
-    msg['To'] = ', '.join(recips)
+    msg['From'] = FROM
+    msg['To'] = ', '.join(RECIPIENTS)
     s = smtplib.SMTP('localhost')
-    s.sendmail(msg['From'], recips, msg.as_string())
+    s.sendmail(msg['From'], RECIPIENTS, msg.as_string())
     s.quit()
 
 def main():
