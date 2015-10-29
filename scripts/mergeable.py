@@ -6,7 +6,7 @@ import getpass
 import smtplib
 
 def main():
-    r = requests.get('https://api.github.com/repos/buildbot/buildbot/issues?labels=merge-me')
+    r = requests.get('https://api.github.com/repos/buildbot/buildbot/issues?labels=merge me')
     body = [ "%(html_url)s - %(title)s" % pr for pr in r.json() ]
     if not body:
         return
