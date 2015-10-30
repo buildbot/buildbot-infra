@@ -35,11 +35,8 @@ WEEKLY_MEETING_TEXT = textwrap.dedent("""
     That is about 90 minutes from now!
 
     <p>Meetings are in #buildbot on Freenode, open to any and all participants.
-    They generally focus on organizational, rather than technical issues, but
-    are open to anything Buildbot-related.  To raise a topic, add it to "All
-    Other Business" in the <a
-    href="https://titanpad.com/buildbot-agenda">agenda</a>, or just speak up
-    during the meeting.
+    They generally focus on organizational, rather than technical issues, but are open to anything Buildbot-related.
+    To raise a topic, add it to "All Other Business" in the <a href="https://titanpad.com/buildbot-agenda">agenda</a>, or just speak up during the meeting.
 
     <p>Meeting minutes are available <a href="https://supybot.buildbot.net/meetings/">here</a>.
     """)
