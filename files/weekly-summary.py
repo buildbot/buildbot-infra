@@ -29,6 +29,18 @@ HTTP_HEADERS = Headers({'User-Agent': ['buildbot.net weekly summary']})
 FROM = 'dustin@buildbot.net'
 RECIPIENTS = ['devel@buildbot.net', 'users@buildbot.net']
 
+WEEKLY_MEETING_TEXT = textwrap.dedent("""
+
+    <p>Buildbot has weekly meetings via irc, held at 16:30 UTC on Tuesdays.
+    That is about 90 minutes from now!
+
+    <p>Meetings are in #buildbot on Freenode, open to any and all participants.
+    They generally focus on organizational, rather than technical issues, but are open to anything Buildbot-related.
+    To raise a topic, add it to "All Other Business" in the <a href="https://titanpad.com/buildbot-agenda">agenda</a>, or just speak up during the meeting.
+
+    <p>Meeting minutes are available <a href="https://supybot.buildbot.net/meetings/">here</a>.
+    """)
+
 email = textwrap.dedent("""\
     <html>
     <head>
@@ -108,11 +120,6 @@ def get_trac_tickets(start_day, end_day):
         return (what, summary)
 
     def summarize_trac_tickets(results):
-        each_type = {'Opened': 0, 'Closed': 0}
-        ticket_summary = {'Enhancements': each_type.copy(),
-            'Defects': each_type.copy(), 'Tasks': each_type.copy(),
-            'Regressions': each_type.copy(), 'Undecideds': each_type.copy(),
-            'Other': each_type.copy(), 'Total': each_type.copy()}
         opened = {}
         closed = {}
         for success, value in results:
@@ -120,25 +127,11 @@ def get_trac_tickets(start_day, end_day):
                 continue
             what, tickets = value
             for t in tickets:
-                Type = t['type'].capitalize() + 's'
-                if Type in ticket_summary:
-                    ticket_summary[Type][what] += 1
-                else:
-                    ticket_summary['Other'][what] += 1
-                ticket_summary['Total'][what] += 1
                 if what == 'Opened':
                     opened[len(opened)] = t
                 elif what == 'Closed':
                     closed[len(closed)] = t
         # Convert ticket summary to a table to start the weekly summary.
-        row_order = ['Enhancements', 'Defects', 'Regressions', 'Tasks',
-            'Undecideds', 'Other', 'Total']
-        for r in row_order:
-            ticket_summary[r]['Type'] = r
-        col_order = ['Type', 'Opened', 'Closed']
-        ticket_table = tablify_dict(ticket_summary, row_order=row_order,
-                col_order=col_order)
-        ticket_overview = '\n'.join(['<h2>Ticket Summary</h2>', ticket_table])
 
         # Also include a list of every new/reopened and closed tickets.
         col_order = ['id', 'type', 'summary']
@@ -152,7 +145,7 @@ def get_trac_tickets(start_day, end_day):
             col_order=col_order, link_field='id', link_url_field='url')
         closed_overview = '\n'.join(['<h2>Closed Tickets</h2>', closed_table])
 
-        trac_summary = [ticket_overview, opened_overview, closed_overview]
+        trac_summary = [opened_overview, closed_overview]
         return ('trac', '\n\n'.join(trac_summary))
 
     trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
@@ -240,6 +233,8 @@ def get_github_prs(project, start_day, end_day):
 
 def make_html(results):
     body = (
+        '<h1>Weekly Meeting</h1>\n'
+        '%(weekly-meeting)s\n'
         '<h1>Trac Tickets</h1>\n'
         '%(trac)s\n'
         '\n\n'
@@ -254,6 +249,7 @@ def make_html(results):
             continue
         part, msg = value
         body_parts[part] = msg
+    body_parts['weekly-meeting'] = WEEKLY_MEETING_TEXT
     return email % dict(body=body % body_parts)
 
 def send_email(html):
