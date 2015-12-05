@@ -1,6 +1,6 @@
 $TTL            86400
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015061001      ;serial
+                                        2015120501      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -16,8 +16,8 @@ $TTL            86400
 buildbot        IN      A       140.211.10.239
 xy2dwhhhx5d4    IN      CNAME   gv-d47fzorbndt4i4.dv.googlehosted.com.
 mx              IN      A       140.211.10.235
-www             IN      CNAME   buildbot.net.
-www-new         IN      CNAME   buildbot.net.
+www             IN      A       140.211.10.238
+www-new         IN      A       140.211.10.238
 lists           IN      A       140.211.10.241
 trac            IN      A       140.211.10.240
 ftp             IN      A       140.211.10.243
