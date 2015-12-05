@@ -1,5 +1,5 @@
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015061001      ;serial
+                                        2015120501      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -23,7 +23,7 @@
 235     86400   IN       PTR     mx.buildbot.net.
 236     86400   IN       PTR     ns1.buildbot.net.
 237     86400   IN       PTR     docs.buildbot.net.
-238     86400   IN       PTR     buildbot.net.
+238     86400   IN       PTR     www.buildbot.net.
 239     86400   IN       PTR     buildbot.buildbot.net.
 240     86400   IN       PTR     trac.buildbot.net.
 241     86400   IN       PTR     lists.buildbot.net.
