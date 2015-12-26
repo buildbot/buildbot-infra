@@ -50,7 +50,7 @@ utility_packages:
 - vim-lite  # we probably do not want to bring all the stuff
 
 # The upstream repository from which the service host crontask should pull
-ansible_git_repository: git://github.com/buildbot/buildbot-infra
+ansible_git_repository: https://github.com/buildbot/buildbot-infra
 
 # syslog server to which all syslog messages should be forwarded
 global_syslog_server: 192.168.80.211
