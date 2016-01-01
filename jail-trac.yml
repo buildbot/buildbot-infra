@@ -18,13 +18,18 @@
     - Twisted
     - PyOpenSSL
     - service_identity
+  - role: virtualenv
+    venv_user: emailer
+    venv_home_dir: /home/emailer
+    venv_name: mergeable
+    venv_python_packages:
+    - requests
   tasks:
   - name: install weekly-summary script
     copy:
       src: files/weekly-summary.py
       dest: /home/emailer/weekly-summary/weekly-summary.py
       mode: 0777
-  
   - name: install weekly-summary crontask
     cron:
       name: send-weekly-summary
@@ -34,3 +39,15 @@
       minute: 0
       hour: 15
       weekday: 2
+  - name: install mergeable PR script
+    copy:
+      src: files/mergeable.py
+      dest: /home/emailer/mergeable/mergeable.py
+      mode: 0777
+  - name: install mergeable PR crontask
+    cron:
+      name: send-mergeable
+      job: "cd /home/emailer/mergeable/; bin/python mergeable.py"
+      user: emailer
+      minute: 0
+      hour: 10
