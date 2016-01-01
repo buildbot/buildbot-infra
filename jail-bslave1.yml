@@ -35,25 +35,25 @@
   # Slave for bslave1, connected to nine.buildbot.net.
   - role: virtualenv
     venv_user: "{{ worker_account }}"
-    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_home_dir: "{{ worker_home_dir }}"
     venv_name: "{{ bslave1.env_name }}"
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
     bb_user: "{{ worker_account }}"
     bb_slave_name: "{{ bslave1.bb_slave_name }}"
-    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.env_name }}"
-    bb_slave_dir: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.slave_dir }}"
+    bb_env_dir: "{{ worker_home_dir }}/{{ bslave1.env_name }}"
+    bb_slave_dir: "{{ worker_home_dir }}/{{ bslave1.slave_dir }}"
   - role: supervisor-service
     service_name: "{{ bslave1.slave_service_name }}"
-    service_dir: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.slave_dir }}"
-    service_command: "{{ getent_passwd[worker_account].4 }}/{{ bslave1.env_name }}/bin/buildslave start --nodaemon"
+    service_dir: "{{ worker_home_dir }}/{{ bslave1.slave_dir }}"
+    service_command: "{{ worker_home_dir }}/{{ bslave1.env_name }}/bin/buildslave start --nodaemon"
     service_user: "{{ worker_account }}"
 
   # Slave for buildbot.net, connected to buildbot.buildbot.net.
   - role: virtualenv
     venv_user: "{{ worker_account }}"
-    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_home_dir: "{{ worker_home_dir }}"
     venv_name: "{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}"
     venv_packages:
       - python  # Install a 'python' wrapper.
@@ -65,12 +65,12 @@
   - role: bb-slave
     bb_user: "{{ worker_account }}"
     bb_slave_name: "{{ buildbot_net.bb_slave_name }}"
-    bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}"
-    bb_slave_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.slave_dir }}"
+    bb_env_dir: "{{ worker_home_dir }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}"
+    bb_slave_dir: "{{ worker_home_dir }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.slave_dir }}"
   - role: supervisor-service
     service_name: "{{ buildbot_net.slave_service_name }}"
-    service_dir: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.slave_dir }}"
-    service_command: "{{ getent_passwd[worker_account].4 }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}/bin/buildslave start --nodaemon"
+    service_dir: "{{ worker_home_dir }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.slave_dir }}"
+    service_command: "{{ worker_home_dir }}/{{ buildbot_net.bb_slave_name }}/{{ buildbot_net.env_name }}/bin/buildslave start --nodaemon"
     service_user: "{{ worker_account }}"
 
 # vim:ts=2:sw=2:noai:nosi
