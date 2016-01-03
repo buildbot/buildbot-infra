@@ -2,7 +2,7 @@ import requests
 import smtplib
 
 FROM = 'dustin@buildbot.net'
-RECIPIENT = ['devel@buildbot.net']
+RECIPIENT = 'devel@buildbot.net'
 
 def main():
     r = requests.get('https://api.github.com/repos/buildbot/buildbot/issues?labels=merge me')
@@ -15,9 +15,10 @@ def main():
     smtp = smtplib.SMTP('localhost')
     smtp.sendmail(FROM, RECIPIENT, """\
 Subject: Mergeable Buildbot pull requests
+From: %s
 To: %s
 
-%s""" % (RECIPIENT, body))
+%s""" % (FROM, RECIPIENT, body))
 
 if __name__ == "__main__":
     main()
