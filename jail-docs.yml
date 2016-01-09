@@ -21,13 +21,13 @@
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
     venv_name: "{{ env_name }}"
     venv_packages:
-    - jpeg
     - gmake
+    - jpeg
     venv_python_packages:
-    - 'sphinx==1.2.2'
-    - 'Pygments==2.0.1'   # This seems to be redundant since sphinx depends on Pygments
-    - 'sphinxcontrib-blockdiag'
     - 'docutils>=0.8'
+    - 'Pygments==2.0.1'   # This seems to be redundant since sphinx depends on Pygments
+    - 'sphinx==1.2.2'
+    - 'sphinxcontrib-blockdiag'
   - role: simple-buildout
     repo_url: git://github.com/buildbot/bbdocs.git
     repo_branch: master
