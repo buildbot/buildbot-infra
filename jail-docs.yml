@@ -22,6 +22,7 @@
     venv_name: "{{ env_name }}"
     venv_packages:
     - jpeg
+    - gmake
     venv_python_packages:
     - 'sphinx==1.2.2'
     - 'Pygments==2.0.1'   # This seems to be redundant since sphinx depends on Pygments
