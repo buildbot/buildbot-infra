@@ -37,6 +37,8 @@
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
     venv_name: "{{ bslave1.env_name }}"
+    venv_packages:
+    - jpeg
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
