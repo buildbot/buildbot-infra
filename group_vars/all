@@ -75,6 +75,7 @@ slave_master_allocations:
   - knuth.r.igoro.us
   - koobs-freebsd10
   - koobs-freebsd9
+  - linux
   - metrohm-win81
   - minimata
   - minime
