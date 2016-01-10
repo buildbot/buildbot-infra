@@ -25,9 +25,12 @@
     - jpeg
     venv_python_packages:
     - 'docutils>=0.8'
+    - 'funcparserlib==0.3.6'
+    - 'Pillow==3.1.0'
     - 'Pygments==2.0.1'   # This seems to be redundant since sphinx depends on Pygments
     - 'sphinx==1.2.2'
     - 'sphinxcontrib-blockdiag'
+    - 'webcolors==1.5'
   - role: simple-buildout
     repo_url: git://github.com/buildbot/bbdocs.git
     repo_branch: master
