@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /usr/local/bin/bash
 
 set -e
 
@@ -9,19 +9,34 @@ export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/
 # set up to gather output
 OUTPUT=/tmp/ansible-pull.$$.log
 
-# run ansible-pull from the directory containing the repository (and, thus, the inventory file)
-cd /home/{{ service_account}}/repo
-set +e
-ansible-pull \
-    -C master \
-    -d /home/{{ service_account }}/repo/ \
-    -m git \
-    -U {{ ansible_git_repository }} \
-    -i localhost \
-    --vault-password-file=/home/{{ service_account }}/.vault-password \
-    local.yml >$OUTPUT 2>&1
-RESULT=$?
-set -e
+# retry controls
+RETRIES=10
+RETRY=0
+
+while [[ $RETRY -lt $RETRIES ]]; do
+    RETRY=$((RETRY + 1))
+
+    # run ansible-pull from the directory containing the repository (and, thus, the inventory file)
+    cd /home/{{ service_account}}/repo
+    set +e
+    ansible-pull \
+        -C master \
+        -d /home/{{ service_account }}/repo/ \
+        -m git \
+        -U {{ ansible_git_repository }} \
+        -i localhost \
+        --vault-password-file=/home/{{ service_account }}/.vault-password \
+        local.yml >$OUTPUT 2>&1
+    RESULT=$?
+    set -e
+
+    if [[ $RESULT -eq 0 ]]; then
+        break
+    else
+        echo '==== RETRYING ===='
+        sleep 30
+    fi
+done
 
 if [ $RESULT -ne 0 ]; then
     echo "ansible-pull run on on "$(uname -n)" failed."
