@@ -9,9 +9,7 @@
     ftp_hostname: ftp.buildbot.net
   roles:
   - base
-  - role: ftp
-    ftp_root: "{{ ftp_root }}"
-    ftp_hostname: "{{ ftp_hostname }}"
+  - ftp
   # run a specialized SSH daemon to receive uploads from other internal hosts
   - role: ssh
     sshd_port: 2200
