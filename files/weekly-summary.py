@@ -62,12 +62,12 @@ def tablify_dict(d, show_header=True, row_order=None, col_order=None,
                  link_field=None, link_url_field=None):
     def format_cell(cell, is_header):
         elt = 'th' if is_header else 'td'
-        pattern = '<%s style="padding: 1px 8px; text-align: left;">%s</%s>'
+        pattern = u'<%s style="padding: 1px 8px; text-align: left;">%s</%s>'
         return pattern % (elt, cell, elt)
     def linkify(r, c):
         if c == link_field:
             url = d[r][link_url_field]
-            return '<a href="%s">%s</a>' % (url, d[r][c])
+            return u'<a href="%s">%s</a>' % (url, d[r][c])
         return d[r][c]
 
     if row_order is None:
@@ -81,14 +81,20 @@ def tablify_dict(d, show_header=True, row_order=None, col_order=None,
     else:
         cols = col_order
 
+    # convert everything to unicode, and don't look back
+    for r in rows:
+        for c in cols:
+            if not isinstance(d[r][c], unicode):
+                d[r][c] = unicode(d[r][c])
+
     # At a minimum, need to be able to fit the column headers. The final value
     # is for the row names. Putting it at the end to keep subsequent enumerate
     # calls simple.
     col_widths = [len(c) for c in cols] + [0]
     for r in rows:
-        col_widths[-1] = max(col_widths[-1], len(str(r)))
+        col_widths[-1] = max(col_widths[-1], len(unicode(r)))
         for i, c in enumerate(cols):
-            col_widths[i] = max(col_widths[i], len(str(d[r][c])))
+            col_widths[i] = max(col_widths[i], len(d[r][c]))
 
     # The first row of the table is the header.
     if show_header:
@@ -101,7 +107,7 @@ def tablify_dict(d, show_header=True, row_order=None, col_order=None,
         tr = []
         for i, c in enumerate(cols):
             value = linkify(r, c)
-            tr.append(format_cell(str(value), False))
+            tr.append(format_cell(value, False))
         table.append('<tr>' + ''.join(tr) + '</tr>')
     return '<table>\n' + '\n'.join(table) + '\n</table>\n'
 
@@ -253,7 +259,7 @@ def make_html(results):
     return email % dict(body=body % body_parts)
 
 def send_email(html):
-    msg = MIMEText(html, 'html')
+    msg = MIMEText(html.encode('utf-8'), 'html', 'utf-8')
     msg['Subject'] = "Buildbot Weekly Summary"
     msg['From'] = FROM
     msg['To'] = ', '.join(RECIPIENTS)
@@ -265,7 +271,6 @@ def main():
     end_day = date.today() - timedelta(1)
     start_day = end_day - timedelta(6)
 
-    #dl = defer.DeferredList([get_trac_tickets()])
     dl = defer.DeferredList([
         get_trac_tickets(start_day, end_day),
         get_github_prs('buildbot/buildbot', start_day, end_day),
