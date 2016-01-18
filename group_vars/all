@@ -61,7 +61,6 @@ root_email_destination: "sysadmin@buildbot.net"
 # This structure refers to `build_slaves` in `secrets.yml`
 slave_master_allocations:
   nine:
-  - knuth
   - buildbot-linux4
   - bslave1
   master:
@@ -72,7 +71,6 @@ slave_master_allocations:
   - centos_5_python2_4
   - debian
   - freebsd_7
-  - knuth.r.igoro.us
   - koobs-freebsd10
   - koobs-freebsd9
   - linux
