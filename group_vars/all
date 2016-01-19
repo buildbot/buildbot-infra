@@ -63,6 +63,7 @@ slave_master_allocations:
   nine:
   - buildbot-linux4
   - bslave1
+  - bdbaddog-nine
   master:
   - automan
   - bghimi4-2
@@ -84,6 +85,7 @@ slave_master_allocations:
   - w7.kvm.r.igoro.us
   - win7-cygwin
   - xp-msysgit
+  - bdbaddog-eight
   obsolete:
   - cm-bbot-leopard-001
   - cm-bbot-leopard-002
