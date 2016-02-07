@@ -1,6 +1,6 @@
 $TTL            86400
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2015120501      ;serial
+                                        2016020701      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -50,3 +50,4 @@ bot             IN      A       192.168.80.242
 ftp             IN      A       192.168.80.243
 nine            IN      A       192.168.80.244
 supybot         IN      A       192.168.80.245
+build1          IN      A       192.168.80.210
