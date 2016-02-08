@@ -4,6 +4,7 @@
     name: "{{ item.username }}"
     groups: wheel
     remove: true
+    password: x  # unlock, but not a valid password
     state: "{{ item.state }}"
   with_items: admin_users
 
