@@ -6,3 +6,5 @@
   sudo: yes
   roles:
   - base-vm
+  - role: docker-worker
+    bb_slave_name: linux

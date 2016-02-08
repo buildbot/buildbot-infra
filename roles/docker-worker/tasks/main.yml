@@ -1,0 +1,13 @@
+---
+- name: "Install worker-startup.sh"
+  template:
+    src: "worker-startup.sh"
+    dest: "/root/{{bb_slave_name}}-worker-startup.sh"
+
+# because this just starts containers, it doesn't act like a service, so we just
+# start it on boot
+- name: "Run worker-startup on reboot"
+  cron:
+    name: "{{bb_slave_name}}-worker"
+    job: "/bin/bash /root/{{bb_slave_name}}-worker-startup.sh"
+    special_time: reboot

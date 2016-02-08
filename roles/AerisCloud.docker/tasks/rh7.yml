@@ -1,0 +1,5 @@
+- name: "Install docker"
+  yum: >
+    name=docker
+    state=present
+  notify: Restart Docker
