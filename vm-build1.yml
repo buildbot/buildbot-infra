@@ -5,4 +5,4 @@
   connection: local
   sudo: yes
   roles:
-  - base
+  - base-vm
