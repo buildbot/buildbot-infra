@@ -36,18 +36,27 @@ worker_account: bbuser
 # Ansible installation is taken care of depending on what kind of host is that
 # (service host, jail, vm)
 mandatory_packages:
-- sudo
-- git       # this is a mandatory package since we rely on ansible-pull
+  FreeBSD:
+  - sudo
+  - git       # this is a mandatory package since we rely on ansible-pull
+  Debian:
+  - sudo
+  - git       # this is a mandatory package since we rely on ansible-pull
 
 # TODO: make use of these
 # Utility packages are the ones that must be installed on service host only (at
 # least, at the moment).
 # The original list is based on http://trac.buildbot.net/ticket/3036
 utility_packages:
-- bash
-- rsync
-- screen
-- vim-lite  # we probably do not want to bring all the stuff
+  FreeBSD:
+  - bash
+  - rsync
+  - screen
+  Debian:
+  - bash
+  - rsync
+  - screen
+  - vim-tiny  # we probably do not want to bring all the stuff
 
 # The upstream repository from which the service host crontask should pull
 ansible_git_repository: https://github.com/buildbot/buildbot-infra

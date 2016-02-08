@@ -1,7 +1,19 @@
 ---
-- name: install ansible
+- name: install ansible (FreeBSD)
   pkgng:
     name: ansible
+    state: present
+  when: ansible_distribution == "FreeBSD"
+
+- name: install ansible (Debian)
+  apt:
+    name: ansible
+    state: present
+  when: ansible_distribution == "Debian"
+
+- name: create wheel group
+  group:
+    name: "wheel"
     state: present
 
 - name: create service account
@@ -13,7 +25,7 @@
 
 - name: add mail alias for service account to root
   lineinfile:
-    dest: "/etc/mail/aliases"
+    dest: "{{ '/etc/mail/aliases' if ansible_distribution == 'FreeBSD' else '/etc/aliases' }}"
     line: "{{ service_account }}: root"
   notify: newaliases
 

@@ -2,8 +2,12 @@
 - include: packages.yml
 - include: sudo.yml
 - include: syslog.yml
+  when: ansible_distribution == "FreeBSD"
 - include: sendmail.yml
+  when: ansible_distribution == "FreeBSD"
 - include: rootpw.yml
 - include: ansible-pull.yml
 - include: periodic.yml
+  when: ansible_distribution == "FreeBSD"
 - include: python-cert-symlink.yml
+  when: ansible_distribution == "FreeBSD"

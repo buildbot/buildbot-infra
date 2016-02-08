@@ -1,12 +1,12 @@
 ---
 - name: enable sudo modular configuration
   lineinfile:
-    dest: "/usr/local/etc/sudoers"
-    line: "#includedir /usr/local/etc/sudoers.d"
+    dest: "{{ sudoers_root }}/sudoers"
+    line: "#includedir {{ sudoers_root }}/sudoers.d"
     state: present
     validate: "visudo -cf %s"
 
 - name: enable passwordless sudo for members of the wheel group
   copy:
     src: "sudoers-wheel"
-    dest: "/usr/local/etc/sudoers.d/sudoers-wheel"
+    dest: "{{ sudoers_root }}/sudoers.d/sudoers-wheel"
