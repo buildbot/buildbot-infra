@@ -268,8 +268,8 @@ def send_email(html):
     s.quit()
 
 def main():
-    end_day = date.today() - timedelta(1)
-    start_day = end_day - timedelta(6)
+    end_day = date.today()
+    start_day = end_day - timedelta(7)
 
     dl = defer.DeferredList([
         get_trac_tickets(start_day, end_day),
