@@ -29,7 +29,7 @@
     bb_user_home: "{{ getent_passwd[worker_account].4 }}"
     bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}"  # Must match the one created above
     bb_master_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
-    bb_branch: "bug2340"      # A branch in buildbot.git
+    bb_branch: "master"       # A branch in buildbot.git
     bb_config_branch: "nine"  # A branch in metabbotcfg.git
     bb_service: "{{ master_service_name }}"
   - role: supervisor-service
