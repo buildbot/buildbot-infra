@@ -18,6 +18,7 @@
     mode: 0600
     owner: root
     group: wheel
+  notify: restart vsftpd
   when: ssl
 
 - name: create ssl key file
