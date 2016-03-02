@@ -55,6 +55,7 @@
   copy:
     content: "{{ ssl_keys[server_name]['cert'] }}"
     dest: "{{ nginx_cert_dir }}/{{ server_name }}.crt"
+  notify: reload nginx
   when: ssl
 
 - name: create ssl key file
