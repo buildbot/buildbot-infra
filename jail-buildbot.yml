@@ -20,6 +20,7 @@
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
     venv_name: "{{ env_name }}"   # Another possibility is to just define correct variable above
     venv_packages:
+    - py27-sqlite3
     - sqlite3
     venv_python_packages:
     - pysqlite
