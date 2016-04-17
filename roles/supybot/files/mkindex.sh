@@ -15,7 +15,11 @@ for dirpath, _, filenames in os.walk('.'):
                 name, date, ordinal, extension = m.group('name', 'date', 'ordinal', 'extension')
                 meeting = meetings.setdefault(name, {}).setdefault(date, {}).setdefault(ordinal,
                         {'name': name, 'date': date, 'ordinal': ordinal})
-                meeting[extension] = '{}/{}'.format(dirpath[2:], filename)
+                if len(dirpath) > 2:
+                        relpath = dirpath[2:] + '/'
+                else:
+                        relpath = ''
+                meeting[extension] = '{}{}'.format(relpath, filename)
 
 def a(href, text):
         return '<a href="{}">{}</a>'.format(href, text)
