@@ -23,14 +23,6 @@
     venv_packages:
     - gmake
     - jpeg
-    venv_python_packages:
-    - 'docutils>=0.8'
-    - 'funcparserlib==0.3.6'
-    - 'Pillow==3.1.0'
-    - 'Pygments==2.0.1'   # This seems to be redundant since sphinx depends on Pygments
-    - 'sphinx==1.2.2'
-    - 'sphinxcontrib-blockdiag'
-    - 'webcolors==1.5'
   - role: simple-buildout
     repo_url: git://github.com/buildbot/bbdocs.git
     repo_branch: master
@@ -44,6 +36,7 @@
     target_commands:
     # `command` module does not allow to set env variables, nor expands them,
     # so let's use make's variables.
+    - "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/pip install -e master[docs]":
     - "gmake -C master/docs PATH:={{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin:$(PATH) VERSION=latest"
     - "find master/docs/_build/html -name '*.html' -exec python2 {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/add-tracking.py {} ;"
     - "rm -rf {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs/latest"
