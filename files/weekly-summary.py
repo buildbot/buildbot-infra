@@ -275,6 +275,7 @@ def main():
         get_trac_tickets(start_day, end_day),
         get_github_prs('buildbot/buildbot', start_day, end_day),
         get_github_prs('buildbot/buildbot-infra', start_day, end_day),
+        get_github_prs('buildbot/metabbotcfg', start_day, end_day),
     ], fireOnOneErrback=True, consumeErrors=True)
     dl.addCallback(make_html)
     dl.addCallback(send_email)
