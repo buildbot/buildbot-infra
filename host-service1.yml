@@ -3,7 +3,7 @@
   hosts: service1
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
   roles:
   - role: jail
     name: mx

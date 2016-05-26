@@ -4,7 +4,7 @@
   hosts: lists
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
   roles:
   - role: base
     configure_sendmail: False

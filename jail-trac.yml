@@ -4,6 +4,6 @@
   hosts: trac
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
   roles:
   - base

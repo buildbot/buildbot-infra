@@ -3,7 +3,7 @@
   hosts: syslog
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
   roles:
     - role: base
       # don't add the base configuration for syslog here, as this host

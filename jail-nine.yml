@@ -3,7 +3,7 @@
   hosts: nine
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
   vars:
     env_name: venv
     web_host_name: "nine.buildbot.net"
