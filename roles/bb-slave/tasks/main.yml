@@ -1,6 +1,6 @@
 ---
 - name: make sure build slave config exists
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildslave create-slave {{ bb_slave_dir }} {{ build_slaves[bb_slave_name].master }} {{ bb_slave_name }} {{ build_slaves[bb_slave_name].password }}"
   args:
     creates: "{{ bb_slave_dir }}/buildbot.tac"
