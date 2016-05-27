@@ -2,7 +2,7 @@
 # repo.
 ---
 - name: Make sure we have an updated copy of Buildbot repository
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   git:
     repo: "{{ buildbot_repo }}"
     dest: "{{ bb_user_home }}/{{ buildbot_short }}"
@@ -17,18 +17,18 @@
   when: "bb_repo_state|changed"
 
 - name: Install/upgrade build master
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
   when: "bb_repo_state|changed"
 
 - name: Create build master config
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot create-master {{ bb_master_dir }}"
   args:
     creates: "{{ bb_master_dir }}/buildbot.tac"
 
 - name: Make sure we have an updated copy of metabbotcfg repository
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   git:
     repo: "{{ metabbotcfg_repo }}"
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}"
@@ -38,14 +38,14 @@
   register: mbb_repo_state
 
 - name: Make sure we have a symlink for the master.cfg
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   file:
     src: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/master.cfg"
     dest: "{{ bb_master_dir }}/master.cfg"
     state: link
 
 - name: Make sure we have latest build slave passwords
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   copy:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item }}.pass"
     content: "{{ build_slaves[item].password }}"
@@ -55,7 +55,7 @@
   # this is for future improvements.
 
 - name: Remove passwords for obsolete slaves
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   file:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item }}.pass"
     state: absent
@@ -63,7 +63,7 @@
 
 # It's important to get the config and passwords before trying to upgrade the database.
 - name: Ensure latest schema of the database
-  sudo_user: "{{ bb_user }}"
+  become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot upgrade-master {{ bb_master_dir }}"
   when: "bb_repo_state|changed"
 

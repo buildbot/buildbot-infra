@@ -1,6 +1,6 @@
 ---
 - name: Make sure we have an updated copy of the repository
-  sudo_user: "{{ target_user }}"
+  become_user: "{{ target_user }}"
   git:
     repo: "{{ repo_url }}"
     dest: "{{ target_dir }}"
@@ -10,7 +10,7 @@
   register: repo_state
 
 - name: Perform build
-  sudo_user: "{{ target_user }}"
+  become_user: "{{ target_user }}"
   command: "{{ item }}"
   args:
     chdir: "{{ target_dir }}"

@@ -26,7 +26,7 @@
   with_items: venv_packages
 
 - name: create the virtual environment
-  sudo_user: "{{ venv_user }}"
+  become_user: "{{ venv_user }}"
   pip:
     name: "{{ item }}"
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"

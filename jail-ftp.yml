@@ -3,7 +3,7 @@
   hosts: ftp
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
   vars:
     ftp_root: /data/ftp
     ftp_hostname: ftp.buildbot.net

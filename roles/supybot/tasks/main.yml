@@ -2,7 +2,7 @@
 # repo.
 ---
 - name: update supybot repository
-  sudo_user: "{{ supybot_user }}"
+  become_user: "{{ supybot_user }}"
   git:
     repo: "{{ supybot_repo }}"
     dest: "{{ supybot_user_home }}/supybot-repo"
@@ -17,7 +17,7 @@
   when: "supybot_repo_state|changed"
 
 - name: update meetbot repository
-  sudo_user: "{{ supybot_user }}"
+  become_user: "{{ supybot_user }}"
   git:
     repo: "{{ meetbot_repo }}"
     dest: "{{ supybot_user_home }}/meetbot-repo"
