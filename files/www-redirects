@@ -17,3 +17,5 @@ rewrite ^/buildbot/docs/(latest|current)/WithProperties.html http://docs.buildbo
 rewrite ^/buildbot/docs/(latest|current)/release-notes.html http://docs.buildbot.net/$1/relnotes/index.html permanent;
 rewrite ^/buildbot/docs/(latest|current)/release-notes/(.*) http://docs.buildbot.net/$1/relnotes/$2 permanent;
 rewrite ^/buildbot/docs(.*)$ http://docs.buildbot.net$1 permanent;
+# Renamed documentation pages.
+rewrite ^/latest/developer/cls-forcesched.html http://docs.buildbot.net/latest/manual/cfg-schedulers.html#forcescheduler-scheduler permanent;
