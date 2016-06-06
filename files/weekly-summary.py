@@ -245,10 +245,13 @@ def make_html(results):
         '%(trac)s\n'
         '\n\n'
         '<h1 style="padding-top: 1em;">Buildbot Pull Requests</h1>\n'
-        '%(github/buildbot/buildbot)s' 
+        '%(github/buildbot/buildbot)s'
         '\n\n'
         '<h1 style="padding-top: 1em;">Buildbot-Infra Pull Requests</h1>\n'
-        '%(github/buildbot/buildbot-infra)s')
+        '%(github/buildbot/buildbot-infra)s'
+        '<h1 style="padding-top: 1em;">Meta-buildbot Pull Requests</h1>\n'
+        '%(github/buildbot/metabbotcfg)s'
+    )
     body_parts = {}
     for success, value in results:
         if not success:
