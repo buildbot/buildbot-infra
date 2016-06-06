@@ -2,3 +2,4 @@
 dev-hosts
 dev-secrets.yml
 *.pyc
+.tox
