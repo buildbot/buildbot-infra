@@ -17,3 +17,13 @@ rewrite ^/buildbot/docs/(latest|current)/WithProperties.html http://docs.buildbo
 rewrite ^/buildbot/docs/(latest|current)/release-notes.html http://docs.buildbot.net/$1/relnotes/index.html permanent;
 rewrite ^/buildbot/docs/(latest|current)/release-notes/(.*) http://docs.buildbot.net/$1/relnotes/$2 permanent;
 rewrite ^/buildbot/docs(.*)$ http://docs.buildbot.net$1 permanent;
+# Renamed documentation pages.
+rewrite ^/latest/developer/master-slave\.html http://docs.buildbot.net/latest/developer/master-worker.html permanent;
+rewrite ^/latest/developer/cls-bslavemanager\.html http://docs.buildbot.net/latest/developer/cls-workermanager.html permanent;
+rewrite ^/latest/developer/cls-buildslave\.html http://docs.buildbot.net/latest/developer/cls-worker.html permanent;
+rewrite ^/latest/manual/cfg-buildslaves-libvirt\.html http://docs.buildbot.net/latest/manual/cfg-workers-libvirt.html permanent;
+rewrite ^/latest/manual/cfg-buildslaves-docker\.html http://docs.buildbot.net/latest/manual/cfg-workers-docker.html permanent;
+rewrite ^/latest/manual/cfg-buildslaves-openstack\.html http://docs.buildbot.net/latest/manual/cfg-workers-openstack.html permanent;
+rewrite ^/latest/manual/cfg-buildslaves-ec2\.html http://docs.buildbot.net/latest/manual/cfg-workers-ec2.html permanent;
+rewrite ^/latest/manual/cfg-buildslaves\.html http://docs.buildbot.net/latest/manual/cfg-workers.html permanent;
+rewrite ^/latest/manual/installation/buildslave\.html http://docs.buildbot.net/latest/manual/installation/worker.html permanent;
