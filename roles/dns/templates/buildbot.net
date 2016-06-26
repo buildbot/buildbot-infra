@@ -1,6 +1,6 @@
 $TTL            86400
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2016022002      ;serial
+                                        2016062601      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -30,6 +30,7 @@ mac1            IN      A       140.211.10.234
 ns1             IN      A       140.211.10.236
 docs            IN      A       140.211.10.237
 pr-docs         IN      CNAME   pr-docs.buildbot.net.s3-website-us-east-1.amazonaws.com.
+status          IN      CNAME   status.buildbot.net.s3-website-us-east-1.amazonaws.com.
 nine            IN      A       140.211.10.244
 supybot         IN      A       140.211.10.245
 
