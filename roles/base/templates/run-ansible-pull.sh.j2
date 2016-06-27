@@ -44,4 +44,7 @@ if [ $RESULT -ne 0 ]; then
     cat $OUTPUT
 fi
 
+# clean up temp files
+find /home/{{ service_account }}/.ansible/tmp -type d -mtime +1 -delete
+
 rm -f "$OUTPUT"
