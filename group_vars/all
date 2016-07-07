@@ -23,6 +23,8 @@ admin_users:
   state: present
 - username: sean
   state: present
+- username: tardyp
+  state: present
 
 # This account is used to run `ansible-pull` and has passwordless sudo rights
 # on the host.
