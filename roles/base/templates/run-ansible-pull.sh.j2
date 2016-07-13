@@ -26,6 +26,7 @@ while [[ $RETRY -lt $RETRIES ]]; do
         -U {{ ansible_git_repository }} \
         -i localhost \
         --vault-password-file=/home/{{ service_account }}/.vault-password \
+        -l "localhost,$(hostname),127.0.0.1"
         local.yml >$OUTPUT 2>&1
     RESULT=$?
     set -e
