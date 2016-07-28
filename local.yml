@@ -18,6 +18,10 @@
       key: "{{ansible_hostname}}"
     changed_when: False
 
+  - debug:
+      var: groups
+    changed_when: False
+
 - include: "track-config.yml"
   vars:
     commit_message: "pre-ansible checkin"
