@@ -22,6 +22,7 @@
     venv_packages:
     - py27-sqlite3
     - sqlite3
+    - enchant
     venv_python_packages:
     - pysqlite
   - role: bb-master
