@@ -39,6 +39,7 @@
     venv_name: "{{ bslave1.env_name }}"
     venv_packages:
     - jpeg
+    - enchant
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
@@ -62,6 +63,7 @@
       - sqlite3
       - node
       - npm
+      - enchant
     venv_python_packages:
     - buildbot-slave    # Install the latest released version
   - role: bb-slave
