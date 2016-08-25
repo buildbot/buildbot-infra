@@ -26,10 +26,10 @@
   command: "git reset --hard HEAD^"
   args:
     chdir: "{{ target_dir }}"
-  when: "command_result.rc != 0"
+  when: "repo_state|changed and command_result.rc != 0"
 
 - name: Indicate failure
   fail: msg="the buildout command failed"
-  when: "command_result.rc != 0"
+  when: "repo_state|changed and command_result.rc != 0"
 
 # vim:ts=2:sw=2:noai:nosi
