@@ -11,6 +11,17 @@
     accept_hostkey: True
   register: bb_repo_state
 
+- name: Make sure we have an updated copy of Buildbot travis repository
+  become_user: "{{ bb_user }}"
+  git:
+    repo: "{{ buildbot_travis_repo }}"
+    dest: "{{ bb_user_home }}/{{ buildbot_travis_short }}"
+    update: yes
+    version: "{{bb_travis_branch}}"
+    accept_hostkey: True
+  register: bbt_repo_state
+  when: "bb_travis_branch is defined"
+
 - name: stop Supervisor service
   shell: "supervisorctl stop {{ bb_service }}"
   ignore_errors: True
@@ -19,7 +30,13 @@
 - name: Install/upgrade build master
   become_user: "{{ bb_user }}"
   script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
-  when: "bb_repo_state|changed"
+  when: "bb_repo_state|changed or bbt_repo_state|changed"
+
+- name: Install/upgrade buildbot_travis
+  become_user: "{{ bb_user }}"
+  script: "{{ bb_env_dir }}/bin/pip install --pre --upgrade -e {{ bb_user_home }}/{{ buildbot_travis_short }}"
+  when: "bb_travis_branch is defined and bbt_repo_state|changed"
+
 
 - name: Create build master config
   become_user: "{{ bb_user }}"
