@@ -4,9 +4,12 @@ import smtplib
 FROM = 'dustin@buildbot.net'
 RECIPIENT = 'devel@buildbot.net'
 
+
 def main():
-    r = requests.get('https://api.github.com/repos/buildbot/buildbot/issues?labels=merge me')
-    body = [ "%(html_url)s - %(title)s" % pr for pr in r.json() ]
+    r = requests.get(
+        'https://api.github.com/repos/buildbot/buildbot/issues?labels=merge me'
+    )
+    body = ["%(html_url)s - %(title)s" % pr for pr in r.json()]
     if not body:
         return
 
@@ -22,4 +25,3 @@ To: %s
 
 if __name__ == "__main__":
     main()
-

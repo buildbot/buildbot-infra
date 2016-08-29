@@ -3,11 +3,15 @@ language: python
 python:
   - 2.7
 
+env:
+- TOXENV=lint
+- TOXENV=ansible-syntax
+
 install:
-  - pip install ansible
+  - pip install tox
 
 script:
-  - ansible-playbook -i localhost local.yml --syntax-check
+- tox
 
 notifications:
   email: false

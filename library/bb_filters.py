@@ -24,6 +24,7 @@
 from hashlib import new as new_hash
 from random import Random
 
+
 def seeded_range(seed, start, stop=None, step=1, extra=None):
     """
     A filter to produce deterministic random numbers.
@@ -47,6 +48,7 @@ def seeded_range(seed, start, stop=None, step=1, extra=None):
 
     # We rely on randrange's interpretation of parameters
     return Random(hashed_seed).randrange(start, stop, step)
+
 
 class FilterModule(object):
     """

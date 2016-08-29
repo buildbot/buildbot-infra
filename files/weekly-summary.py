@@ -35,10 +35,14 @@ WEEKLY_MEETING_TEXT = textwrap.dedent("""
     That is about 90 minutes from now!
 
     <p>Meetings are in #buildbot on Freenode, open to any and all participants.
-    They generally focus on organizational, rather than technical issues, but are open to anything Buildbot-related.
-    To raise a topic, add it to "All Other Business" in the <a href="https://titanpad.com/buildbot-agenda">agenda</a>, or just speak up during the meeting.
+    They generally focus on organizational, rather than technical issues,
+    but are open to anything Buildbot-related.
+    To raise a topic, add it to "All Other Business" in the
+    <a href="https://titanpad.com/buildbot-agenda">agenda</a>,
+    or just speak up during the meeting.
 
-    <p>Meeting minutes are available <a href="https://supybot.buildbot.net/meetings/">here</a>.
+    <p>Meeting minutes are available
+    <a href="https://supybot.buildbot.net/meetings/">here</a>.
     """)
 
 email = textwrap.dedent("""\
@@ -51,6 +55,7 @@ email = textwrap.dedent("""\
     </html>
     """)
 
+
 def get_body(what, f):
     def cb(resp):
         d = readBody(resp)
@@ -58,12 +63,14 @@ def get_body(what, f):
         return d
     return cb
 
+
 def tablify_dict(d, show_header=True, row_order=None, col_order=None,
                  link_field=None, link_url_field=None):
     def format_cell(cell, is_header):
         elt = 'th' if is_header else 'td'
         pattern = u'<%s style="padding: 1px 8px; text-align: left;">%s</%s>'
         return pattern % (elt, cell, elt)
+
     def linkify(r, c):
         if c == link_field:
             url = d[r][link_url_field]
@@ -111,6 +118,7 @@ def tablify_dict(d, show_header=True, row_order=None, col_order=None,
         table.append('<tr>' + ''.join(tr) + '</tr>')
     return '<table>\n' + '\n'.join(table) + '\n</table>\n'
 
+
 def get_trac_tickets(start_day, end_day):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
@@ -121,8 +129,8 @@ def get_trac_tickets(start_day, end_day):
         next(tickets)
         # Returned format is id, summary, type.
         summary = [{'id': t[0], 'summary': t[1], 'type': t[2],
-            'url': TRAC_BUILDBOT_TICKET_URL % {'ticket': t[0]}}
-            for t in tickets]
+                    'url': TRAC_BUILDBOT_TICKET_URL % {'ticket': t[0]}}
+                   for t in tickets]
         return (what, summary)
 
     def summarize_trac_tickets(results):
@@ -144,17 +152,20 @@ def get_trac_tickets(start_day, end_day):
         # Left-justify every cell except the first column. Return None for the
         # first column to have it skipped.
         opened_table = tablify_dict(opened, show_header=False,
-            col_order=col_order, link_field='id', link_url_field='url')
+                                    col_order=col_order, link_field='id',
+                                    link_url_field='url')
         opened_overview = '\n'.join(['<h2>New/Reopened Tickets</h2>',
-            opened_table])
+                                     opened_table])
         closed_table = tablify_dict(closed, show_header=False,
-            col_order=col_order, link_field='id', link_url_field='url')
+                                    col_order=col_order, link_field='id',
+                                    link_url_field='url')
         closed_overview = '\n'.join(['<h2>Closed Tickets</h2>', closed_table])
 
         trac_summary = [opened_overview, closed_overview]
         return ('trac', '\n\n'.join(trac_summary))
 
-    trac_query_url = ('%(trac_url)s/query?%(status)s&format=tab'
+    trac_query_url = (
+        '%(trac_url)s/query?%(status)s&format=tab'
         '&%(time_arg)s=%(start)s..%(end)s'
         '&col=id&col=summary&col=type&col=status&order=id')
     url_options = {
@@ -185,6 +196,7 @@ def get_trac_tickets(start_day, end_day):
     dl.addCallback(summarize_trac_tickets)
     return dl
 
+
 def get_github_prs(project, start_day, end_day):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
@@ -212,7 +224,7 @@ def get_github_prs(project, start_day, end_day):
                     happened = datetime.strptime(pr[when], gh_time_format)
                     # If this pull request was created outside of the summary
                     # period, skip it.
-                    if happened.date() < start_day or happened.date() > end_day:
+                    if not (start_day <= happened.date() <= end_day):
                         continue
                     pr_dict[len(pr_dict)] = pr
 
@@ -220,13 +232,13 @@ def get_github_prs(project, start_day, end_day):
         for group in categories:
             what, _, _, pr_dict = group
             title = '<h2>%s Pull Requests</h2>' % (what,)
-            table = tablify_dict(pr_dict, show_header=False,
-                row_order=sorted(pr_dict.keys(), lambda a,b: cmp(b, a)),
+            table = tablify_dict(
+                pr_dict, show_header=False,
+                row_order=sorted(pr_dict.keys(), lambda a, b: cmp(b, a)),
                 col_order=['number', 'title'],
                 link_field='number', link_url_field='html_url')
             overviews.append('\n'.join([title, table]))
         return ('github/' + project, '\n\n'.join(overviews))
-
 
     gh_api_url = ('%(api_url)s/repos/%(project)s/pulls?state=all')
     url_options = {'api_url': GITHUB_API_URL, 'project': project}
@@ -261,6 +273,7 @@ def make_html(results):
     body_parts['weekly-meeting'] = WEEKLY_MEETING_TEXT
     return email % dict(body=body % body_parts)
 
+
 def send_email(html):
     msg = MIMEText(html.encode('utf-8'), 'html', 'utf-8')
     msg['Subject'] = "Buildbot Weekly Summary"
@@ -269,6 +282,7 @@ def send_email(html):
     s = smtplib.SMTP('localhost')
     s.sendmail(msg['From'], RECIPIENTS, msg.as_string())
     s.quit()
+
 
 def main():
     end_day = date.today()
