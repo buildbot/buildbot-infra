@@ -2,5 +2,8 @@
 buildbot_repo: git://github.com/buildbot/buildbot.git
 buildbot_short: buildbot
 
+buildbot_travis_repo: git://github.com/buildbot/buildbot_travis.git
+buildbot_travis_short: buildbot_travis
+
 metabbotcfg_repo: git://github.com/buildbot/metabbotcfg.git
 metabbotcfg_short: metabbotcfg
