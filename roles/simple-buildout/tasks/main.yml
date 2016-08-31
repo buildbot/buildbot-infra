@@ -14,7 +14,7 @@
   command: "{{ item }}"
   args:
     chdir: "{{ target_dir }}"
-  with_items: target_commands
+  with_items: "{{ target_commands }}"
   when: "repo_state|changed"
   register: command_result
   ignore_errors: true
