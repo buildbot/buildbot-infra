@@ -6,12 +6,12 @@
     remove: true
     password: x  # unlock, but not a valid password
     state: "{{ item.state }}"
-  with_items: admin_users
+  with_items: "{{ admin_users }}"
 
 - name: add administrative users' SSH keys
   authorized_key:
     user: "{{ item.username }}"
     key: "{{ lookup('file', 'authorized_keys/' + item.username + '.keys') }}"
-  with_items: admin_users
+  with_items: "{{ admin_users }}"
   # only operate on present users; absent users don't have a homedir in /etc/passwd anymore
   when: item.state == 'present'

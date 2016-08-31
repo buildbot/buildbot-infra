@@ -23,13 +23,13 @@
   pkgng:
     name: "{{item}}"
     state: present
-  with_items: venv_packages
+  with_items: "{{ venv_packages }}"
 
 - name: create the virtual environment
   become_user: "{{ venv_user }}"
   pip:
     name: "{{ item }}"
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
-  with_items: venv_python_packages
+  with_items: "{{ venv_python_packages }}"
 
 # vim:ts=2:sw=2:noai:nosi
