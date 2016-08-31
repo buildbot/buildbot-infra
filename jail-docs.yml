@@ -20,9 +20,12 @@
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
     venv_name: "{{ env_name }}"
+    venv_python_packages:
+    - pip
     venv_packages:
     - gmake
     - jpeg
+    - python
   - role: simple-buildout
     repo_url: git://github.com/buildbot/bbdocs.git
     repo_branch: master
