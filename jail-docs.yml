@@ -23,6 +23,7 @@
     venv_packages:
     - gmake
     - jpeg
+    - python
   - role: simple-buildout
     repo_url: git://github.com/buildbot/bbdocs.git
     repo_branch: master
