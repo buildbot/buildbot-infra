@@ -1,11 +1,13 @@
 ---
 - name: create jail
+  tags: jail
   command: "ezjail-admin create -f {{ ezjail_default_flavour }} {{ name }} {{ ip_address|join(',') }}"
   args:
     creates: "{{ ezjail_conf_dir }}/{{ name }}"
   register: jail_created
 
 - name: set jail's hostname
+  tags: jail
   lineinfile:
     dest: "{{ ezjail_conf_dir }}/{{ name }}"
     regexp: "^export jail_{{ name }}_hostname="
@@ -13,10 +15,12 @@
   when: jail_created|changed
 
 - name: start jail for bootstrapping
+  tags: jail
   command: "ezjail-admin start {{ name }}"
   when: jail_created|changed
 
 - name: prepare bootstrap script
+  tags: jail
   template:
     src: "templates/run-once"
     dest: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
@@ -24,27 +28,32 @@
   when: jail_created|changed
 
 - name: execute bootstrap script
+  tags: jail
   command: "jexec {{ name }} root/run-once"
   when: jail_created|changed
   register: debug
 
 - name: print output of bootstrap script
+  tags: jail
   debug:
     var: debug.stdout_lines
   when: jail_debug
 
 - name: remove bootstrap script
+  tags: jail
   file:
     path: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
     state: absent
   when: jail_created|changed
 
 - name: check if the jail is running
+  tags: jail
   shell: "jls -j {{ name }} > /dev/null 2>&1"
   ignore_errors: True
   register: jail_running
 
 - name: start the jail
+  tags: jail
   command: "ezjail-admin start {{ name }}"
   when: jail_running|failed
 
