@@ -33,6 +33,7 @@ pr-docs         IN      CNAME   pr-docs.buildbot.net.s3-website-us-east-1.amazon
 status          IN      CNAME   status.buildbot.net.s3-website-us-east-1.amazonaws.com.
 nine            IN      A       140.211.10.244
 supybot         IN      A       140.211.10.245
+events          IN      A       140.211.10.227
 prci            IN      A       209.177.87.210
 
 ; Our "internal" addreses.  Note that we do not use split DNS. Also note that
@@ -54,3 +55,4 @@ ftp             IN      A       192.168.80.243
 nine            IN      A       192.168.80.244
 supybot         IN      A       192.168.80.245
 build1          IN      A       192.168.80.210
+events          IN      A       192.168.80.227

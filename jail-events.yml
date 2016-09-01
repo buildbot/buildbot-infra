@@ -1,0 +1,32 @@
+---
+- name: configure events
+  hosts: events
+  gather_facts: no
+  connection: local
+  become: yes
+  vars:
+    env_name: venv
+    web_host_name: "events.buildbot.net"
+
+  roles:
+  - base
+  - role: user
+    user_id: "{{ worker_account }}"
+    user_name: Buildbot Worker Account
+  - role: virtualenv
+    venv_user: "{{ worker_account }}"
+    venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
+    venv_name: "{{ env_name }}"
+    venv_packages: []
+    venv_python_packages: []
+  - role: supervisor-service
+    service_name: events
+    service_dir: "{{ getent_passwd[worker_account].4 }}/run"
+    service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/listen-events"
+    service_user: "{{ worker_account }}"
+  - role: nginx
+    nginx_template: proxy
+    server_name: "{{ web_host_name }}"
+    ssl: true
+    upstream_url: 192.168.80.227:8080
+    ssl: True
