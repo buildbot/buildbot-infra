@@ -39,7 +39,7 @@
     target_commands:
     # `command` module does not allow to set env variables, nor expands them,
     # so let's use make's variables.
-    - "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/pip install -e master[docs]":
+    - "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/pip install -e master[docs]"
     - "gmake -C master/docs PATH:={{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin:$(PATH) VERSION=latest"
     - "find master/docs/_build/html -name '*.html' -exec python2 {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/add-tracking.py {} ;"
     - "rm -rf {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs/latest"
