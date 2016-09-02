@@ -19,8 +19,8 @@ fi
 git config user.email "{{ track_config['default_author_email'] }}"
 git config user.name "{{ track_config['default_author_name'] }}"
 
-# check for changes
-if git status 2>/dev/null | grep -q 'working directory clean'; then
+# check for changes (some versions of git have different messages)
+if git status 2>/dev/null | egrep -qe 'working (tree|directory) clean'; then
     exit 0
 fi
 
