@@ -1,23 +1,4 @@
 ---
-- name: install elasticsearch
-  pkgng:
-    name: elasticsearch2
-    state: present
-  notify: restart elasticsearch
-
-- name: install logstash
-  pkgng:
-    name: logstash
-    state: present
-  notify: restart logstash
-
-- name: install kibana
-  pkgng:
-    name: kibana43
-    state: present
-  notify: restart kibana
-
-
 - name: configure elasticsearch
   template:
     src: elasticsearch.yml
