@@ -1,0 +1,4 @@
+server.port: {{ kibana_port }}
+server.host: "{{ local_ip }}"
+elasticsearch.url: "http://{{ local_ip }}:{{ elastic_port }}"
+logging.quiet: true
