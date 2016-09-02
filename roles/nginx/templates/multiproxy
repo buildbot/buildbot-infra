@@ -7,9 +7,9 @@ server {
 
     {% for item in upstream_urls %}
         location {{ item.endpoint }} {
-            proxy_pass http://{{item.upstream_url}};
+            proxy_pass http://{{ item.url }};
 
-            {% if item.use_websocket %}
+            {% if 'use_websocket' in item %}
                 proxy_buffering off;
 
                 proxy_read_timeout 600;
@@ -53,11 +53,10 @@ server {
     {% for item in upstream_urls %}
         location {{ item.endpoint }} {
 
-            proxy_pass http://{{item.upstream_url}};
+            proxy_pass http://{{ item.url }};
 
-            {% if item.use_websocket %}
-            # +++ NOTE(sa2ajj): these need to be reviewed (trying to fix the errors
-            # shown in error.log)
+            {% if 'use_websocket' in item %}
+
             proxy_buffering off;
 
             proxy_read_timeout 600;

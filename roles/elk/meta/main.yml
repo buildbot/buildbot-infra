@@ -3,11 +3,13 @@ dependencies:
 - base
 
 - role: packages
-  packages: elasticsearch2 logstash kibana43
+  packages:
+    - elasticsearch2
+    - logstash
+    - kibana43
 
 - role: nginx
   nginx_template: multiproxy
-  server_name: "{{ server_name }}"
   upstream_urls:
       - endpoint: /kibana
         url: "{{ local_ip }}:{{ kibana_port }}"

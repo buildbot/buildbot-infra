@@ -9,13 +9,13 @@
   template:
     src: logstash.conf
     dest: "{{ logstash_configuration }}"
-  notify: reload logstash
+  notify: restart logstash
 
 - name: configure kibana
   template:
     src: kibana.yml
     dest: "{{ kibana_configuration }}"
-  notify: reload kibana
+  notify: restart kibana
 
 - name: enable elk
   lineinfile:
@@ -23,7 +23,7 @@
     line: "{{item.option}}=\"{{item.value}}\""
     regexp: "^{{item.option}}=.*"
     state: present
-  notify: reload logstash
+  notify: restart logstash
   with_items:
   - option: "elasticsearch_enable"
     value: "YES"
