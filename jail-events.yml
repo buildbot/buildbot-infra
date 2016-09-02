@@ -27,6 +27,5 @@
   - role: nginx
     nginx_template: proxy
     server_name: "{{ web_host_name }}"
-    ssl: true
     upstream_url: 192.168.80.227:8080
-    ssl: True
+    ssl: true
