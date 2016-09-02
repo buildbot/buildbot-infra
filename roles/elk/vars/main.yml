@@ -1,0 +1,9 @@
+# elk networking configuration
+---
+local_ip: 192.168.80.227
+kibana_port: 5602
+elastic_port: 9100
+logstash_port: 8080
+elastic_configuration: /usr/local/etc/elasticsearch/elasticsearch.yml
+logstash_configuration: /usr/local/etc/logstash/logstash.conf
+kibana_configuration: /usr/local/etc/kibana.yml

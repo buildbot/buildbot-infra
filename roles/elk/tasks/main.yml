@@ -1,0 +1,56 @@
+---
+- name: configure elasticsearch
+  template:
+    src: elasticsearch.yml
+    dest: "{{ elastic_configuration }}"
+  notify: restart elasticsearch
+
+- name: configure logstash
+  template:
+    src: logstash.conf
+    dest: "{{ logstash_configuration }}"
+  notify: restart logstash
+
+- name: configure kibana
+  template:
+    src: kibana.yml
+    dest: "{{ kibana_configuration }}"
+  notify: restart kibana
+
+- name: enable elk
+  lineinfile:
+    dest: "/etc/rc.conf"
+    line: "{{item.option}}=\"{{item.value}}\""
+    regexp: "^{{item.option}}=.*"
+    state: present
+  notify: restart logstash
+  with_items:
+  - option: "elasticsearch_enable"
+    value: "YES"
+  - option: "logstash_enable"
+    value: "YES"
+  - option: "logstash_log"
+    value: "YES"
+  - option: "logstash_log_file"
+    value: "/var/log/logstash.log"
+  - option: "kibana_enable"
+    value: "YES"
+
+
+- name: start elasticsearch
+  service:
+    name: elasticsearch
+    enabled: true
+    state: running
+
+- name: start logstash
+  service:
+    name: logstash
+    enabled: true
+    state: running
+
+- name: start kibana
+  service:
+    name: kibana
+    enabled: true
+    state: running

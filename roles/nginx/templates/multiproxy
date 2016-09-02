@@ -1,0 +1,84 @@
+server {
+    listen 80;
+    server_name {{server_name}};
+
+    access_log {{nginx_log_dir}}/{{server_name}}/access.log;
+    error_log {{nginx_log_dir}}/{{server_name}}/error.log;
+
+    {% for item in upstream_urls %}
+        location {{ item.endpoint }} {
+            proxy_pass http://{{ item.url }};
+
+            {% if 'use_websocket' in item %}
+                proxy_buffering off;
+
+                proxy_read_timeout 600;
+                chunked_transfer_encoding off;
+                proxy_cache off;
+                # ---
+
+                # These three lines would be required for web socket proxying
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+            {% endif %}
+        }
+    {% endfor %}
+
+    #error_page 404 /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page 500 502 503 504  /50x.html;
+    location = /50x.html {
+        root /usr/local/www/nginx-dist;
+    }
+}
+{% if ssl %}
+server {
+    listen 443 ssl;
+    server_name {{server_name}};
+
+    # certs sent to the client in SERVER HELLO are concatenated in ssl_certificate
+    ssl_certificate {{ nginx_cert_dir }}/{{ server_name }}.crt;
+    ssl_certificate_key {{ nginx_cert_dir }}/{{ server_name }}.key;
+    ssl_session_timeout 5m;
+    ssl_session_cache shared:SSL:5m;
+
+    include conf.d/ssl.conf;
+
+    access_log {{nginx_log_dir}}/{{server_name}}/ssl-access.log;
+    error_log {{nginx_log_dir}}/{{server_name}}/ssl-error.log;
+
+    {% for item in upstream_urls %}
+        location {{ item.endpoint }} {
+
+            proxy_pass http://{{ item.url }};
+
+            {% if 'use_websocket' in item %}
+
+            proxy_buffering off;
+
+            proxy_read_timeout 600;
+            chunked_transfer_encoding off;
+            proxy_cache off;
+            # ---
+
+            # These three lines would be required for web socket proxying
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            {% endif %}
+        }
+    {% endfor %}
+
+    #error_page 404 /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page 500 502 503 504  /50x.html;
+    location = /50x.html {
+        root /usr/local/www/nginx-dist;
+    }
+}
+{% endif %}
