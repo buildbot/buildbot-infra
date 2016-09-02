@@ -11,8 +11,8 @@ dependencies:
 - role: nginx
   nginx_template: multiproxy
   upstream_urls:
-      - endpoint: /kibana
-        url: "{{ local_ip }}:{{ kibana_port }}"
       - endpoint: /events
         url: "{{ local_ip }}:{{ logstash_port }}"
+      - endpoint: /
+        url: "{{ local_ip }}:{{ kibana_port }}"
   ssl: true
