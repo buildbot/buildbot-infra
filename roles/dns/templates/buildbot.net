@@ -1,6 +1,6 @@
 $TTL            86400
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2016062601      ;serial
+                                        2016090201      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -35,6 +35,7 @@ nine            IN      A       140.211.10.244
 supybot         IN      A       140.211.10.245
 events          IN      A       140.211.10.227
 prci            IN      A       209.177.87.210
+; dont forget to update the serial in 3rd line when adding new records!
 
 ; Our "internal" addreses.  Note that we do not use split DNS. Also note that
 ; there is no reverse resolution for these addresses.
