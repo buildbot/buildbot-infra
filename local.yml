@@ -46,6 +46,7 @@
 - include: "jail-bslave1.yml"
 - include: "jail-buildbot.yml"
 - include: "jail-mysql.yml"
+- include: "jail-events.yml"
 
 - include: "host-vm1.yml"
 - include: "vm-build1.yml"
