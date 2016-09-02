@@ -19,8 +19,8 @@ fi
 git config user.email "{{ track_config['default_author_email'] }}"
 git config user.name "{{ track_config['default_author_name'] }}"
 
-# check for changes (some versions of git have different messages)
-if git status 2>/dev/null | egrep -qe 'working (tree|directory) clean'; then
+# check for changes (porcelain is meant for scripting. Will return empty stdout if clean)
+if [ -z "$(git status --porcelain)" ]; then
     exit 0
 fi
 
