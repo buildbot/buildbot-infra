@@ -45,7 +45,6 @@ mandatory_packages:
   - sudo
   - git       # this is a mandatory package since we rely on ansible-pull
 
-# TODO: make use of these
 # Utility packages are the ones that must be installed on service host only (at
 # least, at the moment).
 # The original list is based on http://trac.buildbot.net/ticket/3036
@@ -128,3 +127,38 @@ ssh_host_keys:
     - "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMYtZrTzjDDtQa5DUGkuad+oi3N75cdb3iw0rLohuHBBL+iOxDBR6gdmOARNNqB2WKyN7inN3j965p335cy+BRc="
     - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvwDVNIL/7bA6rqCZZlgckn2ws1+r7PtLSDo3cDeBUr"
     - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEemfRZouB2MSDecG6SnHxLPcYvqmfDx+poIhnH5bJ1SrGJSK45fRdqDlJCgUeXxwTnz3qUwRSU6muXEziVbFZMLg8nRw8JauLZHwq/4oIKioXqtohLZ4dG70cs5rlZVvyimChsJ5F+15myBIlq9HusM4Ov0l023r53OaB8ZkdN2glSCqdHt6k6KyJulVsJjk51ug0e9y+yGWkmFG0WJpoOVlL3aRw7hs9CISZF4W3VouuAQ4tS9DsM3PuquH6wF8NEkzKez2v3zcykpng+1nUOimsAuSCvL3opX4ncDkaB8zMEZOqtCtJoBT28mZfmp9zbuSqMwHO8L2L8MPbga0b"
+
+# network subnets
+internal_network: 192.168.80
+external_network: 140.211.10
+
+# those prod defaults are overriden by vagrant.yml
+nat_if: ""  # none: needed only for vagrant
+internal_if: vlan0
+external_if: lagg0
+
+# IP addresses for all hosts in the network
+hosts_ips:
+    events  : 227
+    service1: 230
+    service2: 231
+    service3: 232
+    vm1     : 233
+    mac1    : 234
+    mx      : 235
+    ns1     : 236
+    docs    : 237
+    www     : 238
+    buildbot: 239
+    trac    : 240
+    lists   : 241
+    bot     : 242
+    ftp     : 243
+    nine    : 244
+    supybot : 245
+    mysql   : 246
+
+    backup : 212
+    bslave1: 226
+    syslog : 211
+    build1 : 210

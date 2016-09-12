@@ -1,21 +1,52 @@
 ---
 - name: Install ezjail
+  tags: jail
   pkgng:
     name: ezjail
     state: present
+- name: enable jail networking on vagrant box
+  lineinfile:
+    dest: "/etc/rc.conf"
+    line: "{{item.option}}=\"{{item.value}}\""
+    regexp: "^{{item.option}}=.*"
+    state: present
+  with_items:
+  - option: "cloned_interfaces"
+    value: "{{ nat_if }} {{ internal_if }} {{ external_if }}"
+  - option: "pf_rules"
+    value: "{{ pf_conf }}"
+  - option: "pf_enable"
+    value: "YES"
+  when: "nat_if is defined"
+
+- name: pf config
+  tags: jail
+  template:
+    src: pf.conf
+    dest: "{{ pf_conf }}"
+  when: "nat_if is defined"
+
+- name: Restart pf
+  tags: jail
+  service:
+    name: pf
+    state: restarted
 
 - name: ezjail config
+  tags: jail
   template:
     src: ezjail.conf
     dest: "{{ ezjail_conf_file }}"
     mode: "0644"
 
 - name: Populate basejail
+  tags: jail
   command: ezjail-admin install
   args:
     creates: "{{ ezjail_jaildir }}/{{ ezjail_base_jail }}"
 
 - name: Create base flavour directories
+  tags: jail
   file:
     path: "{{ ezjail_jaildir }}/flavours/{{ ezjail_default_flavour }}/{{ item }}"
     state: directory
@@ -23,6 +54,7 @@
   - etc
 
 - name: Set base flavour config
+  tags: jail
   copy:
     dest: "{{ ezjail_jaildir }}/flavours/{{ item }}"
     src: "flavours/{{ item }}"
@@ -31,15 +63,19 @@
   - "{{ ezjail_default_flavour }}/etc/periodic.conf"
   - "{{ ezjail_default_flavour }}/etc/rc.conf"
 
-# TODO(sa2ajj): should it be done here or while creation of the actual jail?
-- name: Copy some host configuration files
-  copy:
-    dest: "{{ ezjail_jaildir }}/flavours/{{ ezjail_default_flavour }}/etc/{{ item }}"
-    src: "/etc/{{ item }}"
+- name: enable sshd on vagrant boxes'jail
+  lineinfile:
+    dest: "{{ ezjail_jaildir }}/flavours/{{ ezjail_default_flavour }}/etc/rc.conf"
+    line: "{{item.option}}=\"{{item.value}}\""
+    regexp: "^{{item.option}}=.*"
+    state: present
   with_items:
-  - resolv.conf
+  - option: "sshd_enable"
+    value: "YES"
+  when: "is_vagrant"
 
 - name: Enable jails
+  tags: jail
   service:
     name: ezjail
     enabled: true

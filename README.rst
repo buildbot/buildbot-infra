@@ -6,7 +6,8 @@ Production Runs
 
 Production runs of Ansible take place on the host or jail to be configured, as the ``{{service_user}}``, with a command line such as ::
 
-    ansible-playbook local.yml
+    ansible-playbook local.yml --vault-password=~/.vault-password
+
 
 This playbook automatically determines which host it's runnning on based on the hostname and configures it accordingly.
 Supply host-specific variables in ``group_vars/$hostname``.
@@ -27,11 +28,35 @@ Before running the script, ensure:
 Development
 -----------
 
-To develop a patch on a test system, set the system's base hostname to correspond to the host or jail you want to work on, and run the same command::
+Development is made easier with Vagrant.
 
-    ansible-playbook local.yml
+First install 3 vagrant box with FreeBSD 10.3. Each of them representing one of the hw hosts::
 
-To avoid installing the Ansible crontask, add ``-e no_ansible_pull=true``.
+    vagrant up
+
+Those vagrant boxes will be used to host all jails as it is in prod.
+``vagrant up`` will run the ansible script for all those 3 boxes, and create all the jails.
+The jails will not be fully provisionned though (they only will be provisionned with ssh and vagrant user).
+You need to run ansible on each of those jails to actually activate the services
+
+Internal network is mapped to the virtualbox host's network, so you can connect to the jails using their ip address.
+
+Difference between prod are:
+- sshd is enabled in jails
+- a ``vagrant`` user is added in jail, which can be connected using the identity file that vagrant generated to create the host (.vagrant/machines/<host>/virtualbox/private_key)
+- connection is over ssh
+- ansible-pull is disabled
+- keep only internal network ip addresses
+
+To setup all jails on your dev system just run::
+
+    ansible-playbook --vault-password=~/.vault-password -i vagrant_inventory.py vagrant.yml
+
+But it is preferable to only run ansible for the jail you are working on::
+
+    ansible-playbook --vault-password=~/.vault-password -i vagrant_inventory.py vagrant.yml -l ns1
+
+vagrant_inventory.py will automatically figure out which jail needs to be connected to, and with which ssh key
 
 To use development secrets (which may be unencrypted), create ``dev-secrets.yml`` and invoke Ansible with ``-e secrets_file=dev-secrets.yml``.
 

@@ -12,6 +12,18 @@ cd ~
 # Install prerequsite packages
 env ASSUME_ALWAYS_YES=YES pkg install ansible git sudo
 
+# vagrant build will not use ansible pull on the jails (as it is better to just update on demand each jail)
+{% if is_vagrant %}
+# bootstrap access for vagrant user
+if [ ! -d /home/vagrant ]
+then
+pw useradd -n vagrant -s /bin/csh -m -G wheel
+echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /usr/local/etc/sudoers
+fi
+# root ssh keys is copied at the jail setup, and must be copied to this user
+cp -rf /root/.ssh /home/vagrant
+chown -R vagrant /home/vagrant/.ssh
+{% else %}
 # Ansible only runs locally, so clone the repository there
 git clone --depth 1 --branch master {{ ansible_git_repository }} ${repo_dir}
 
@@ -29,3 +41,6 @@ umask ${old_umask}
 
 # Undo the damage we caused
 rm -rf ${repo_dir} ${vault_password_file}
+{% endif %}
+
+touch /root/.run-once

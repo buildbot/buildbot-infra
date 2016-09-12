@@ -1,6 +1,7 @@
 Port {{ sshd_port }}
+{% for listen_address in listen_addresses %}
 ListenAddress {{ listen_address }}
-
+{% endfor %}
 # these are always disabled
 PermitRootLogin no
 PasswordAuthentication no

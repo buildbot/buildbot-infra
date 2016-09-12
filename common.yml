@@ -1,0 +1,37 @@
+# This is the common playbook for local and ssh connection
+---
+- include: "load-secrets.yml"
+- include: "track-config.yml"
+  vars:
+    commit_message: "pre-ansible checkin"
+
+# Service hosts and their jails
+- include: "host-service1.yml"
+- include: "jail-ns1.yml"
+- include: "jail-mx.yml"
+- include: "jail-syslog.yml"
+
+- include: "host-service2.yml"
+- include: "jail-bot.yml"
+- include: "jail-docs.yml"
+- include: "jail-ftp.yml"
+- include: "jail-lists.yml"
+- include: "jail-nine.yml"
+- include: "jail-trac.yml"
+- include: "jail-www.yml"
+- include: "jail-supybot.yml"
+
+- include: "host-service3.yml"
+- include: "jail-bslave1.yml"
+- include: "jail-buildbot.yml"
+- include: "jail-mysql.yml"
+- include: "jail-events.yml"
+
+- include: "host-vm1.yml"
+- include: "vm-build1.yml"
+
+- include: "track-config.yml"
+  vars:
+    commit_message: "post-ansible checkin"
+
+# vim:ts=2:sw=2:noai:nosi
