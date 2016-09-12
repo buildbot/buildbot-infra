@@ -60,6 +60,22 @@ vagrant_inventory.py will automatically figure out which jail needs to be connec
 
 To use development secrets (which may be unencrypted), create ``dev-secrets.yml`` and invoke Ansible with ``-e secrets_file=dev-secrets.yml``.
 
+Development with proxies
+------------------------
+
+Because of https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=212452 the vagrant boostrap will not work.
+Upon VM creation by vagrant, vagrant will indefinitly try to connect via ssh.
+
+- You need to run virtualbox manually, and go to the freebsd console.
+- Hit CTRL-C will stop the firstboot script and give you login prompt
+- use root:vagrant
+- setenv http_proxy http://xxx
+- pkg install -y sudo
+- then you can run 'vagrant provision' again
+
+You need to do this setup for the three hosts VMs.
+Once this is done the environment variables http_proxy, https_proxy and no_proxy are copied inside the ansible run for the commands that needs internet access.
+
 Secrets
 -------
 

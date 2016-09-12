@@ -3,6 +3,7 @@
   pkgng:
     name: py27-supervisor
     state: present
+  environment: "{{ proxy_env }}"
 
 - name: make directories for supervisor
   file:

@@ -3,12 +3,14 @@
   pkgng:
     name: nginx
     state: present
+  environment: "{{ proxy_env }}"
 
 # this seems to be needed, but not formally required, for nginx
 - name: install pcre package
   pkgng:
     name: pcre
     state: present
+  environment: "{{ proxy_env }}"
 
 - name: make sure necessary configuration directories exist
   file:

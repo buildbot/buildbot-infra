@@ -10,6 +10,7 @@
   pkgng:
     name: syslog-ng
     state: present
+  environment: "{{ proxy_env }}"
 
 - name: configure syslog-ng
   template:

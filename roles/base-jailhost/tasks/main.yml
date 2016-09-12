@@ -4,6 +4,8 @@
   pkgng:
     name: ezjail
     state: present
+  environment: "{{ proxy_env }}"
+
 - name: enable jail networking on vagrant box
   lineinfile:
     dest: "/etc/rc.conf"
@@ -44,6 +46,7 @@
   command: ezjail-admin install
   args:
     creates: "{{ ezjail_jaildir }}/{{ ezjail_base_jail }}"
+  environment: "{{ proxy_env }}"
 
 - name: Create base flavour directories
   tags: jail

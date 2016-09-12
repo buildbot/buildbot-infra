@@ -27,12 +27,12 @@
     - jpeg
     - python
   - role: simple-buildout
-    repo_url: git://github.com/buildbot/bbdocs.git
+    repo_url: https://github.com/buildbot/bbdocs.git
     repo_branch: master
     target_user: "{{ worker_account }}"
     target_dir: "{{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}"
   - role: simple-buildout
-    repo_url: git://github.com/buildbot/buildbot.git
+    repo_url: https://github.com/buildbot/buildbot.git
     repo_branch: master
     target_user: "{{ worker_account }}"
     target_dir: "{{ getent_passwd[worker_account].4 }}/buildbot"

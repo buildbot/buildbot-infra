@@ -18,7 +18,7 @@
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account
   - role: simple-buildout
-    repo_url: git://github.com/buildbot/buildbot-website.git
+    repo_url: https://github.com/buildbot/buildbot-website.git
     repo_branch: master
     target_user: "{{ worker_account }}"
     target_dir: "{{ getent_passwd[worker_account].4 }}/{{ build_dir }}"

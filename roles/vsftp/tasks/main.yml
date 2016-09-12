@@ -4,6 +4,7 @@
     name: vsftpd-ssl
     state: present
   notify: restart vsftpd
+  environment: "{{ proxy_env }}"
 
 - name: create ssl dir
   file:
@@ -41,4 +42,3 @@
     name: vsftpd
     enabled: true
     state: running
-

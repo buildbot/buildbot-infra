@@ -4,3 +4,4 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ packages }}"
+  environment: "{{ proxy_env }}"

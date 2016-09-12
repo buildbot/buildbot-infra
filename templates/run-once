@@ -1,7 +1,11 @@
 #! /bin/sh
 
 set -e
-
+{% if proxy_env is defined %}
+{% for k, v in proxy_env.items() %}
+export {{k}}={{v}}
+{% endfor %}
+{% endif %}
 # Some local names to prevent typos
 vault_password_file=~/.vault-password
 repo_dir=repo

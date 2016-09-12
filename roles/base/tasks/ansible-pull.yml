@@ -4,6 +4,7 @@
     name: ansible
     state: present
   when: '{{ ansible_distribution == "FreeBSD" }}'
+  environment: "{{ proxy_env }}"
 
 - name: install ansible (Debian)
   apt:
@@ -48,6 +49,7 @@
     dest: "/home/{{ service_account }}/repo"
     version: master
     accept_hostkey: yes
+  environment: "{{ proxy_env }}"
 
 - name: install ansible-pull cronscript
   tags: ansible-pull

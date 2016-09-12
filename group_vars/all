@@ -26,6 +26,11 @@ admin_users:
 - username: tardyp
   state: present
 
+
+# proxy configuration is found automatically given the host's environment
+# via bb_filters.py
+proxy_env: "{{ {} | proxies_from_env }}"
+
 # This account is used to run `ansible-pull` and has passwordless sudo rights
 # on the host.
 service_account: bbinfra

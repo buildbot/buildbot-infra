@@ -24,7 +24,7 @@ Example::
 
     ...
     - role: simple-buildout
-      repo_url: git://github.com/buildbot/buildbot-website.git
+      repo_url: https://github.com/buildbot/buildbot-website.git
       repo_dir: site
       repo_commands:
       - "npm install"
