@@ -21,7 +21,7 @@ env ASSUME_ALWAYS_YES=YES pkg install ansible git sudo
 # bootstrap access for vagrant user
 if [ ! -d /home/vagrant ]
 then
-pw useradd -n vagrant -s /bin/csh -m -G wheel
+pw useradd -n vagrant -s /bin/sh -m -G wheel
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /usr/local/etc/sudoers
 fi
 # root ssh keys is copied at the jail setup, and must be copied to this user
