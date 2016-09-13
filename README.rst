@@ -36,8 +36,8 @@ First install 3 vagrant box with FreeBSD 10.3. Each of them representing one of 
 
 Those vagrant boxes will be used to host all jails as it is in prod.
 ``vagrant up`` will run the ansible script for all those 3 boxes, and create all the jails.
-The jails will not be fully provisionned though (they only will be provisionned with ssh and vagrant user).
-You need to run ansible on each of those jails to actually activate the services
+The jails will not be fully provisioned though (they only will be provisioned with ssh and vagrant user).
+You need to run ansible on each of those jails to actually activate the services.
 
 Internal network is mapped to the virtualbox host's network, so you can connect to the jails using their ip address.
 

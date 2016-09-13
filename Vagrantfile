@@ -22,7 +22,11 @@ Vagrant.configure("2") do |config|
   config.vm.guest = :freebsd
   config.vm.box = 'freebsd/FreeBSD-10.3-STABLE'
   config.ssh.shell = "sh"
+
+  # vagrant sync folder does not work with BSD, so we disable it
   config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # FreeBSD virtualbox boxes do not configure base_mac, you need to configure it manually
   config.vm.base_mac = "080027D14C66"
 
   config.vm.define "service1" do |service1|
@@ -36,6 +40,10 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provider :virtualbox do |vb, override|
+
+    # note that you might want to allocate more memory depending on your dev needs
+    # you can do that afterwards by using virtualbox UI.
+    # this setting is only made at first provision time.
     vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--cpus", "4"]
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
