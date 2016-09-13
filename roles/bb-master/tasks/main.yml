@@ -11,6 +11,7 @@
     accept_hostkey: True
   register: bb_repo_state
   environment: "{{ proxy_env }}"
+  tags: bb-master
 
 - name: Make sure we have an updated copy of Buildbot travis repository
   become_user: "{{ bb_user }}"
@@ -23,30 +24,27 @@
   register: bbt_repo_state
   when: "bb_travis_branch is defined"
   environment: "{{ proxy_env }}"
+  tags: bb-master
 
 - name: stop Supervisor service
   shell: "supervisorctl stop {{ bb_service }}"
   ignore_errors: True
   when: "bb_repo_state|changed"
+  tags: bb-master
 
 - name: Install/upgrade build master
   become_user: "{{ bb_user }}"
   script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
   when: "bb_repo_state|changed or bbt_repo_state|changed"
   environment: "{{ proxy_env }}"
-
-- name: Install/upgrade buildbot_travis
-  become_user: "{{ bb_user }}"
-  script: "{{ bb_env_dir }}/bin/pip install --pre --upgrade -e {{ bb_user_home }}/{{ buildbot_travis_short }}"
-  when: "bb_travis_branch is defined and bbt_repo_state|changed"
-  environment: "{{ proxy_env }}"
-
+  tags: bb-master
 
 - name: Create build master config
   become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot create-master {{ bb_master_dir }}"
   args:
     creates: "{{ bb_master_dir }}/buildbot.tac"
+  tags: bb-master
 
 - name: Make sure we have an updated copy of metabbotcfg repository
   become_user: "{{ bb_user }}"
@@ -58,6 +56,7 @@
     accept_hostkey: True
   register: mbb_repo_state
   environment: "{{ proxy_env }}"
+  tags: bb-master
 
 - name: Make sure we have a symlink for the master.cfg
   become_user: "{{ bb_user }}"
@@ -65,6 +64,7 @@
     src: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/master.cfg"
     dest: "{{ bb_master_dir }}/master.cfg"
     state: link
+  tags: bb-master
 
 - name: Make sure we have latest build slave passwords
   become_user: "{{ bb_user }}"
@@ -75,6 +75,22 @@
   with_items: "{{ slave_master_allocations[bb_config_branch] }}"
   # NOTE(sa2ajj): in case a password changes, a restart is also required, but
   # this is for future improvements.
+  tags: bb-master
+
+- name: Make sure we have latest creds
+  become_user: "{{ bb_user }}"
+  copy:
+    dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{item.filename}}"
+    content: "{{ item.content | to_json}}"
+    mode: "0600"
+  with_items:
+      - filename: hyper.pass
+        content: "{{ hyper_keys }}"
+      - filename: github_oauth.pass
+        content: "{{ github_oauth_keys }}"
+      - filename: github_token
+        content: "{{ github_api_token }}"
+  tags: bb-master
 
 - name: Remove passwords for obsolete slaves
   become_user: "{{ bb_user }}"
@@ -82,16 +98,18 @@
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item }}.pass"
     state: absent
   with_items: "{{ slave_master_allocations.obsolete }}"
+  tags: bb-master
 
 # It's important to get the config and passwords before trying to upgrade the database.
 - name: Ensure latest schema of the database
   become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot upgrade-master {{ bb_master_dir }}"
   when: "bb_repo_state|changed"
+  tags: bb-master
 
 - name: restart Supervisor service
   shell: "supervisorctl restart {{ bb_service }}"
   ignore_errors: True
   when: "bb_repo_state|changed or mbb_repo_state|changed"
-
+  tags: bb-master
 # vim:ts=2:sw=2:noai:nosi

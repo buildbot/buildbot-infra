@@ -24,6 +24,7 @@
     - sqlite3
     venv_python_packages:
     - pysqlite
+    - txrequests
   - role: bb-master
     bb_user: "{{ worker_account }}"
     bb_user_home: "{{ getent_passwd[worker_account].4 }}"

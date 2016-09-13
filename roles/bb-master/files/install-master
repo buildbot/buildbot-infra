@@ -22,8 +22,10 @@ fi
 
 # This is needed for www/base since it executes 'buildbot dataspec'
 PATH=${env_dir}/bin:$PATH
+pip install --quiet --upgrade pip
 
-for name in master pkg www/base www/codeparameter www/console_view www/waterfall_view
+
+for name in master pkg www/base www/codeparameter www/console_view www/waterfall_view ../buildbot_travis
 do
     # Workaround for 0.8.x series
     if [ ! -d ${base_dir}/${name} ]
@@ -31,5 +33,5 @@ do
         continue
     fi
 
-	pip install --upgrade -e ${base_dir}/${name}
+	pip install -e ${base_dir}/${name}
 done

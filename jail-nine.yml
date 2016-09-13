@@ -23,6 +23,7 @@
     - py27-sqlite3
     - sqlite3
     - node
+    - npm
     venv_python_packages:
     - mock        # setup.py for www packages need to be fixed not to require mock at the very beginning.
     - pysqlite
