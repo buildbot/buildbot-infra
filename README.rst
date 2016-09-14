@@ -63,10 +63,11 @@ To use development secrets (which may be unencrypted), create ``dev-secrets.yml`
 Development with proxies
 ------------------------
 
-Because of https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=212452 the vagrant boostrap will not work.
-Upon VM creation by vagrant, vagrant will indefinitly try to connect via ssh.
+Because of https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=212452 the vagrant boostrap will not work when your environment requires http proxies to acces internet.
 
-- You need to run virtualbox manually, and go to the freebsd console.
+In that case, during VM creation phase, vagrant will indefinitly try to connect via ssh.
+
+- You need to attach to the VM using virtualbox UI, and go to the freebsd console.
 - Hit CTRL-C will stop the firstboot script and give you login prompt
 - use root:vagrant
 - setenv http_proxy http://xxx
