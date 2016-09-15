@@ -13,7 +13,8 @@
   # run a specialized SSH daemon to receive uploads from other internal hosts
   - role: ssh
     sshd_port: 2200
-    listen_address: "{{ internal_ip }}"
+    listen_addresses:
+      - "{{ internal_ip }}"
     extra_config: |
         Match User buildbot
             ChrootDirectory {{ ftp_root }}
