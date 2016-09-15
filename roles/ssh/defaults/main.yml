@@ -3,5 +3,5 @@
 sshd_port: 22
 listen_addresses:
     - "{{ ansible_default_ipv4.address }}"
-    - "{{ internal_ip }}"
+    - "{{ internal_ip | default(None) }}"
 extra_config:
