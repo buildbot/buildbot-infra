@@ -46,9 +46,11 @@ mandatory_packages:
   FreeBSD:
   - sudo
   - git       # this is a mandatory package since we rely on ansible-pull
+  - timelimit # this contains timelimit command which is used to avoid ansible-pull to be too long
   Debian:
   - sudo
   - git       # this is a mandatory package since we rely on ansible-pull
+  - coreutils # this contains timeout command which is used to avoid ansible-pull to be too long
 
 # Utility packages are the ones that must be installed on service host only (at
 # least, at the moment).

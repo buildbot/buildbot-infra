@@ -19,7 +19,17 @@ while [[ $RETRY -lt $RETRIES ]]; do
     # run ansible-pull from the directory containing the repository (and, thus, the inventory file)
     cd /home/{{ service_account}}/repo
     set +e
-    ansible-pull \
+    # if coreutils is not yet installed, we should use ansible pull alone
+    ANSIBLE_PULL=ansible-pull
+    if command -v timelimit >/dev/null
+    then
+        # 2500s ~= 40min
+        ANSIBLE_PULL="timelimit -t 2500 -T 120 $ANSIBLE_PULL"
+    else if command -v timeout >/dev/null
+    then
+        ANSIBLE_PULL="timeout -k 2m 40m $ANSIBLE_PULL"
+    fi
+    $ANSIBLE_PULL  \
         -C master \
         -d /home/{{ service_account }}/repo/ \
         -m git \
