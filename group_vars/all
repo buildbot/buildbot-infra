@@ -167,3 +167,6 @@ hosts_ips:
     bslave1: 226
     syslog : 211
     build1 : 210
+
+# vars are lazily evaluated so ansible_hostname will be valid at the time of evaluation (via gatherfacts)
+internal_ip: "{{ internal_network }}.{{ hosts_ips[ansible_hostname] }}"
