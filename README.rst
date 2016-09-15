@@ -41,18 +41,22 @@ You need to run ansible on each of those jails to actually activate the services
 
 Internal network is mapped to the virtualbox host's network, so you can connect to the jails using their ip address.
 
-Difference between prod are:
+Difference between prod are:::
 - sshd is enabled in jails
 - a ``vagrant`` user is added in jail, which can be connected using the identity file that vagrant generated to create the host (.vagrant/machines/<host>/virtualbox/private_key)
 - connection is over ssh
 - ansible-pull is disabled
 - keep only internal network ip addresses
 
-To setup all jails on your dev system just run::
+To setup all jails on your dev system just run:
+
+.. code-block:: bash
 
     ansible-playbook --vault-password=~/.vault-password -i vagrant_inventory.py vagrant.yml
 
-But it is preferable to only run ansible for the jail you are working on::
+But it is preferable to only run ansible for the jail you are working on:
+
+.. code-block:: bash
 
     ansible-playbook --vault-password=~/.vault-password -i vagrant_inventory.py vagrant.yml -l ns1
 
@@ -69,13 +73,18 @@ In that case, during VM creation phase, vagrant will indefinitly try to connect 
 
 - You need to attach to the VM using virtualbox UI, and go to the freebsd console.
 - Hit CTRL-C will stop the firstboot script and give you login prompt
-- use root:vagrant
-- setenv http_proxy http://xxx
-- pkg install -y sudo
-- then you can run 'vagrant provision' again
+- Use ``root:vagrant``  as ``login:password``
+- Type following in the console:
+
+    .. code-block:: bash
+
+        setenv http_proxy http://xxx
+        pkg install -y sudo
+
+- then you can run ``vagrant provision`` again
 
 You need to do this setup for the three hosts VMs.
-Once this is done the environment variables http_proxy, https_proxy and no_proxy are copied inside the ansible run for the commands that needs internet access.
+Once this is done the environment variables :envvar:`http_proxy`, :envvar:`https_proxy`, and :envvar:`https_proxy` are copied inside the ansible run for the commands that needs internet access.
 
 Secrets
 -------
