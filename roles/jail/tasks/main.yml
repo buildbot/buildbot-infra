@@ -1,7 +1,13 @@
 ---
+- name: create jail script
+  tags: jail
+  copy:
+    src: create_jail.py
+    dest: "/usr/local/bin/create_jail.py"
+
 - name: create jail
   tags: jail
-  command: "ezjail-admin create -f {{ ezjail_default_flavour }} {{ name }} {{ ip_address|join(',') }}"
+  command: "python2 /usr/local/bin/create_jail.py  {{ ezjail_default_flavour }} {{ name }} {{ hosts_ips[name] }} {{ internal_network }} {{ external_network}} {{ internet_visible }} '{{internal_if}}' '{{ external_if }}'"
   args:
     creates: "{{ ezjail_conf_dir }}/{{ name }}"
   register: jail_created
@@ -19,6 +25,25 @@
   command: "ezjail-admin start {{ name }}"
   when: jail_created|changed
 
+# pf needs to account for that new jail
+- name: Restart pf
+  tags: jail
+  service:
+    name: pf
+    state: restarted
+  when: jail_created|changed
+
+- name: Copy some host configuration files
+  tags: jail
+  command: "cp '/etc/{{ item }}' '{{ ezjail_jaildir }}/{{ name }}/etc/{{ item }}'"
+  with_items:
+  - resolv.conf
+
+- name: Copy some ssh authorized_keys
+  tags: jail
+  command: "cp -rf '/home/vagrant/.ssh' '{{ ezjail_jaildir }}/{{ name }}/root/'"
+  when: is_vagrant
+
 - name: prepare bootstrap script
   tags: jail
   template:
@@ -27,11 +52,13 @@
     mode: "0700"
   when: jail_created|changed
 
-- name: execute bootstrap script
+- name: execute bootstrap script {{ name }}
   tags: jail
   command: "jexec {{ name }} root/run-once"
-  when: jail_created|changed
+  args:
+    creates: "{{ ezjail_conf_dir }}/{{ name }}/root/.run-once"
   register: debug
+  when: jail_created|changed
 
 - name: print output of bootstrap script
   tags: jail

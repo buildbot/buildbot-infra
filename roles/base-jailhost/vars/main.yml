@@ -1,4 +1,6 @@
 ---
+# pf configuration file
+pf_conf: /etc/pf.conf
 # Directory where jails are created
 ezjail_jaildir: /usr/local/jail
 # Directory where the ezjail-admin keeps jail configuration files

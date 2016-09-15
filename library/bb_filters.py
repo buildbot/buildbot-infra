@@ -21,6 +21,7 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
+import os
 from hashlib import new as new_hash
 from random import Random
 
@@ -50,6 +51,13 @@ def seeded_range(seed, start, stop=None, step=1, extra=None):
     return Random(hashed_seed).randrange(start, stop, step)
 
 
+def proxies_from_env(ret):
+    for env in ['http_proxy', 'https_proxy', 'no_proxy']:
+        if env in os.environ:
+            ret[env] = os.environ[env]
+    return ret
+
+
 class FilterModule(object):
     """
     Buildbot Infra specific filters
@@ -57,5 +65,6 @@ class FilterModule(object):
 
     def filters(self):
         return {
-            'seeded_range': seeded_range
+            'seeded_range': seeded_range,
+            'proxies_from_env': proxies_from_env
         }

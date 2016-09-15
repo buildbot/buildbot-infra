@@ -1,5 +1,7 @@
 ---
 # parameters that can be tweaked for running ssh in jails, for example
 sshd_port: 22
-listen_address: "{{ ansible_default_ipv4.address }}"
+listen_addresses:
+    - "{{ ansible_default_ipv4.address }}"
+    - "{{ internal_ip }}"
 extra_config:

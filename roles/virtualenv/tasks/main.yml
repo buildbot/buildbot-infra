@@ -5,6 +5,7 @@
   pkgng:
     name: "py27-virtualenv"
     state: present
+  environment: "{{ proxy_env }}"
 
 - name: prepare ~/.pydistutils.cfg
   ini_file:
@@ -24,12 +25,14 @@
     name: "{{item}}"
     state: present
   with_items: "{{ venv_packages }}"
+  environment: "{{ proxy_env }}"
 
 - name: create the virtual environment
   become_user: "{{ venv_user }}"
   pip:
     name: "{{ item }}"
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
+  environment: "{{ proxy_env }}"
   with_items: "{{ venv_python_packages }}"
 
 # vim:ts=2:sw=2:noai:nosi

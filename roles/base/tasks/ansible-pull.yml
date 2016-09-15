@@ -3,13 +3,14 @@
   pkgng:
     name: ansible
     state: present
-  when: ansible_distribution == "FreeBSD"
+  when: '{{ ansible_distribution == "FreeBSD" }}'
+  environment: "{{ proxy_env }}"
 
 - name: install ansible (Debian)
   apt:
     name: ansible
     state: present
-  when: ansible_distribution == "Debian"
+  when: '{{ ansible_distribution == "Debian" }}'
 
 - name: create wheel group
   group:
@@ -40,12 +41,15 @@
 # ansible-pull expects the inventory file to exist already, even before it
 # clones the repo, so we clone the repo explicitly.
 - name: clone ansible git repository
+  # note that this fails with ansible 2.1.1.0 (working with 2.1.0.0)
+  # https://github.com/ansible/ansible/issues/17497
   become_user: "{{ service_account }}"
   git:
     repo: "{{ ansible_git_repository }}"
     dest: "/home/{{ service_account }}/repo"
     version: master
     accept_hostkey: yes
+  environment: "{{ proxy_env }}"
 
 - name: install ansible-pull cronscript
   tags: ansible-pull
@@ -64,5 +68,5 @@
     user: "{{ service_account }}"
     minute: "{{ ansible_fqdn|seeded_range(60) }}"
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
-
+  when: not is_vagrant
 # vim:ft=yaml:nosi:noai:ts=2:sw=2

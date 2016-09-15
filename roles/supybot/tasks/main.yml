@@ -10,11 +10,13 @@
     version: "{{supybot_branch}}"
     accept_hostkey: True
   register: supybot_repo_state
+  environment: "{{ proxy_env }}"
 
 - name: install supybot in virtualenv
   # note that pip install -e appears not to work for this package; uninstall and re-install instead
   shell: "{{ supybot_env_dir }}/bin/pip uninstall supybot; {{ supybot_env_dir }}/bin/pip install {{ supybot_user_home }}/supybot-repo"
   when: "supybot_repo_state|changed"
+  environment: "{{ proxy_env }}"
 
 - name: update meetbot repository
   become_user: "{{ supybot_user }}"
@@ -25,6 +27,7 @@
     version: "{{meetbot_branch}}"
     accept_hostkey: True
   register: meetbot_repo_state
+  environment: "{{ proxy_env }}"
 
 - name: create directories
   file:
@@ -76,7 +79,7 @@
     owner: "{{ supybot_user }}"
   with_items:
     - channels.conf
-    - ignores.conf 
+    - ignores.conf
     - userdata.conf
     - users.conf
 
@@ -91,6 +94,6 @@
     job: "cd {{ supybot_user_home }}/web/meetings; sh mkindex.sh"
     user: "{{ supybot_user }}"
     minute: 5
-    
+
 
 # vim:ts=2:sw=2:noai:nosi

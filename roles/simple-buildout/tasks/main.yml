@@ -8,6 +8,7 @@
     version: "{{ repo_branch }}"
     accept_hostkey: True
   register: repo_state
+  environment: "{{ proxy_env }}"
 
 - name: Perform build
   become_user: "{{ target_user }}"
@@ -18,6 +19,7 @@
   when: "repo_state|changed"
   register: command_result
   ignore_errors: true
+  environment: "{{ proxy_env }}"
 
 # if the command failed, roll the git repository back one commit so that
 # on the next run, we will re-run the build
