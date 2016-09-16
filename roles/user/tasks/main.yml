@@ -16,3 +16,4 @@
   getent:
     database: passwd
     key: "{{ user_id }}"
+  tags: always
