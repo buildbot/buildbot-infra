@@ -4,9 +4,10 @@
   gather_facts: no
   connection: local
   become: yes
+  vars:
+    web_host_name: "syslog.buildbot.net"
   roles:
-    - role: base
-      # don't add the base configuration for syslog here, as this host
-      # has its own syslog configuration
-      configure_syslog: False
-    - syslog-aggregator
+    - role: elk
+      logstash_variant: syslog
+      server_name: "{{ web_host_name }}"
+      github_team: "core"  # this restricts access to only people in the github 'core' team

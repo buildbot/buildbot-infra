@@ -15,7 +15,7 @@
     internet_visible: true
   - role: jail
     name: syslog
-    hostname: syslog.int.buildbot.net
-    internet_visible: false
+    hostname: syslog.buildbot.net
+    internet_visible: true
 
 # vim:ts=2:sw=2:noai:nosi
