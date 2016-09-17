@@ -144,6 +144,9 @@ nat_if: ""  # none: needed only for vagrant
 internal_if: vlan0
 external_if: lagg0
 
+# needs to be changed each time the dns config is updated
+dns_serial: 2016091701  # YYYYMMDD01
+
 # IP addresses for all hosts in the network
 hosts_ips:
     events  : 227
@@ -164,10 +167,10 @@ hosts_ips:
     nine    : 244
     supybot : 245
     mysql   : 246
+    syslog : 211
 
     backup : 212
     bslave1: 226
-    syslog : 211
     build1 : 210
 
 # vars are lazily evaluated so ansible_hostname will be valid at the time of evaluation (via gatherfacts)
