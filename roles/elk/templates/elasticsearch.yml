@@ -1,7 +1,7 @@
 # we replace default elasticsearch.yml with only the options we care about
 # see elasticsearch doc for configuration options
 
-network.host: {{ local_ip }}
+network.host: {{ internal_ip }}
 http.port: {{ elastic_port }}
 path.conf: /usr/local/etc/elasticsearch
 path.data: /var/db/elasticsearch

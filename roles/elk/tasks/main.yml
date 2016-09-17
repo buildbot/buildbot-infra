@@ -1,4 +1,10 @@
 ---
+- name: install/update oauth2_proxy
+  shell: 'export GOROOT=/usr/local/go GOPATH=/usr/local; go get github.com/bitly/oauth2_proxy'
+  args:
+    executable: /usr/local/bin/bash
+  environment: "{{ proxy_env }}"
+
 - name: configure elasticsearch
   template:
     src: elasticsearch.yml
@@ -7,7 +13,7 @@
 
 - name: configure logstash
   template:
-    src: logstash.conf
+    src: logstash_{{logstash_variant}}.conf
     dest: "{{ logstash_configuration }}"
   notify: restart logstash
 
@@ -16,6 +22,15 @@
     src: kibana.yml
     dest: "{{ kibana_configuration }}"
   notify: restart kibana
+
+- name: configure oauth2_proxy
+  template:
+    src: oauth2_proxy.conf
+    dest: "{{ oauth2_proxy_configuration }}"
+    mode: "660"
+    owner: "{{ worker_account }}"
+    group: "wheel"
+  notify: restart supervisor
 
 - name: enable elk
   lineinfile:

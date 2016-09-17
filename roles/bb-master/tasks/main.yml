@@ -87,7 +87,7 @@
       - filename: hyper.pass
         content: "{{ hyper_keys }}"
       - filename: github_oauth.pass
-        content: "{{ github_oauth_keys }}"
+        content: "{{ github_oauth_keys[ansible_hostname] }}"
       - filename: github_token
         content: "{{ github_api_token }}"
   tags: bb-master

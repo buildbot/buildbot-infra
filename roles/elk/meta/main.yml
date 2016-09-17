@@ -7,12 +7,24 @@ dependencies:
     - elasticsearch2
     - logstash
     - kibana43
+    - go  # for oauth2-proxy
+
+- role: user
+  user_id: "{{ worker_account }}"
+  user_name: Buildbot Worker Account
+
+- role: supervisor-service
+  service_name: "oauth2_proxy"
+  service_dir: "{{ getent_passwd[worker_account].4 }}"
+  service_command: /usr/local/bin/oauth2_proxy -config {{ oauth2_proxy_configuration }}
+  service_user: "{{ worker_account }}"
+  service_environment: "{{ proxy_env }}"
 
 - role: nginx
   nginx_template: multiproxy
   upstream_urls:
       - endpoint: /events
-        url: "{{ local_ip }}:{{ logstash_port }}"
+        url: "{{ internal_ip }}:{{ logstash_port }}"
       - endpoint: /
-        url: "{{ local_ip }}:{{ kibana_port }}"
+        url: "{{ internal_ip }}:{{ oauth2_proxy_port }}"
   ssl: true
