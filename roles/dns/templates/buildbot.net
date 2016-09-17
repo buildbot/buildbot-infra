@@ -1,6 +1,6 @@
 $TTL            86400
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2016091701      ;serial
+                                        {{ dns_serial }}      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
