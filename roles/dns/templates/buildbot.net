@@ -1,6 +1,6 @@
 $TTL            86400
 @       86400   IN      SOA     ns1.buildbot.net. hostmaster.buildbot.net. (
-                                        2016090201      ;serial
+                                        2016091701      ;serial
                                         10800           ;refresh
                                         1800            ;retry
                                         604800          ;expire
@@ -13,47 +13,21 @@ $TTL            86400
 @               IN      NS      ns1.darkbeer.org.   ; usa
 @               IN      MX      10 mx.buildbot.net.
 @               IN      A       140.211.10.238
-buildbot        IN      A       140.211.10.239
-xy2dwhhhx5d4    IN      CNAME   gv-d47fzorbndt4i4.dv.googlehosted.com.
-mx              IN      A       140.211.10.235
-www             IN      A       140.211.10.238
-www-new         IN      A       140.211.10.238
-lists           IN      A       140.211.10.241
-trac            IN      A       140.211.10.240
-ftp             IN      A       140.211.10.243
-bot             IN      A       140.211.10.242
-service1        IN      A       140.211.10.230
-service2        IN      A       140.211.10.231
-service3        IN      A       140.211.10.232
-vm1             IN      A       140.211.10.233
-mac1            IN      A       140.211.10.234
-ns1             IN      A       140.211.10.236
-docs            IN      A       140.211.10.237
+
+{% for name, ip in hosts_ips.items() %}
+{{name}}              IN      A       {{external_network}}.{{ip}}
+{% endfor %}
+
 pr-docs         IN      CNAME   pr-docs.buildbot.net.s3-website-us-east-1.amazonaws.com.
 status          IN      CNAME   status.buildbot.net.s3-website-us-east-1.amazonaws.com.
-nine            IN      A       140.211.10.244
-supybot         IN      A       140.211.10.245
-events          IN      A       140.211.10.227
-prci            IN      A       209.177.87.210
+
 ; dont forget to update the serial in 3rd line when adding new records!
 
 ; Our "internal" addreses.  Note that we do not use split DNS. Also note that
 ; there is no reverse resolution for these addresses.
 
 $ORIGIN int.buildbot.net.
-backup          IN      A       192.168.80.212
-bslave1         IN      A       192.168.80.226
-buildbot        IN      A       192.168.80.239
-docs            IN      A       192.168.80.237
-mx              IN      A       192.168.80.235
-ns1             IN      A       192.168.80.236
-syslog          IN      A       192.168.80.211
-www             IN      A       192.168.80.238
-trac            IN      A       192.168.80.240
-lists           IN      A       192.168.80.241
-bot             IN      A       192.168.80.242
-ftp             IN      A       192.168.80.243
-nine            IN      A       192.168.80.244
-supybot         IN      A       192.168.80.245
-build1          IN      A       192.168.80.210
-events          IN      A       192.168.80.227
+
+{% for name, ip in hosts_ips.items() %}
+{{name}}              IN      A       {{internal_network}}.{{ip}}
+{% endfor %}

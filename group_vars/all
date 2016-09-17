@@ -164,10 +164,10 @@ hosts_ips:
     nine    : 244
     supybot : 245
     mysql   : 246
+    syslog : 211
 
     backup : 212
     bslave1: 226
-    syslog : 211
     build1 : 210
 
 # vars are lazily evaluated so ansible_hostname will be valid at the time of evaluation (via gatherfacts)

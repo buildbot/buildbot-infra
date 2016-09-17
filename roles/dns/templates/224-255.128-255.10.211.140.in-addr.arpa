@@ -9,34 +9,6 @@
 @               7200    IN      NS      ns1.rtems.org.      ; usa
 @               7200    IN      NS      ns1.darkbeer.org.   ; usa
 
-;224
-;225
-;226
-227     86400   IN       PTR     events.buildbot.net.
-;228
-;229
-230     86400   IN       PTR     service1.buildbot.net.
-231     86400   IN       PTR     service2.buildbot.net.
-232     86400   IN       PTR     service3.buildbot.net.
-233     86400   IN       PTR     vm1.buildbot.net.
-234     86400   IN       PTR     mac1.buildbot.net.
-235     86400   IN       PTR     mx.buildbot.net.
-236     86400   IN       PTR     ns1.buildbot.net.
-237     86400   IN       PTR     docs.buildbot.net.
-238     86400   IN       PTR     www.buildbot.net.
-239     86400   IN       PTR     buildbot.buildbot.net.
-240     86400   IN       PTR     trac.buildbot.net.
-241     86400   IN       PTR     lists.buildbot.net.
-242     86400   IN       PTR     bot.buildbot.net.
-243     86400   IN       PTR     ftp.buildbot.net.
-244     86400   IN       PTR     nine.buildbot.net.
-245     86400   IN       PTR     supybot.buildbot.net.
-;246
-;247
-;248
-;249
-;250
-;251
-;252
-;253
-;254
+{% for name, ip in hosts_ips.items() %}
+{{ip}}     86400   IN       PTR     {{name}}.buildbot.net
+{% endfor %}
