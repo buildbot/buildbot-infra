@@ -88,6 +88,15 @@
         content: "{{ hyper_keys }}"
       - filename: github_oauth.pass
         content: "{{ github_oauth_keys[ansible_hostname] }}"
+  tags: bb-master
+
+- name: Make sure we have latest raw creds
+  become_user: "{{ bb_user }}"
+  copy:
+    dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{item.filename}}"
+    content: "{{ item.content }}"
+    mode: "0600"
+  with_items:
       - filename: github_token
         content: "{{ github_api_token }}"
   tags: bb-master
