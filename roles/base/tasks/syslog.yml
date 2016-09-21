@@ -17,3 +17,13 @@
     dest: /etc/syslog.conf
   notify: reload syslogd
   when: configure_syslog
+
+- name: "syslog.conf - remove old configuration"
+  tags: syslog
+  lineinfile:
+    line: "*.* @192.168.80.51"
+    regexp: "^\\*.\\* *@192.168.80.51"
+    state: "absent"
+    dest: /etc/syslog.conf
+  notify: reload syslogd
+  when: configure_syslog

@@ -1,6 +1,7 @@
 ---
 - include: packages.yml
 - include: sudo.yml
+- include: hosts.yml
 - include: syslog.yml
   when: ansible_distribution == "FreeBSD"
 - include: sendmail.yml
