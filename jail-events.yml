@@ -11,5 +11,5 @@
   - base
   - role: elk
     server_name: "{{ web_host_name }}"
-    logstash_variant: syslog
+    logstash_variant: events
     github_team: "buildbot-commit-access"  # this restricts access to only people in the github 'buildbot-commit-access' team
