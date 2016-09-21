@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+
+::1                     localhost localhost.my.domain
+127.0.0.1               localhost localhost.my.domain
+
+# generated according to groups_vars/all.hosts_ips
+
+{% for name, ip in hosts_ips | dictsort(false, 'value') %}
+{{internal_network}}.{{ip}} {{name}}.int.buildbot.net {{name}}
+{% endfor %}
