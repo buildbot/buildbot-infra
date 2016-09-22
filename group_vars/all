@@ -150,6 +150,7 @@ dns_serial: 2016091701  # YYYYMMDD01
 
 # IP addresses for all hosts in the network
 hosts_ips:
+    mysql   : 215
     events  : 227
     service1: 230
     service2: 231
@@ -167,7 +168,6 @@ hosts_ips:
     ftp     : 243
     nine    : 244
     supybot : 245
-    mysql   : 246
     syslog : 211
 
     backup : 212
