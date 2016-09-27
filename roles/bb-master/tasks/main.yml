@@ -87,7 +87,7 @@
       - filename: hyper.pass
         content: "{{ hyper_keys }}"
       - filename: github_oauth.pass
-        content: "{{ github_oauth_keys[ansible_hostname] }}"
+        content: "{{ github_oauth_keys[ansible_hostname] | default({}) }}"
   tags: bb-master
 
 - name: Make sure we have latest raw creds
