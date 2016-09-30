@@ -25,6 +25,10 @@ dependencies:
   upstream_urls:
       - endpoint: /events
         url: "{{ internal_ip }}:{{ logstash_port }}"
+      # elastic_search_direct_url is in the vault. Allow admins to access the data directly from internet
+      - endpoint: /{{ elastic_search_direct_url }}
+        url: "{{ internal_ip }}:{{ elastic_port }}"
       - endpoint: /
         url: "{{ internal_ip }}:{{ oauth2_proxy_port }}"
+
   ssl: true
