@@ -31,12 +31,15 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "service1" do |service1|
       service1.vm.network "private_network", ip: "192.168.80.230"
+      service1.vm.hostname = "service1" 
   end
   config.vm.define "service2" do |service2|
       service2.vm.network "private_network", ip: "192.168.80.231"
+      service2.vm.hostname = "service2" 
   end
   config.vm.define "service3" do |service3|
       service3.vm.network "private_network", ip: "192.168.80.232"
+      service3.vm.hostname = "service3" 
   end
 
   config.vm.provider :virtualbox do |vb, override|
