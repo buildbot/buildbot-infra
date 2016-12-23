@@ -31,8 +31,8 @@ RECIPIENTS = ['devel@buildbot.net', 'users@buildbot.net']
 
 WEEKLY_MEETING_TEXT = textwrap.dedent("""
 
-    <p>Buildbot has weekly meetings via irc, held at 16:30 UTC on Tuesdays.
-    That is about 90 minutes from now!
+    <p>Buildbot has weekly meetings via irc, held at 17:00 UTC on Tuesdays.
+    That is about 2 hours from now!
 
     <p>Meetings are in #buildbot on Freenode, open to any and all participants.
     They generally focus on organizational, rather than technical issues,
