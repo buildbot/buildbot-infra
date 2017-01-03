@@ -23,5 +23,6 @@ To: %s
 
 %s""" % (FROM, RECIPIENT, body))
 
+
 if __name__ == "__main__":
     main()
