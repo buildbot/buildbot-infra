@@ -59,5 +59,6 @@ def main():
         details = get_host_details(args.host)
         json.dump(details, sys.stdout)
 
+
 if __name__ == '__main__':
     main()
