@@ -34,7 +34,7 @@ server {
 }
 {% if ssl %}
 server {
-    listen 443 ssl;
+    listen 443 ssl http2;
     server_name {{server_name}};
 
     # certs sent to the client in SERVER HELLO are concatenated in ssl_certificate
