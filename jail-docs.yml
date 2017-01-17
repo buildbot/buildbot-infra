@@ -22,7 +22,7 @@
     venv_name: "{{ env_name }}"
     venv_python_packages:
     - pip
-    - "git+https://github.com/tardyp/towncrier"
+    - "git+https://github.com/tardyp/towncrier#egg=towncrier"
     venv_packages:
     - gmake
     - jpeg
