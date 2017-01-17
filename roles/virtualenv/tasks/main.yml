@@ -31,6 +31,7 @@
   become_user: "{{ venv_user }}"
   pip:
     name: "{{ item }}"
+    editable: false
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
   environment: "{{ proxy_env }}"
   with_items: "{{ venv_python_packages }}"
