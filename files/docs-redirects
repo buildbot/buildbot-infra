@@ -1,0 +1,10 @@
+# Renamed documentation pages.
+rewrite ^/(latest|current)/developer/master-slave\.html          /$1/developer/master-worker.html permanent;
+rewrite ^/(latest|current)/developer/cls-bslavemanager\.html     /$1/developer/cls-workermanager.html permanent;
+rewrite ^/(latest|current)/developer/cls-buildslave\.html        /$1/developer/cls-worker.html permanent;
+rewrite ^/(latest|current)/manual/cfg-buildslaves-libvirt\.html  /$1/manual/cfg-workers-libvirt.html permanent;
+rewrite ^/(latest|current)/manual/cfg-buildslaves-docker\.html   /$1/manual/cfg-workers-docker.html permanent;
+rewrite ^/(latest|current)/manual/cfg-buildslaves-openstack\.html/$1/manual/cfg-workers-openstack.html permanent;
+rewrite ^/(latest|current)/manual/cfg-buildslaves-ec2\.html      /$1/manual/cfg-workers-ec2.html permanent;
+rewrite ^/(latest|current)/manual/cfg-buildslaves\.html          /$1/manual/cfg-workers.html permanent;
+rewrite ^/(latest|current)/manual/installation/buildslave\.html  /$1/manual/installation/worker.html permanent;
