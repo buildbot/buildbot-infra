@@ -67,7 +67,7 @@ To use development secrets (which may be unencrypted), create ``dev-secrets.yml`
 Development with proxies
 ------------------------
 
-Because of https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=212452 the vagrant boostrap will not work when your environment requires http proxies to acces internet.
+Because of https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=212452 the vagrant boostrap will not work when your environment requires http proxies to access internet.
 
 In that case, during VM creation phase, vagrant will indefinitly try to connect via ssh.
 
