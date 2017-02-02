@@ -42,6 +42,7 @@
     service_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
     service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildbot start --nodaemon"
     service_user: "{{ worker_account }}"
+    service_stopwaitsecs:  300
   - role: nginx
     nginx_template: proxy
     server_name: "{{ web_host_name }}"

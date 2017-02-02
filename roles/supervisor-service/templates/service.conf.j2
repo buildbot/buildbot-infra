@@ -21,7 +21,7 @@ environment={% for k, v in service_environment.items() %}{{k}}="{{v}}",{% endfor
 # [re]start behaviour
 autostart=true
 autorestart=true
-
+stopwaitsecs={{service_stopwaitsecs | default(10)}}
 # output handling
 redirect_stderr=true
 stdout_logfile={{supervisor_log_dir}}/{{service_name}}.log
