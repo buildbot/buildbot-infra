@@ -27,7 +27,7 @@
   template:
     src: oauth2_proxy.conf
     dest: "{{ oauth2_proxy_configuration }}"
-    mode: "660"
+    mode: 0660
     owner: "{{ worker_account }}"
     group: "wheel"
   notify: restart supervisor
