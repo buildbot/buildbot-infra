@@ -26,6 +26,7 @@
   template:
     src: pf.conf
     dest: "{{ pf_conf }}"
+    validate: pfctl -vnf %s
   when: "nat_if is defined"
 
 - name: Restart pf
