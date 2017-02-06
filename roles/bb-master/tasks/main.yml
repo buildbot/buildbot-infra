@@ -2,6 +2,7 @@
 # repo.
 ---
 - name: Make sure we have an updated copy of Buildbot repository
+  become: yes
   become_user: "{{ bb_user }}"
   git:
     repo: "{{ buildbot_repo }}"
@@ -14,6 +15,7 @@
   tags: bb-master
 
 - name: Make sure we have an updated copy of Buildbot travis repository
+  become: yes
   become_user: "{{ bb_user }}"
   git:
     repo: "{{ buildbot_travis_repo }}"
@@ -33,6 +35,7 @@
   tags: bb-master
 
 - name: Install/upgrade build master
+  become: yes
   become_user: "{{ bb_user }}"
   script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
   when: "bb_repo_state|changed or bbt_repo_state|changed"
@@ -40,6 +43,7 @@
   tags: bb-master
 
 - name: Create build master config
+  become: yes
   become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot create-master {{ bb_master_dir }}"
   args:
@@ -47,6 +51,7 @@
   tags: bb-master
 
 - name: Make sure we have an updated copy of metabbotcfg repository
+  become: yes
   become_user: "{{ bb_user }}"
   git:
     repo: "{{ metabbotcfg_repo }}"
@@ -59,6 +64,7 @@
   tags: bb-master
 
 - name: Make sure we have a symlink for the master.cfg
+  become: yes
   become_user: "{{ bb_user }}"
   file:
     src: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/master.cfg"
@@ -67,6 +73,7 @@
   tags: bb-master
 
 - name: Make sure we have latest build slave passwords
+  become: yes
   become_user: "{{ bb_user }}"
   copy:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item }}.pass"
@@ -78,6 +85,7 @@
   tags: bb-master
 
 - name: Make sure we have latest creds
+  become: yes
   become_user: "{{ bb_user }}"
   copy:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{item.filename}}"
@@ -91,6 +99,7 @@
   tags: bb-master
 
 - name: Make sure we have latest raw creds
+  become: yes
   become_user: "{{ bb_user }}"
   copy:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{item.filename}}"
@@ -102,6 +111,7 @@
   tags: bb-master
 
 - name: Remove passwords for obsolete slaves
+  become: yes
   become_user: "{{ bb_user }}"
   file:
     dest: "{{ bb_master_dir }}/{{ metabbotcfg_short }}/{{ item }}.pass"
@@ -111,6 +121,7 @@
 
 # It's important to get the config and passwords before trying to upgrade the database.
 - name: Ensure latest schema of the database
+  become: yes
   become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot upgrade-master {{ bb_master_dir }}"
   when: "bb_repo_state|changed"
