@@ -7,7 +7,7 @@
   environment: "{{ proxy_env }}"
 
 - name: create rndc key
-  shell: "rndc-confgen -a -A hmac-sha256 -u bind -c {{ namedb_dir }}/{{ rndc_key }}"
+  command: "rndc-confgen -a -A hmac-sha256 -u bind -c {{ namedb_dir }}/{{ rndc_key }}"
   args:
     creates: "{{ namedb_dir }}/{{ rndc_key }}"
 

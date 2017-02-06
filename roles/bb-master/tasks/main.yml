@@ -29,7 +29,7 @@
   tags: bb-master
 
 - name: stop Supervisor service
-  shell: "supervisorctl stop {{ bb_service }}"
+  command: "supervisorctl stop {{ bb_service }}"
   ignore_errors: True
   when: "bb_repo_state|changed"
   tags: bb-master
@@ -128,7 +128,7 @@
   tags: bb-master
 
 - name: restart Supervisor service
-  shell: "supervisorctl restart {{ bb_service }}"
+  command: "supervisorctl restart {{ bb_service }}"
   ignore_errors: True
   when: "bb_repo_state|changed or mbb_repo_state|changed"
   tags: bb-master
