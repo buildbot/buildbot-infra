@@ -28,6 +28,7 @@
   environment: "{{ proxy_env }}"
 
 - name: create the virtual environment
+  become: yes
   become_user: "{{ venv_user }}"
   pip:
     name: "{{ item }}"

@@ -1,5 +1,6 @@
 ---
 - name: Make sure we have an updated copy of the repository
+  become: yes
   become_user: "{{ target_user }}"
   git:
     repo: "{{ repo_url }}"
@@ -13,6 +14,7 @@
   environment: "{{ proxy_env }}"
 
 - name: Perform build
+  become: yes
   become_user: "{{ target_user }}"
   command: "{{ item }}"
   args:
@@ -26,6 +28,7 @@
 # if the command failed, roll the git repository back one commit so that
 # on the next run, we will re-run the build
 - name: Revert git repo
+  become: yes
   become_user: "{{ target_user }}"
   command: "git reset --hard HEAD^"
   args:

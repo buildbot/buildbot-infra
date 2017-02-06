@@ -13,7 +13,8 @@
   tasks:
   # Use this to create "special" groups that will be used to setup a particular host.
   # We use non-fqdn here so a staging/test setup could work as well.
-  - group_by:
+  - name: Group hosts by name
+    group_by:
       key: "{{ansible_hostname}}"
     changed_when: False
 
