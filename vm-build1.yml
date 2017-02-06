@@ -3,7 +3,8 @@
   hosts: build1
   gather_facts: no
   connection: local
-  sudo: yes
+  become: yes
+  become_user: root
   roles:
   - base-vm
   - role: docker-worker
