@@ -42,7 +42,7 @@
     service_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
     service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildbot start --nodaemon"
     service_user: "{{ worker_account }}"
-    service_stopwaitsecs:  {{ 40 * 60 }}  # our slowest build is 22 min. let's try hard to really not kill stuff
+    service_stopwaitsecs:  "{{ 40 * 60 }}"  # our slowest build is 22 min. let's try hard to really not kill stuff
     service_stopsignal: USR1   # sigusr1 is cleanshutdown (wait all builds to finish before stop)
   - role: nginx
     nginx_template: proxy
