@@ -5,7 +5,6 @@
 #  PyOpenSSL
 #  service_identity
 
-import csv
 import json
 import textwrap
 import smtplib
