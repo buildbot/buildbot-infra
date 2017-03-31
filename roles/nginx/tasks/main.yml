@@ -91,3 +91,10 @@
   args:
     chdir: /root/.acme.sh
     creates: "/root/.acme.sh/{{server_name}}"
+
+- name: Install the certificate
+  command: |
+             /root/.acme.sh/acme.sh --install-cert -d {{server_name}} \
+             --key-file {{ nginx_cert_dir }}/{{server_name}}.key  \
+             --fullchain-file {{ nginx_cert_dir }}/{{server_name}}.crt \
+             --reloadcmd "service nginx reload"
