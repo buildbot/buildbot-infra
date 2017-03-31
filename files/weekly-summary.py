@@ -5,7 +5,6 @@
 #  PyOpenSSL
 #  service_identity
 
-import csv
 import json
 import textwrap
 import smtplib
@@ -119,100 +118,25 @@ def tablify_dict(d, show_header=True, row_order=None, col_order=None,
     return '<table>\n' + '\n'.join(table) + '\n</table>\n'
 
 
-def get_trac_tickets(start_day, end_day):
+def get_github_issues(project, start_day, end_day, issue_type='pulls'):
     """
     Get the last week's worth of tickets, where week ends through yesterday.
     """
-    def format_trac_tickets(what, body):
-        tickets = csv.reader(body.splitlines(), delimiter='\t')
-        # Trac returns a tab-delimited file with the header. Skip it.
-        next(tickets)
-        # Returned format is id, summary, type.
-        summary = [{'id': t[0], 'summary': t[1], 'type': t[2],
-                    'url': TRAC_BUILDBOT_TICKET_URL % {'ticket': t[0]}}
-                   for t in tickets]
-        return (what, summary)
-
-    def summarize_trac_tickets(results):
-        opened = {}
-        closed = {}
-        for success, value in results:
-            if not success:
-                continue
-            what, tickets = value
-            for t in tickets:
-                if what == 'Opened':
-                    opened[len(opened)] = t
-                elif what == 'Closed':
-                    closed[len(closed)] = t
-        # Convert ticket summary to a table to start the weekly summary.
-
-        # Also include a list of every new/reopened and closed tickets.
-        col_order = ['id', 'type', 'summary']
-        # Left-justify every cell except the first column. Return None for the
-        # first column to have it skipped.
-        opened_table = tablify_dict(opened, show_header=False,
-                                    col_order=col_order, link_field='id',
-                                    link_url_field='url')
-        opened_overview = '\n'.join(['<h2>New/Reopened Tickets</h2>',
-                                     opened_table])
-        closed_table = tablify_dict(closed, show_header=False,
-                                    col_order=col_order, link_field='id',
-                                    link_url_field='url')
-        closed_overview = '\n'.join(['<h2>Closed Tickets</h2>', closed_table])
-
-        trac_summary = [opened_overview, closed_overview]
-        return ('trac', '\n\n'.join(trac_summary))
-
-    trac_query_url = (
-        '%(trac_url)s/query?%(status)s&format=tab'
-        '&%(time_arg)s=%(start)s..%(end)s'
-        '&col=id&col=summary&col=type&col=status&order=id')
-    url_options = {
-        'trac_url': TRAC_BUILDBOT_URL,
-        'start': start_day,
-        'end': end_day,
-    }
-
-    agent = Agent(reactor)
-    fetches = []
-    # Need to make two queries: one to get the new/reopened tickets and a
-    # second to get the closed tickets.
-    url_options['status'] = 'status=new&status=reopened'
-    url_options['time_arg'] = 'time'
-    new_url = trac_query_url % (url_options)
-    d = agent.request('GET', new_url, HTTP_HEADERS)
-    d.addCallback(get_body('Opened', format_trac_tickets))
-    fetches.append(d)
-
-    url_options['status'] = 'status=closed'
-    url_options['time_arg'] = 'changetime'
-    closed_url = trac_query_url % (url_options)
-    d = agent.request('GET', closed_url, HTTP_HEADERS)
-    d.addCallback(get_body('Closed', format_trac_tickets))
-    fetches.append(d)
-
-    dl = defer.DeferredList(fetches, fireOnOneErrback=True, consumeErrors=True)
-    dl.addCallback(summarize_trac_tickets)
-    return dl
-
-
-def get_github_prs(project, start_day, end_day):
-    """
-    Get the last week's worth of tickets, where week ends through yesterday.
-    """
-    def summarize_github_prs(what, body_json):
+    def summarize_github_issues(what, body_json):
         # I don't know a good way to parse the time zone. Github returns
         # ISO8601 in UTC.
         gh_time_format = '%Y-%m-%dT%H:%M:%SZ'
-        opened_prs = {}
-        closed_prs = {}
+        opened_issues = {}
+        closed_issues = {}
         body = json.loads(body_json)
         categories = [
-            ('Opened', 'open', 'created_at', opened_prs),
-            ('Completed', 'closed', 'closed_at', closed_prs),
+            ('Opened', 'open', 'created_at', opened_issues),
+            ('Completed', 'closed', 'closed_at', closed_issues),
         ]
-        for pr in body:
+        for iss in body:
+            # skip pull requests, which GH returns in lists of issues
+            if issue_type == 'issues' and 'pull_request' in iss:
+                continue
             for group in categories:
                 _, state, when, pr_dict = group
                 # Have to check if the when field is not None. The state is
@@ -220,32 +144,39 @@ def get_github_prs(project, start_day, end_day):
                 # tuple is first, so any pull request that is closed and has a
                 # merged_at date will be added there before checking the
                 # closed_at date.
-                if pr['state'] == state and pr[when] is not None:
-                    happened = datetime.strptime(pr[when], gh_time_format)
+                if iss['state'] == state and iss[when] is not None:
+                    happened = datetime.strptime(iss[when], gh_time_format)
                     # If this pull request was created outside of the summary
                     # period, skip it.
                     if not (start_day <= happened.date() <= end_day):
                         continue
-                    pr_dict[len(pr_dict)] = pr
+                    pr_dict[len(pr_dict)] = iss
 
         overviews = []
         for group in categories:
             what, _, _, pr_dict = group
-            title = '<h2>%s Pull Requests</h2>' % (what,)
+            if not pr_dict:
+                continue
+            typename = {'issues': 'Issues', 'pulls': 'Pull Requests'}[issue_type]
+            title = '<h2>%s %s</h2>' % (what, typename)
             table = tablify_dict(
                 pr_dict, show_header=False,
                 row_order=sorted(pr_dict.keys(), lambda a, b: cmp(b, a)),
                 col_order=['number', 'title'],
                 link_field='number', link_url_field='html_url')
             overviews.append('\n'.join([title, table]))
-        return ('github/' + project, '\n\n'.join(overviews))
+        identifier = 'github/{}/{}'.format(project, issue_type)
+        if overviews:
+            return (identifier, '\n'.join(overviews))
+        else:
+            return (identifier, '<i>None this week</i>')
 
-    gh_api_url = ('%(api_url)s/repos/%(project)s/pulls?state=all')
-    url_options = {'api_url': GITHUB_API_URL, 'project': project}
+    gh_api_url = ('%(api_url)s/repos/%(project)s/%(issue_type)s?state=all')
+    url_options = {'api_url': GITHUB_API_URL, 'project': project, 'issue_type': issue_type}
     url = gh_api_url % (url_options)
     agent = Agent(reactor)
     d = agent.request('GET', url, HTTP_HEADERS)
-    d.addCallback(get_body('Github', summarize_github_prs))
+    d.addCallback(get_body('Github', summarize_github_issues))
     return d
 
 
@@ -253,16 +184,14 @@ def make_html(results):
     body = (
         '<h1>Weekly Meeting</h1>\n'
         '%(weekly-meeting)s\n'
-        '<h1>Trac Tickets</h1>\n'
-        '%(trac)s\n'
-        '\n\n'
+        '<h1 style="padding-top: 1em;">Buildbot Issues</h1>\n'
+        '%(github/buildbot/buildbot/issues)s\n'
         '<h1 style="padding-top: 1em;">Buildbot Pull Requests</h1>\n'
-        '%(github/buildbot/buildbot)s'
-        '\n\n'
+        '%(github/buildbot/buildbot/pulls)s\n'
         '<h1 style="padding-top: 1em;">Buildbot-Infra Pull Requests</h1>\n'
-        '%(github/buildbot/buildbot-infra)s'
+        '%(github/buildbot/buildbot-infra/pulls)s\n'
         '<h1 style="padding-top: 1em;">Meta-buildbot Pull Requests</h1>\n'
-        '%(github/buildbot/metabbotcfg)s'
+        '%(github/buildbot/metabbotcfg/pulls)s\n'
     )
     body_parts = {}
     for success, value in results:
@@ -289,10 +218,10 @@ def main():
     start_day = end_day - timedelta(7)
 
     dl = defer.DeferredList([
-        get_trac_tickets(start_day, end_day),
-        get_github_prs('buildbot/buildbot', start_day, end_day),
-        get_github_prs('buildbot/buildbot-infra', start_day, end_day),
-        get_github_prs('buildbot/metabbotcfg', start_day, end_day),
+        get_github_issues('buildbot/buildbot', start_day, end_day, 'issues'),
+        get_github_issues('buildbot/buildbot', start_day, end_day, 'pulls'),
+        get_github_issues('buildbot/buildbot-infra', start_day, end_day),
+        get_github_issues('buildbot/metabbotcfg', start_day, end_day),
     ], fireOnOneErrback=True, consumeErrors=True)
     dl.addCallback(make_html)
     dl.addCallback(send_email)
