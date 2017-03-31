@@ -31,20 +31,11 @@
     server_root: "{{ getent_passwd[worker_account].4 }}/{{ build_dir }}/dist"
     extra_config_from: "files/www-redirects"
     ssl: True
-    # for a while buildbot.net was 301'ing to www-new.buildbot.net.  301 is a permament
-    # redirect.  So let's make that site exist, too.
-  - role: nginx
-    nginx_template: static
-    server_name: "www-new.buildbot.net"
-    server_root: "{{ getent_passwd[worker_account].4 }}/{{ build_dir }}/dist"
-    extra_config_from: "files/www-redirects"
   - role: nginx
     nginx_template: domain-redirect
     server_name: redirects
     server_names:
     - www.buildbot.net
-    - www.buildbot.org
-    - buildbot.org
     target_url: "http://{{ web_host_name }}"
 
 # vim:ts=2:sw=2:noai:nosi

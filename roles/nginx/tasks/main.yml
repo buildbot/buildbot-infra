@@ -14,6 +14,7 @@
 
 - name: Download acme.sh
   git: repo=https://github.com/Neilpang/acme.sh dest=/usr/local/src/acme.sh
+  when: ssl
 
 
 - name: Install acme.sh
@@ -21,6 +22,7 @@
   args:
     creates: /root/.acme.sh/acme.sh
     chdir: /usr/local/src/acme.sh
+  when: ssl
 
 
 - name: make sure necessary configuration directories exist
@@ -91,6 +93,7 @@
   args:
     chdir: /root/.acme.sh
     creates: "/root/.acme.sh/{{server_name}}"
+  when: ssl
 
 - name: Install the certificate
   command: |
@@ -98,3 +101,4 @@
              --key-file {{ nginx_cert_dir }}/{{server_name}}.key  \
              --fullchain-file {{ nginx_cert_dir }}/{{server_name}}.crt \
              --reloadcmd "service nginx reload"
+  when: ssl
