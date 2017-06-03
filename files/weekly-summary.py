@@ -37,7 +37,7 @@ WEEKLY_MEETING_TEXT = textwrap.dedent("""
     They generally focus on organizational, rather than technical issues,
     but are open to anything Buildbot-related.
     To raise a topic, add it to "All Other Business" in the
-    <a href="https://titanpad.com/buildbot-agenda">agenda</a>,
+    <a href="http://bit.ly/2rup31x">agenda</a>,
     or just speak up during the meeting.
 
     <p>Meeting minutes are available
