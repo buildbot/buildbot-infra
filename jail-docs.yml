@@ -22,6 +22,7 @@
     venv_name: "{{ env_name }}"
     venv_python_packages:
     - pip
+    - "git+https://github.com/tardyp/towncrier#egg=towncrier"
     venv_packages:
     - gmake
     - jpeg
@@ -39,8 +40,9 @@
     target_commands:
     # `command` module does not allow to set env variables, nor expands them,
     # so let's use make's variables.
-    - "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/pip install -e master[docs]"
+    - "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/pip install -Ur requirements-cidocs.txt -e master"
     - "gmake -C master/docs PATH:={{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin:$(PATH) VERSION=latest"
+    - "git checkout HEAD master/docs/relnotes/index.rst"
     - "find master/docs/_build/html -name '*.html' -exec python2 {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/add-tracking.py {} ;"
     - "rm -rf {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs/latest"
     - "ln -sf {{ getent_passwd[worker_account].4 }}/buildbot/master/docs/_build/html {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs/latest"
@@ -48,6 +50,7 @@
     nginx_template: static
     server_name: "{{ web_host_name }}"
     server_root: "{{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs"
+    extra_config_from: "files/docs-redirects"
     ssl: True
   - role: nginx
     nginx_template: domain-redirect

@@ -2,6 +2,7 @@
 # repo.
 ---
 - name: update supybot repository
+  become: yes
   become_user: "{{ supybot_user }}"
   git:
     repo: "{{ supybot_repo }}"
@@ -19,6 +20,7 @@
   environment: "{{ proxy_env }}"
 
 - name: update meetbot repository
+  become: yes
   become_user: "{{ supybot_user }}"
   git:
     repo: "{{ meetbot_repo }}"

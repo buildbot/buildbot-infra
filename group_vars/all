@@ -141,7 +141,7 @@ internal_network: 192.168.80
 external_network: 140.211.10
 
 # those prod defaults are overriden by vagrant.yml
-nat_if: ""  # none: needed only for vagrant
+nat_if: lagg0
 internal_if: vlan0
 external_if: lagg0
 

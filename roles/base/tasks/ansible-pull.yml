@@ -43,6 +43,7 @@
 - name: clone ansible git repository
   # note that this fails with ansible 2.1.1.0 (working with 2.1.0.0)
   # https://github.com/ansible/ansible/issues/17497
+  become: yes
   become_user: "{{ service_account }}"
   git:
     repo: "{{ ansible_git_repository }}"

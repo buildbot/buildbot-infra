@@ -12,6 +12,19 @@
     state: present
   environment: "{{ proxy_env }}"
 
+- name: Download acme.sh
+  git: repo=https://github.com/Neilpang/acme.sh dest=/usr/local/src/acme.sh
+  when: ssl
+
+
+- name: Install acme.sh
+  command: /usr/local/src/acme.sh/acme.sh --install
+  args:
+    creates: /root/.acme.sh/acme.sh
+    chdir: /usr/local/src/acme.sh
+  when: ssl
+
+
 - name: make sure necessary configuration directories exist
   file:
     path: "{{ nginx_conf_dir }}/{{item}}"
@@ -44,30 +57,6 @@
     dest: "{{ nginx_conf_dir }}/sites/{{ server_name }}"
   notify: reload nginx
 
-- name: create ssl certificate directory
-  file:
-    path: "{{ nginx_cert_dir }}"
-    state: directory
-    mode: 0600
-    owner: root
-    group: wheel
-  when: ssl
-
-- name: create ssl cert file
-  copy:
-    content: "{{ ssl_keys[server_name]['cert'] }}"
-    dest: "{{ nginx_cert_dir }}/{{ server_name }}.crt"
-  notify: reload nginx
-  when: ssl
-
-- name: create ssl key file
-  copy:
-    content: "{{ ssl_keys[server_name]['key'] }}"
-    dest: "{{ nginx_cert_dir }}/{{ server_name }}.key"
-    mode: 0600
-    owner: root
-    group: wheel
-  when: ssl
 
 - name: create DHE parameter file
   command: "/usr/bin/openssl dhparam -out {{ nginx_conf_dir }}/dhparam.pem 2048"
@@ -98,3 +87,18 @@
     name: nginx
     enabled: true
     state: running
+
+- name: Issue the certificate
+  command: "/root/.acme.sh/acme.sh --nginx --issue -d {{server_name}}"
+  args:
+    chdir: /root/.acme.sh
+    creates: "/root/.acme.sh/{{server_name}}"
+  when: ssl
+
+- name: Install the certificate
+  command: |
+             /root/.acme.sh/acme.sh --install-cert -d {{server_name}} \
+             --key-file {{ nginx_cert_dir }}/{{server_name}}.key  \
+             --fullchain-file {{ nginx_cert_dir }}/{{server_name}}.crt \
+             --reloadcmd "service nginx reload"
+  when: ssl
