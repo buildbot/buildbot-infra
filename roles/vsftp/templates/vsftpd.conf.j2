@@ -52,8 +52,8 @@ ssl_sslv3=NO
 require_ssl_reuse=NO
 ssl_ciphers=HIGH
 
-rsa_cert_file={{ ssl_cert_file }}
-rsa_private_key_file={{ ssl_key_file }}
+rsa_cert_file=/usr/local/etc/nginx/certs/ftp.buildbot.net.crt
+rsa_private_key_file=/usr/local/etc/nginx/certs/ftp.buildbot.net.key
 {% else %}
 ssl_enable=NO
 {% endif %}
