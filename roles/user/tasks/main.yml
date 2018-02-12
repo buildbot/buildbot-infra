@@ -9,7 +9,7 @@
   authorized_key:
     user: "{{ user_id }}"
     key: "{{ authorized_key }}"
-  when: authorized_key
+  when: authorized_key != ''
 
 # NOTE: the information will only be available until the next use of `getent`
 - name: get user information
