@@ -9,4 +9,4 @@
   service:
     name: sshd
     enabled: true
-    state: running
+    state: started

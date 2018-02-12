@@ -22,4 +22,4 @@
   service:
     name: vsftpd
     enabled: true
-    state: running
+    state: started
