@@ -27,7 +27,7 @@
     group_by:
       key: '{{ansible_hostname}}'
 
-- include: "common.yml"
+- import_playbook: "common.yml"
   vars:
     ansible_connection: "ssh"
     is_vagrant: true
