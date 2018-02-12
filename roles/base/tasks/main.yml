@@ -1,14 +1,14 @@
 ---
-- include: packages.yml
-- include: sudo.yml
-- include: hosts.yml
-- include: syslog.yml
+- import_tasks: packages.yml
+- import_tasks: sudo.yml
+- import_tasks: hosts.yml
+- include_tasks: syslog.yml
   when: ansible_distribution == "FreeBSD"
-- include: sendmail.yml
+- include_tasks: sendmail.yml
   when: ansible_distribution == "FreeBSD"
-- include: rootpw.yml
-- include: ansible-pull.yml
-- include: periodic.yml
+- import_tasks: rootpw.yml
+- import_tasks: ansible-pull.yml
+- include_tasks: periodic.yml
   when: ansible_distribution == "FreeBSD"
-- include: python-cert-symlink.yml
+- include_tasks: python-cert-symlink.yml
   when: ansible_distribution == "FreeBSD"
