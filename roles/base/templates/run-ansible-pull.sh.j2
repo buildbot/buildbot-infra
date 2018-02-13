@@ -56,6 +56,6 @@ if [ $RESULT -ne 0 ]; then
 fi
 
 # clean up temp files
-find /home/{{ service_account }}/.ansible/tmp -type d -mtime +1 -delete
+find /home/{{ service_account }}/.ansible/tmp -type d -mtime +1 -delete 2>&1 | grep -v 'Permission denied'
 
 rm -f "$OUTPUT"
