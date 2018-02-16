@@ -9,7 +9,7 @@ server {
     {%- endif %}
 
     location / {
-        uwsgi_pass unix:/tmp/uwsgi.sock;
+        uwsgi_pass {{ uwsgi_sock }};
         include uwsgi_params;
     }
 

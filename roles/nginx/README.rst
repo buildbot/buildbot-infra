@@ -33,6 +33,13 @@ The nginx role requires the following arguments:
         ``upstream_url``
             <host>:<port> of the upstream
 
+    ``uwsgi``
+        A template for a uwsgi site.
+        Parameters:
+
+        ``uwsgi_sock``
+            Either a unix domain socket (include the ``unix:`` prefix) or a <host>:<port> for uwsgi.
+
     ``domain-redirect``
         A template for redirecting traffic for the whole domain to another one.
         Parameters:
