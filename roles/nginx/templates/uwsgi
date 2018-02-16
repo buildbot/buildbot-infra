@@ -1,0 +1,25 @@
+server {
+    listen 80;
+    server_name {{server_name}};
+
+    access_log {{nginx_log_dir}}/{{server_name}}/access.log;
+    error_log {{nginx_log_dir}}/{{server_name}}/error.log;
+    {% if extra_config_from is defined -%}
+    {{ lookup('file', extra_config_from)|indent }}
+    {%- endif %}
+
+    location / {
+        uwsgi_pass {{ uwsgi_sock }};
+        include uwsgi_params;
+    }
+
+    location /chrome {
+        alias /usr/www/{{ server_name }}/chrome;
+    }
+    location /favicon.ico {
+        alias /usr/www/{{ server_name }}/favicon.ico;
+    }
+    location /robots.txt {
+        alias /usr/www/{{ server_name }}/robots.txt;
+    }
+}
