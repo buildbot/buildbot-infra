@@ -24,6 +24,11 @@
     venv_name: mergeable
     venv_python_packages:
     - requests
+  - role: uwsgi
+  - role: nginx
+    server_name: trac.buildbot.net
+    nginx_template: uwsgi
+    uwsgi_sock: unix:/tmp/uwsgi.sock
   tasks:
   - name: install weekly-summary script
     copy:
