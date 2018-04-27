@@ -6,6 +6,20 @@
   become: yes
   roles:
   - role: jail
+    name: mx
+    hostname: mx.buildbot.net
+    internet_visible: true
+  - role: jail
+    name: ns1
+    hostname: ns1.buildbot.net
+    internet_visible: true
+  - role: jail
+    name: syslog
+    hostname: syslog.buildbot.net
+    internet_visible: true
+  # note that the remainder here are specified the "old way", with
+  # ip_address
+  - role: jail
     name: bot
     hostname: bot.buildbot.net
     ip_address:

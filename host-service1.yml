@@ -4,18 +4,6 @@
   gather_facts: no
   connection: "{{ ansible_connection }}"
   become: yes
-  roles:
-  - role: jail
-    name: mx
-    hostname: mx.buildbot.net
-    internet_visible: true
-  - role: jail
-    name: ns1
-    hostname: ns1.buildbot.net
-    internet_visible: true
-  - role: jail
-    name: syslog
-    hostname: syslog.buildbot.net
-    internet_visible: true
+  roles: []
 
 # vim:ts=2:sw=2:noai:nosi
