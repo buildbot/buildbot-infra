@@ -60,7 +60,7 @@ utility_packages:
   - bash
   - rsync
   - screen
-  - vim-lite
+  - vim-console
   Debian:
   - bash
   - rsync
