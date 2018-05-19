@@ -1,0 +1,123 @@
+mailman-loop@buildbot.net				smtp:192.168.80.241
+
+
+mailman@buildbot.net					smtp:192.168.80.241
+mailman-admin@buildbot.net				smtp:192.168.80.241
+mailman-bounces@buildbot.net			smtp:192.168.80.241
+mailman-confirm@buildbot.net			smtp:192.168.80.241
+mailman-join@buildbot.net				smtp:192.168.80.241
+mailman-leave@buildbot.net				smtp:192.168.80.241
+mailman-owner@buildbot.net				smtp:192.168.80.241
+mailman-request@buildbot.net			smtp:192.168.80.241
+mailman-subscribe@buildbot.net			smtp:192.168.80.241
+mailman-unsubscribe@buildbot.net		smtp:192.168.80.241
+
+botherders@buildbot.net					smtp:192.168.80.241
+botherders-admin@buildbot.net			smtp:192.168.80.241
+botherders-bounces@buildbot.net			smtp:192.168.80.241
+botherders-confirm@buildbot.net			smtp:192.168.80.241
+botherders-join@buildbot.net			smtp:192.168.80.241
+botherders-leave@buildbot.net			smtp:192.168.80.241
+botherders-owner@buildbot.net			smtp:192.168.80.241
+botherders-request@buildbot.net			smtp:192.168.80.241
+botherders-subscribe@buildbot.net		smtp:192.168.80.241
+botherders-unsubscribe@buildbot.net		smtp:192.168.80.241
+
+gsoc@buildbot.net						smtp:192.168.80.241
+gsoc-admin@buildbot.net					smtp:192.168.80.241
+gsoc-bounces@buildbot.net				smtp:192.168.80.241
+gsoc-confirm@buildbot.net				smtp:192.168.80.241
+gsoc-join@buildbot.net					smtp:192.168.80.241
+gsoc-leave@buildbot.net					smtp:192.168.80.241
+gsoc-owner@buildbot.net					smtp:192.168.80.241
+gsoc-request@buildbot.net				smtp:192.168.80.241
+gsoc-subscribe@buildbot.net				smtp:192.168.80.241
+gsoc-unsubscribe@buildbot.net			smtp:192.168.80.241
+
+bugs@buildbot.net						smtp:192.168.80.241
+bugs-admin@buildbot.net					smtp:192.168.80.241
+bugs-bounces@buildbot.net				smtp:192.168.80.241
+bugs-confirm@buildbot.net				smtp:192.168.80.241
+bugs-join@buildbot.net					smtp:192.168.80.241
+bugs-leave@buildbot.net					smtp:192.168.80.241
+bugs-owner@buildbot.net					smtp:192.168.80.241
+bugs-request@buildbot.net				smtp:192.168.80.241
+bugs-subscribe@buildbot.net				smtp:192.168.80.241
+bugs-unsubscribe@buildbot.net			smtp:192.168.80.241
+
+metabuildbot@buildbot.net				smtp:192.168.80.241
+metabuildbot-admin@buildbot.net			smtp:192.168.80.241
+metabuildbot-bounces@buildbot.net		smtp:192.168.80.241
+metabuildbot-confirm@buildbot.net		smtp:192.168.80.241
+metabuildbot-join@buildbot.net			smtp:192.168.80.241
+metabuildbot-leave@buildbot.net			smtp:192.168.80.241
+metabuildbot-owner@buildbot.net			smtp:192.168.80.241
+metabuildbot-request@buildbot.net		smtp:192.168.80.241
+metabuildbot-subscribe@buildbot.net		smtp:192.168.80.241
+metabuildbot-unsubscribe@buildbot.net	smtp:192.168.80.241
+
+administration@buildbot.net				smtp:192.168.80.241
+administration-admin@buildbot.net		smtp:192.168.80.241
+administration-bounces@buildbot.net		smtp:192.168.80.241
+administration-confirm@buildbot.net		smtp:192.168.80.241
+administration-join@buildbot.net		smtp:192.168.80.241
+administration-leave@buildbot.net		smtp:192.168.80.241
+administration-owner@buildbot.net		smtp:192.168.80.241
+administration-request@buildbot.net		smtp:192.168.80.241
+administration-subscribe@buildbot.net	smtp:192.168.80.241
+administration-unsubscribe@buildbot.net	smtp:192.168.80.241
+
+announce@buildbot.net					smtp:192.168.80.241
+announce-admin@buildbot.net				smtp:192.168.80.241
+announce-bounces@buildbot.net			smtp:192.168.80.241
+announce-confirm@buildbot.net			smtp:192.168.80.241
+announce-join@buildbot.net				smtp:192.168.80.241
+announce-leave@buildbot.net				smtp:192.168.80.241
+announce-owner@buildbot.net				smtp:192.168.80.241
+announce-request@buildbot.net			smtp:192.168.80.241
+announce-subscribe@buildbot.net			smtp:192.168.80.241
+announce-unsubscribe@buildbot.net		smtp:192.168.80.241
+
+sysadmin@buildbot.net					smtp:192.168.80.241
+sysadmin-admin@buildbot.net				smtp:192.168.80.241
+sysadmin-bounces@buildbot.net			smtp:192.168.80.241
+sysadmin-confirm@buildbot.net			smtp:192.168.80.241
+sysadmin-join@buildbot.net				smtp:192.168.80.241
+sysadmin-leave@buildbot.net				smtp:192.168.80.241
+sysadmin-owner@buildbot.net				smtp:192.168.80.241
+sysadmin-request@buildbot.net			smtp:192.168.80.241
+sysadmin-subscribe@buildbot.net			smtp:192.168.80.241
+sysadmin-unsubscribe@buildbot.net		smtp:192.168.80.241
+
+users@buildbot.net						smtp:192.168.80.241
+users-admin@buildbot.net				smtp:192.168.80.241
+users-bounces@buildbot.net				smtp:192.168.80.241
+users-confirm@buildbot.net				smtp:192.168.80.241
+users-join@buildbot.net					smtp:192.168.80.241
+users-leave@buildbot.net				smtp:192.168.80.241
+users-owner@buildbot.net				smtp:192.168.80.241
+users-request@buildbot.net				smtp:192.168.80.241
+users-subscribe@buildbot.net			smtp:192.168.80.241
+users-unsubscribe@buildbot.net			smtp:192.168.80.241
+
+devel@buildbot.net						smtp:192.168.80.241
+devel-admin@buildbot.net				smtp:192.168.80.241
+devel-bounces@buildbot.net				smtp:192.168.80.241
+devel-confirm@buildbot.net				smtp:192.168.80.241
+devel-join@buildbot.net					smtp:192.168.80.241
+devel-leave@buildbot.net				smtp:192.168.80.241
+devel-owner@buildbot.net				smtp:192.168.80.241
+devel-request@buildbot.net				smtp:192.168.80.241
+devel-subscribe@buildbot.net			smtp:192.168.80.241
+devel-unsubscribe@buildbot.net			smtp:192.168.80.241
+
+commits@buildbot.net						smtp:192.168.80.241
+commits-admin@buildbot.net				smtp:192.168.80.241
+commits-bounces@buildbot.net				smtp:192.168.80.241
+commits-confirm@buildbot.net				smtp:192.168.80.241
+commits-join@buildbot.net					smtp:192.168.80.241
+commits-leave@buildbot.net				smtp:192.168.80.241
+commits-owner@buildbot.net				smtp:192.168.80.241
+commits-request@buildbot.net				smtp:192.168.80.241
+commits-subscribe@buildbot.net			smtp:192.168.80.241
+commits-unsubscribe@buildbot.net			smtp:192.168.80.241

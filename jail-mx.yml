@@ -1,5 +1,4 @@
 ---
-# TODO: actually manage configuration (#3046)
 - name: configure mx
   hosts: mx
   gather_facts: no
@@ -8,3 +7,4 @@
   roles:
   - role: base
     configure_sendmail: False
+  - role: postfix
