@@ -661,11 +661,13 @@ smtp_tls_CAfile			= /usr/local/share/certs/ca-root-nss.crt
 #smtp_tls_enforce_peername = no
 #smtp_tls_note_starttls_offer = yes
 
-smtpd_use_tls           = yes
-smtpd_enforce_tls       = no
-smtpd_tls_cert_file     = /usr/local/etc/postfix/cert/mx.buildbot.net.crt
-smtpd_tls_key_file      = /usr/local/etc/postfix/cert/mx.buildbot.net.key
-smtpd_tls_CAfile		= /usr/local/etc/postfix/cert/cacert_class3.crt
+# we do not currently accept incoming TLS; to do so, we would need a certificate
+# see https://github.com/buildbot/buildbot-infra/pull/196#discussion_r189585790
+#smtpd_use_tls           = yes
+#smtpd_enforce_tls       = no
+#smtpd_tls_cert_file     = /usr/local/etc/postfix/cert/mx.buildbot.net.crt
+#smtpd_tls_key_file      = /usr/local/etc/postfix/cert/mx.buildbot.net.key
+#smtpd_tls_CAfile		= /usr/local/etc/postfix/cert/cacert_class3.crt
 
 smtpd_tls_loglevel      = 1
 smtpd_tls_received_header = yes
