@@ -1,0 +1,28 @@
+postmaster			admin
+hostmaster			admin
+usenet				admin
+news				admin
+webmaster			admin
+www					admin
+uucp				admin
+ftp					admin
+mailadmin			admin
+abuse				sysadmin@buildbot.net
+bbinfra				sysadmin@buildbot.net
+
+admin				amar
+#amar				verm@darkbeer.org
+#dustin				dustin@v.igoro.us
+tracnotify			verm@darkbeer.org, djmitche@gmail.com, rutsky.vladimir@gmail.com
+trac				verm@darkbeer.org, djmitche@gmail.com, rutsky.vladimir@gmail.com
+
+bill@buildbot.net	bill@baddogconsulting.com
+dustin@buildbot.net	dustin@v.igoro.us
+jared@buildbot.net	jared.grubb@gmail.com
+pierre@buildbot.net	tardyp@gmail.com
+tom@buildbot.net	tom.prince@ualberta.net
+amar@buildbot.net	verm@darkbeer.org
+sa2ajj@buildbot.net	mss@mawhrin.net
+
+bot@buildbot.net	mss+bb@mawhrin.net
+trachelp@buildbot.net	verm@darkbeer.org
