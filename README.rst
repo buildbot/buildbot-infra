@@ -21,9 +21,8 @@ Before running the script, ensure:
 * The basic system is installed (FreeBSD 10.0+) on the host
 * Networking for the host is fully configured
 * The hostname (uname -n) of the host is set correctly
-* The root password is known (or SSH keys set up)
-* Ssh access for 'root' is enabled (`PermitRootLogin yes`; note that this is not the default!)
 * You know the vault password
+* Run as root
 
 Development
 -----------
