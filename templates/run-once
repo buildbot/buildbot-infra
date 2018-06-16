@@ -17,7 +17,7 @@ cd ~
 env ASSUME_ALWAYS_YES=YES pkg install ansible git sudo
 
 # vagrant build will not use ansible pull on the jails (as it is better to just update on demand each jail)
-{% if is_vagrant %}
+{% if is_vagrant|default(False) %}
 # bootstrap access for vagrant user
 if [ ! -d /home/vagrant ]
 then
