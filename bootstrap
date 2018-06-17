@@ -3,23 +3,10 @@
 # This script sets up a brand-new FreeBSD host as the proper piece of Buildbot
 # infrastructure.  See README.rst
 #
-# Usage: ./bootstrap HOST
+# Usage: ./bootstrap
 
 set -e
 
-HOSTNAME="${1}"
-if [ -z "${HOSTNAME}" ]; then
-    echo "USAGE: ./bootstrap hostname"
-    exit 1
-fi
+env ASSUME_ALWAYS_YES=YES pkg install ansible git
 
-SSH_ARGS="$SSH_ARGS -o PreferredAuthentications=password,keyboard-interactive"
-# don't prompt to add the SSH key
-SSH_ARGS="$SSH_ARGS -o StrictHostKeyChecking=no"
-# use a control connection to send multiple SSH commands through a single connection
-SSH_ARGS="$SSH_ARGS -o ControlPersist=10m"
-SSH_ARGS="$SSH_ARGS -o ControlMaster=auto"
-
-export ANSIBLE_SSH_ARGS="$SSH_ARGS"
-
-ansible-playbook --ask-vault-pass -e target_host=${HOSTNAME} bootstrap.yml
+ansible-pull -U https://github.com/buildbot/buildbot-infra --ask-vault-pass local.yml
