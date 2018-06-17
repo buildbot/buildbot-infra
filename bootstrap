@@ -9,4 +9,4 @@ set -e
 
 env ASSUME_ALWAYS_YES=YES pkg install ansible git python2
 
-ansible-pull -U https://github.com/buildbot/buildbot-infra --ask-vault-pass local.yml
+ansible-playbook --ask-vault-pass local.yml

@@ -15,7 +15,7 @@ Supply host-specific variables in ``group_vars/$hostname``.
 Bootstrapping
 -------------
 
-To bootstrap a newly-installed system, use ``./bootstrap HOSTNAME``.
+To bootstrap a newly-installed system, use ``./bootstrap``.
 Before running the script, ensure:
 
 * The basic system is installed (FreeBSD 10.0+) on the host
