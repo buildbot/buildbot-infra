@@ -3,14 +3,14 @@
   pkgng:
     name: ansible
     state: present
-  when: '{{ ansible_distribution == "FreeBSD" }}'
+  when: ansible_distribution == "FreeBSD"
   environment: "{{ proxy_env }}"
 
 - name: install ansible (Debian)
   apt:
     name: ansible
     state: present
-  when: '{{ ansible_distribution == "Debian" }}'
+  when: ansible_distribution == "Debian"
 
 - name: create wheel group
   group:
