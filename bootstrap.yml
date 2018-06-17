@@ -1,20 +1,8 @@
 ---
-- name: prepare temporary group
-  hosts: all
-  gather_facts: no
-  connection: local
-
-  tasks:
-  - name: create temporary group for the target host
-    add_host:
-      hostname: "{{ target_host }}"
-      groupname: new_host
-
 # Needs to be performed here, so the secrets are available for the new group
 - include: "load-secrets.yml"
 
 - name: bootstrap remote server
-  hosts: new_host
   connection: local
   gather_facts: no
   vars:
@@ -23,11 +11,6 @@
     bootstrap_script: "/root/run-once"
 
   tasks:
-  # There's an overlap here with run-once script.  I (sa2ajj) could not think
-  # of any "nicer" way though.
-  - name: install ansible
-    raw: "env ASSUME_ALWAYS_YES=YES pkg install ansible"
-
   - name: prepare bootstrap script
     template:
       src: "templates/run-once"
