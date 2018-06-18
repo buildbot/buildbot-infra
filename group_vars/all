@@ -10,6 +10,8 @@ ansible_python_interpreter: python2
 #
 # Note that SSH keys are in roles/base/files/authorized_keys
 #
+# Keep this in sync with the `buildbot-infra` team in Github.
+#
 # WARNING: do not remove entries from this list; just mark them 'state: absent'
 
 admin_users:

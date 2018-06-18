@@ -10,4 +10,5 @@
     - role: elk
       logstash_variant: syslog
       server_name: "{{ web_host_name }}"
-      github_team: "core"  # this restricts access to only people in the github 'core' team
+      # this restricts access to only people in the github 'buildbot-infra' team
+      github_team: "buildbot-infra"
