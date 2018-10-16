@@ -47,7 +47,7 @@ supybot.networks: freenode
 #
 # Default value: 
 ###
-supybot.networks.freenode.password: 
+supybot.networks.freenode.password: username:password
 
 ###
 # Space-separated list of servers the bot will connect to for freenode.
@@ -673,7 +673,7 @@ supybot.directories.log: /usr/home/bbuser/run/logs
 #
 # Default value:  
 ###
-supybot.plugins: MeetBot Admin ChannelLogger Misc Alias User Owner Config Channel
+supybot.plugins: MeetBot Admin ChannelLogger Misc Alias User Services Config Owner Channel
 
 ###
 # Determines whether this plugin is loaded by default.
@@ -934,6 +934,103 @@ supybot.plugins.Owner.public: True
 # Default value: 
 ###
 supybot.plugins.Owner.quitMsg: 
+
+###
+# Determines whether this plugin is loaded by default.
+###
+supybot.plugins.Services: True
+
+###
+# Determines whether this plugin is publicly visible.
+#
+# Default value: True
+###
+supybot.plugins.Services.public: True
+
+###
+# Determines what nicks the bot will use with services.
+#
+# Default value:  
+###
+supybot.plugins.Services.nicks: bb-supy
+
+###
+# Determines what networks this plugin will be disabled on.
+#
+# Default value: QuakeNet
+###
+supybot.plugins.Services.disabledNetworks: QuakeNet
+
+###
+# Determines whether the bot will not join any channels until it is
+# identified. This may be useful, for instances, if you have a vhost
+# that isn't set until you're identified, or if you're joining +r
+# channels that won't allow you to join unless you identify.
+#
+# Default value: False
+###
+supybot.plugins.Services.noJoinsUntilIdentified: True
+
+###
+# Determines how many seconds the bot will wait between successive GHOST
+# attempts.
+#
+# Default value: 60
+###
+supybot.plugins.Services.ghostDelay: 60
+
+###
+# Determines what nick the 'NickServ' service has.
+#
+# Default value: 
+###
+supybot.plugins.Services.NickServ: NickServ
+
+###
+# Determines what password the bot will use with NickServ when
+# identifying as bb-supy.
+#
+# Default value: 
+###
+supybot.plugins.Services.NickServ.password.bb-supy: {{bb_supy_nickserv_password}}
+
+###
+# Determines what nick the 'ChanServ' service has.
+#
+# Default value: 
+###
+supybot.plugins.Services.ChanServ: ChanServ
+
+###
+# Determines what password the bot will use with ChanServ.
+#
+# Default value: 
+###
+supybot.plugins.Services.ChanServ.password: 
+
+###
+# Determines whether the bot will request to get opped by the ChanServ
+# when it joins the channel.
+#
+# Default value: False
+###
+supybot.plugins.Services.ChanServ.op: False
+
+###
+# Determines whether the bot will request to get half-opped by the
+# ChanServ when it joins the channel.
+#
+# Default value: False
+###
+supybot.plugins.Services.ChanServ.halfop: False
+
+###
+# Determines whether the bot will request to get voiced by the ChanServ
+# when it joins the channel.
+#
+# Default value: False
+###
+supybot.plugins.Services.ChanServ.voice: False
 
 ###
 # Determines whether this plugin is loaded by default.
