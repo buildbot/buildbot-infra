@@ -93,6 +93,10 @@ I use this script to upgrade all of the jails.
 
 From Source
 -----------
+
+This part of the document is for historical purposes.
+It will be deleted once all hosts and jails use ``freebsd-update``.
+
 Much of this document is based on the Handbook, section 24.6 Rebuilding World.
 That should be the primary source to use when upgrading.
 
