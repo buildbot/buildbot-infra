@@ -43,6 +43,13 @@ Upgrade Host Packages
 Upgrade basejail's Userland
 ---------------------------
 
+Use ``ezjail-admin update`` to upgrade the basejail.
+The value for the ``-s`` option is the current FreeBSD version of the basejail.
+
+::
+
+    ezjail-admin update -U -s BASEJAIL_CURRENT_RELEASE
+
 Upgrade Jail's etc
 ------------------
 
