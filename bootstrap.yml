@@ -27,7 +27,7 @@
   # There's an overlap here with run-once script.  I (sa2ajj) could not think
   # of any "nicer" way though.
   - name: install ansible
-    raw: "env ASSUME_ALWAYS_YES=YES pkg install ansible"
+    raw: "env ASSUME_ALWAYS_YES=YES pkg install {{ pkg_ansible_version }}"
 
   - name: prepare bootstrap script
     template:

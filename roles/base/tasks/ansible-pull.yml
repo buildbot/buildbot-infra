@@ -1,7 +1,7 @@
 ---
 - name: install ansible (FreeBSD)
   pkgng:
-    name: ansible
+    name: "{{ pkg_ansible_version }}"
     state: present
   when: ansible_distribution == "FreeBSD"
   environment: "{{ proxy_env }}"

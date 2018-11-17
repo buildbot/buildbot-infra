@@ -14,7 +14,7 @@ repo_dir=repo
 cd ~
 
 # Install prerequsite packages
-env ASSUME_ALWAYS_YES=YES pkg install ansible git sudo
+env ASSUME_ALWAYS_YES=YES pkg install {{ pkg_ansible_version }} git sudo
 
 # vagrant build will not use ansible pull on the jails (as it is better to just update on demand each jail)
 {% if is_vagrant %}

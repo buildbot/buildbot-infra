@@ -16,7 +16,7 @@
         {% endfor %}
         {% endif %}
         export ASSUME_ALWAYS_YES=YES;\
-        pkg install ansible python2 git sudo rsync virtualbox-ose-additions;\
+        pkg install {{ pkg_ansible_version }} python2 git sudo rsync virtualbox-ose-additions;\
         touch /root/.run-once
 - name: gather facts when ssh
   connection: ssh
