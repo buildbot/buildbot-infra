@@ -7,7 +7,8 @@ export HOME=/home/{{ service_account }}
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/home/{{ service_account }}/bin
 
 # set up to gather output
-OUTPUT=/tmp/ansible-pull.$$.log
+OUTPUT=/tmp/ansible.$$.log
+PULL_OUTPUT=/tmp/ansible-pull.$$.log
 
 # retry controls
 RETRIES=5
@@ -37,25 +38,26 @@ while [[ $RETRY -lt $RETRIES ]]; do
         -i localhost \
         --vault-password-file=/home/{{ service_account }}/.vault-password \
         -l "localhost,$(hostname),127.0.0.1" \
-        local.yml >$OUTPUT 2>&1
+        local.yml >$PULL_OUTPUT 2>&1
     RESULT=$?
     set -e
 
     if [[ $RESULT -eq 0 ]]; then
         break
     else
-        echo '==== RETRYING ===='
+        echo '==== RETRYING ====' >> $OUTPUT
         sleep 30
     fi
 done
 
 if [ $RESULT -ne 0 ]; then
+    cat $OUTPUT
     echo "ansible-pull run on on "$(uname -n)" failed."
     echo
-    cat $OUTPUT
+    cat $PULL_OUTPUT
 fi
 
-rm -f "$OUTPUT"
+rm -f "$OUTPUT" "$PULL_OUTPUT"
 
 # clean up temp files
 find /home/{{ service_account }}/.ansible/tmp -type d -mtime +1 -delete 2>&1 | grep -v 'Permission denied'
