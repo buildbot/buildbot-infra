@@ -6,27 +6,31 @@
   become: yes
   roles:
   - role: jail
-    name: bslave1
-    hostname: bslave1.int.buildbot.net
-    ip_address:
-      - 'vlan0|192.168.80.226'
+    vars:
+      name: bslave1
+      hostname: bslave1.int.buildbot.net
+      ip_address:
+        - 'vlan0|192.168.80.226'
   - role: jail
-    name: buildbot
-    hostname: buildbot.buildbot.net
-    ip_address:
-    - 'lo0|127.0.0.239'       # localhost, must be first
-    - 'lagg0|140.211.10.239'
-    - 'vlan0|192.168.80.239'
+    vars:
+      name: buildbot
+      hostname: buildbot.buildbot.net
+      ip_address:
+      - 'lo0|127.0.0.239'       # localhost, must be first
+      - 'lagg0|140.211.10.239'
+      - 'vlan0|192.168.80.239'
   - role: jail
-    name: mysql
-    hostname: mysql.int.buildbot.net
-    ip_address:
-    - 'vlan0|192.168.80.215'
+    vars:
+      name: mysql
+      hostname: mysql.int.buildbot.net
+      ip_address:
+      - 'vlan0|192.168.80.215'
   - role: jail
-    name: events
-    hostname: events.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.227'
-    - 'vlan0|192.168.80.227'
+    vars:
+      name: events
+      hostname: events.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.227'
+      - 'vlan0|192.168.80.227'
 
 # vim:ts=2:sw=2:noai:nosi

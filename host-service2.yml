@@ -6,66 +6,77 @@
   become: yes
   roles:
   - role: jail
-    name: mx
-    hostname: mx.buildbot.net
-    internet_visible: true
+    vars:
+      name: mx
+      hostname: mx.buildbot.net
+      internet_visible: true
   - role: jail
-    name: ns1
-    hostname: ns1.buildbot.net
-    internet_visible: true
+    vars:
+      name: ns1
+      hostname: ns1.buildbot.net
+      internet_visible: true
   - role: jail
-    name: syslog
-    hostname: syslog.buildbot.net
-    internet_visible: true
+    vars:
+      name: syslog
+      hostname: syslog.buildbot.net
+      internet_visible: true
   # note that the remainder here are specified the "old way", with
   # ip_address
   - role: jail
-    name: bot
-    hostname: bot.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.242'
-    - 'vlan0|192.168.80.242'
+    vars:
+      name: bot
+      hostname: bot.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.242'
+      - 'vlan0|192.168.80.242'
   - role: jail
-    name: docs
-    hostname: docs.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.237'
-    - 'vlan0|192.168.80.237'
+    vars:
+      name: docs
+      hostname: docs.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.237'
+      - 'vlan0|192.168.80.237'
   - role: jail
-    name: ftp
-    hostname: ftp.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.243'
-    - 'vlan0|192.168.80.243'
+    vars:
+      name: ftp
+      hostname: ftp.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.243'
+      - 'vlan0|192.168.80.243'
   - role: jail
-    name: lists
-    hostname: lists.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.241'
-    - 'vlan0|192.168.80.241'
+    vars:
+      name: lists
+      hostname: lists.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.241'
+      - 'vlan0|192.168.80.241'
   - role: jail
-    name: nine
-    hostname: nine.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.244'
-    - 'vlan0|192.168.80.244'
+    vars:
+      name: nine
+      hostname: nine.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.244'
+      - 'vlan0|192.168.80.244'
   - role: jail
-    name: trac
-    hostname: trac.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.240'
-    - 'vlan0|192.168.80.240'
+    vars:
+      name: trac
+      hostname: trac.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.240'
+      - 'vlan0|192.168.80.240'
   - role: jail
-    name: www
-    hostname: www.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.238'
-    - 'vlan0|192.168.80.238'
+    vars:
+      name: www
+      hostname: www.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.238'
+      - 'vlan0|192.168.80.238'
   - role: jail
-    name: supybot
-    hostname: supybot.buildbot.net
-    ip_address:
-    - 'lagg0|140.211.10.245'
-    - 'vlan0|192.168.80.245'
+    vars:
+      name: supybot
+      hostname: supybot.buildbot.net
+      ip_address:
+      - 'lagg0|140.211.10.245'
+      - 'vlan0|192.168.80.245'
 
 # vim:ts=2:sw=2:noai:nosi
