@@ -62,10 +62,10 @@
   notify: restart supybot
 
 - name: install config
-  copy:
+  template:
     # note that supybot is not allowed to write its config
+    src: bb-supy.conf.j2
     dest: "{{ supybot_user_home }}/run/bb-supy.conf"
-    src: bb-supy.conf
   notify: restart supybot
 
 - name: install meetbot config
