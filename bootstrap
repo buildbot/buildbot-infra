@@ -8,12 +8,12 @@
 set -e
 
 HOSTNAME="${1}"
+REMOTE_USER=${2:-$USER}
 if [ -z "${HOSTNAME}" ]; then
-    echo "USAGE: ./bootstrap hostname"
+    echo "USAGE: ./bootstrap hostname [remote-user]"
     exit 1
 fi
 
-SSH_ARGS="$SSH_ARGS -o PreferredAuthentications=password,keyboard-interactive"
 # don't prompt to add the SSH key
 SSH_ARGS="$SSH_ARGS -o StrictHostKeyChecking=no"
 # use a control connection to send multiple SSH commands through a single connection
@@ -22,4 +22,7 @@ SSH_ARGS="$SSH_ARGS -o ControlMaster=auto"
 
 export ANSIBLE_SSH_ARGS="$SSH_ARGS"
 
-ansible-playbook --ask-vault-pass -e target_host=${HOSTNAME} bootstrap.yml
+ansible-playbook --ask-vault-pass \
+    -e target_user=$REMOTE_USER \
+    -e target_host=${HOSTNAME} \
+    bootstrap.yml

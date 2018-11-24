@@ -16,7 +16,9 @@
 - name: bootstrap remote server
   hosts: new_host
   connection: ssh
-  remote_user: root
+  remote_user: "{{ target_user }}"
+  become: yes
+  become_user: root
   gather_facts: no
   vars:
     # Fortunately, '/root' always exists.  This variable is used to prevent
