@@ -179,3 +179,6 @@ hosts_ips:
 
 # vars are lazily evaluated so ansible_hostname will be valid at the time of evaluation (via gatherfacts)
 internal_ip: "{{ internal_network }}.{{ hosts_ips[ansible_hostname] }}"
+
+# Default is not using Vagrant. It will be overriden in vagrant.yml.
+is_vagrant: false
