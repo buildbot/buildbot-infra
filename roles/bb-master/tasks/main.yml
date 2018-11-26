@@ -31,14 +31,14 @@
 - name: stop Supervisor service
   command: "supervisorctl stop {{ bb_service }}"
   ignore_errors: True
-  when: "bb_repo_state|changed"
+  when: "bb_repo_state is changed"
   tags: bb-master
 
 - name: Install/upgrade build master
   become: yes
   become_user: "{{ bb_user }}"
   script: "install-master {{ bb_user_home }}/{{ buildbot_short }} {{ bb_env_dir }}"
-  when: "bb_repo_state|changed or bbt_repo_state|changed"
+  when: "bb_repo_state is changed or bbt_repo_state is changed"
   environment: "{{ proxy_env }}"
   tags: bb-master
 
@@ -124,12 +124,12 @@
   become: yes
   become_user: "{{ bb_user }}"
   command: "{{ bb_env_dir }}/bin/buildbot upgrade-master {{ bb_master_dir }}"
-  when: "bb_repo_state|changed"
+  when: "bb_repo_state is changed"
   tags: bb-master
 
 - name: restart Supervisor service
   command: "supervisorctl restart {{ bb_service }}"
   ignore_errors: True
-  when: "bb_repo_state|changed or mbb_repo_state|changed"
+  when: "bb_repo_state is changed or mbb_repo_state is changed"
   tags: bb-master
 # vim:ts=2:sw=2:noai:nosi
