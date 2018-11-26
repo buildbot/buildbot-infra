@@ -51,7 +51,16 @@ while [[ $RETRY -lt $RETRIES ]]; do
     fi
 done
 
-if [ $RESULT -ne 0 ]; then
+if [[ $RESULT -eq 0 ]]; then
+    # If everything was okay, check for deprecations but only at the 00:* run.
+    # These deprecation warnings will happen on every run so only notify once a
+    # day. The -A3 seems to be enough to get all/most of the deprecation
+    # warning to make sense of what to fix.
+    HOUR=$(date +%H)
+    if [[ $HOUR == 00 ]]; then
+        grep -A3 '\[DEPRECATION WARNING\]' $ANSIBLE_LOG
+    fi
+else
     cat $RETRY_LOG
     echo "ansible-pull run on on "$(uname -n)" failed."
     echo
