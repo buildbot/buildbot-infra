@@ -16,7 +16,9 @@
 - name: bootstrap remote server
   hosts: new_host
   connection: ssh
-  remote_user: root
+  remote_user: "{{ target_user }}"
+  become: yes
+  become_user: root
   gather_facts: no
   vars:
     # Fortunately, '/root' always exists.  This variable is used to prevent
@@ -27,7 +29,7 @@
   # There's an overlap here with run-once script.  I (sa2ajj) could not think
   # of any "nicer" way though.
   - name: install ansible
-    raw: "env ASSUME_ALWAYS_YES=YES pkg install {{ pkg_ansible_version }}"
+    raw: "pkg install --yes python2 {{ pkg_ansible_version }}"
 
   - name: prepare bootstrap script
     template:
