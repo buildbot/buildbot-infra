@@ -1,36 +1,36 @@
 # This is the common playbook for local and ssh connection
 ---
-- include: "load-secrets.yml"
-- include: "track-config.yml"
+- import_playbook: "load-secrets.yml"
+- import_playbook: "track-config.yml"
   vars:
     commit_message: "pre-ansible checkin"
 
 # Service hosts and their jails
-- include: "host-service1.yml"
-- include: "jail-ns1.yml"
-- include: "jail-mx.yml"
-- include: "jail-syslog.yml"
+- import_playbook: "host-service1.yml"
+- import_playbook: "jail-ns1.yml"
+- import_playbook: "jail-mx.yml"
+- import_playbook: "jail-syslog.yml"
 
-- include: "host-service2.yml"
-- include: "jail-bot.yml"
-- include: "jail-docs.yml"
-- include: "jail-ftp.yml"
-- include: "jail-lists.yml"
-- include: "jail-nine.yml"
-- include: "jail-trac.yml"
-- include: "jail-www.yml"
-- include: "jail-supybot.yml"
+- import_playbook: "host-service2.yml"
+- import_playbook: "jail-bot.yml"
+- import_playbook: "jail-docs.yml"
+- import_playbook: "jail-ftp.yml"
+- import_playbook: "jail-lists.yml"
+- import_playbook: "jail-nine.yml"
+- import_playbook: "jail-trac.yml"
+- import_playbook: "jail-www.yml"
+- import_playbook: "jail-supybot.yml"
 
-- include: "host-service3.yml"
-- include: "jail-bslave1.yml"
-- include: "jail-buildbot.yml"
-- include: "jail-mysql.yml"
-- include: "jail-events.yml"
+- import_playbook: "host-service3.yml"
+- import_playbook: "jail-bslave1.yml"
+- import_playbook: "jail-buildbot.yml"
+- import_playbook: "jail-mysql.yml"
+- import_playbook: "jail-events.yml"
 
-- include: "host-vm1.yml"
-- include: "vm-build1.yml"
+- import_playbook: "host-vm1.yml"
+- import_playbook: "vm-build1.yml"
 
-- include: "track-config.yml"
+- import_playbook: "track-config.yml"
   vars:
     commit_message: "post-ansible checkin"
 

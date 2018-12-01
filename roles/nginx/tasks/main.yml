@@ -86,7 +86,7 @@
   service:
     name: nginx
     enabled: true
-    state: running
+    state: started
 
 - name: Issue the certificate
   command: "/root/.acme.sh/acme.sh --nginx --issue -d {{server_name}}"

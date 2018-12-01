@@ -34,4 +34,4 @@
   service:
     name: syslog-ng
     enabled: true
-    state: running
+    state: started

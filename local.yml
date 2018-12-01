@@ -21,7 +21,7 @@
   - debug:
       var: groups
     changed_when: False
-- include: "common.yml"
+- import_playbook: "common.yml"
   vars:
       is_vagrant: false
       ansible_connection: "local"

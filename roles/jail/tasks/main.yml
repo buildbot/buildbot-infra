@@ -18,12 +18,12 @@
     dest: "{{ ezjail_conf_dir }}/{{ name }}"
     regexp: "^export jail_{{ name }}_hostname="
     line: 'export jail_{{ name }}_hostname="{{ hostname }}"'
-  when: jail_created|changed
+  when: jail_created is changed
 
 - name: start jail for bootstrapping
   tags: jail
   command: "ezjail-admin start {{ name }}"
-  when: jail_created|changed
+  when: jail_created is changed
 
 # pf needs to account for that new jail
 - name: Restart pf
@@ -31,7 +31,7 @@
   service:
     name: pf
     state: restarted
-  when: jail_created|changed
+  when: jail_created is changed
 
 - name: Copy some host configuration files
   tags: jail
@@ -50,7 +50,7 @@
     src: "templates/run-once"
     dest: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
     mode: "0700"
-  when: jail_created|changed
+  when: jail_created is changed
 
 - name: execute bootstrap script {{ name }}
   tags: jail
@@ -58,7 +58,7 @@
   args:
     creates: "{{ ezjail_conf_dir }}/{{ name }}/root/.run-once"
   register: debug
-  when: jail_created|changed
+  when: jail_created is changed
 
 - name: print output of bootstrap script
   tags: jail
@@ -71,7 +71,7 @@
   file:
     path: "{{ ezjail_jaildir }}/{{ name }}/root/run-once"
     state: absent
-  when: jail_created|changed
+  when: jail_created is changed
 
 - name: check if the jail is running
   tags: jail
@@ -82,6 +82,6 @@
 - name: start the jail
   tags: jail
   command: "ezjail-admin start {{ name }}"
-  when: jail_running|failed
+  when: jail_running is failed
 
 # vim:ts=2:sw=2:noai:nosi

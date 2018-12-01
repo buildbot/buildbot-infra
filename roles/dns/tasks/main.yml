@@ -59,6 +59,6 @@
   service:
     name: named
     enabled: true
-    state: running
+    state: started
 
 # vim:ft=yaml:nosi:noai:ts=2:sw=2

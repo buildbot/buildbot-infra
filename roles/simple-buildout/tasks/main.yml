@@ -20,7 +20,7 @@
   args:
     chdir: "{{ target_dir }}"
   with_items: "{{ target_commands }}"
-  when: "repo_state|changed"
+  when: "repo_state is changed"
   register: command_result
   ignore_errors: true
   environment: "{{ proxy_env }}"
@@ -33,10 +33,14 @@
   command: "git reset --hard HEAD^"
   args:
     chdir: "{{ target_dir }}"
-  when: "repo_state|changed and command_result|failed"
+  when:
+    - repo_state is changed
+    - command_result is failed
 
 - name: Indicate failure
   fail: msg="the buildout command failed"
-  when: "repo_state|changed and command_result|failed"
+  when:
+    - repo_state is changed
+    - command_result is failed
 
 # vim:ts=2:sw=2:noai:nosi

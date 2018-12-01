@@ -45,4 +45,4 @@
   service:
     name: supervisord
     enabled: true
-    state: running
+    state: started

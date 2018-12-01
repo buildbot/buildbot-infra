@@ -56,16 +56,16 @@
   service:
     name: elasticsearch
     enabled: true
-    state: running
+    state: started
 
 - name: start logstash
   service:
     name: logstash
     enabled: true
-    state: running
+    state: started
 
 - name: start kibana
   service:
     name: kibana
     enabled: true
-    state: running
+    state: started

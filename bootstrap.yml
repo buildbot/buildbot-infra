@@ -11,7 +11,7 @@
       groupname: new_host
 
 # Needs to be performed here, so the secrets are available for the new group
-- include: "load-secrets.yml"
+- import_playbook: "load-secrets.yml"
 
 - name: bootstrap remote server
   hosts: new_host

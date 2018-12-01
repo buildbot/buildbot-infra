@@ -16,7 +16,7 @@
 - name: install supybot in virtualenv
   # note that pip install -e appears not to work for this package; uninstall and re-install instead
   shell: "{{ supybot_env_dir }}/bin/pip uninstall supybot; {{ supybot_env_dir }}/bin/pip install {{ supybot_user_home }}/supybot-repo"
-  when: "supybot_repo_state|changed"
+  when: "supybot_repo_state is changed"
   environment: "{{ proxy_env }}"
 
 - name: update meetbot repository

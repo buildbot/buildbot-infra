@@ -1,7 +1,7 @@
-- include: rh6.yml
+- include_tasks: rh6.yml
   when: ansible_distribution_major_version|int == 6
 
-- include: rh7.yml
+- include_tasks: rh7.yml
   when: ansible_distribution_major_version|int == 7
 
 - name: "Change docker options"

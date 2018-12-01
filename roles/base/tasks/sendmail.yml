@@ -28,6 +28,6 @@
   service:
     name: sendmail
     enabled: true
-    state: running
+    state: started
   when: configure_sendmail
 
