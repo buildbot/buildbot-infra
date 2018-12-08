@@ -5,6 +5,4 @@ network.host: {{ internal_ip }}
 http.port: {{ elastic_port }}
 path.conf: /usr/local/etc/elasticsearch
 path.data: /var/db/elasticsearch
-path.work: /var/tmp/elasticsearch
 path.logs: /var/log/elasticsearch
-path.plugins: /usr/local/lib/elasticsearch/plugins
