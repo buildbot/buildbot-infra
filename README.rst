@@ -97,7 +97,7 @@ To run Ansible with these production secrets, you will need to supply a shared v
 All secrets are loaded into Ansible variables.
 By convention, these variables should be named with the prefix ``secret_``.
 
-You can edit the secrets with ``ansible-vault edit secrets.yml``.
+You can edit the secrets with ``ansible-vault --vault-password=~/.vault-password edit secrets.yml``.
 
 Other files
 ===========

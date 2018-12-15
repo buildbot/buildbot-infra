@@ -1,0 +1,26 @@
+---
+- name: make sure we have python3.6
+  pkgng:
+    name: python36
+    state: present
+  environment: "{{ proxy_env }}"
+
+- name: install system packages
+  pkgng:
+    name: "{{item}}"
+    state: present
+  with_items: "{{ venv_packages }}"
+  environment: "{{ proxy_env }}"
+
+- name: create the virtual environment
+  become: yes
+  become_user: "{{ venv_user }}"
+  pip:
+    name: "{{ item }}"
+    editable: false
+    virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
+    virtualenv_command: "/usr/local/bin/python3.6 -m venv"
+  environment: "{{ proxy_env }}"
+  with_items: "{{ venv_python_packages }}"
+
+# vim:ts=2:sw=2:noai:nosi

@@ -12,32 +12,42 @@
 
   roles:
   - base
+
   - role: user
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account
-  - role: virtualenv
+
+  - role: virtualenv3
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
     venv_name: "{{ env_name }}"   # Another possibility is to just define correct variable above
     venv_packages:
-    - py27-sqlite3
+    - py36-sqlite3
     - sqlite3
+    - node
+    - npm
+    - yarn
     venv_python_packages:
-    - pysqlite
-    - txrequests
+    - "twisted[tls]"
+    - mock        # setup.py for www packages need to be fixed not to require mock at the very beginning.
+
   - role: bb-master
     bb_user: "{{ worker_account }}"
     bb_user_home: "{{ getent_passwd[worker_account].4 }}"
     bb_env_dir: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}"  # Must match the one created above
     bb_master_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
-    bb_branch: "eight"          # A branch in buildbot.git
-    bb_config_branch: "master"  # A branch in metabbotcfg.git
+    bb_travis_dir: "{{ getent_passwd[worker_account].4 }}/{{ travis_dir }}"
+    bb_branch: "master"          # A branch in buildbot.git
+    bb_travis_branch: "master"  # A branch in buildbot_travis.git
+    bb_config_branch: "master"   # A branch in metabbotcfg.git
     bb_service: "{{ master_service_name }}"
+
   - role: supervisor-service
     service_name: "{{ master_service_name }}"
     service_dir: "{{ getent_passwd[worker_account].4 }}/{{ master_dir }}"
     service_command: "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/buildbot start --nodaemon"
     service_user: "{{ worker_account }}"
+
   - role: nginx
     nginx_template: proxy
     server_name: "{{ web_host_name }}"
