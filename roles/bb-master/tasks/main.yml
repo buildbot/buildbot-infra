@@ -4,9 +4,11 @@
 - name: 'Check for running master'
   shell: "curl  http://{{ web_host_name }}/"
   register: master_ping
+  ignore_errors: True
 
 - name: 'Check for busy master'
   shell: "curl  http://{{ web_host_name }}/api/v2/builds?complete=false |grep '\"total\": 0'"
+  ignore_errors: True
   register: master_building
   when: master_ping.rc == 0
 
