@@ -106,6 +106,8 @@
       content: "{{ item.content | to_json}}"
       mode: "0600"
     with_items:
+        - filename: "buildbot-master.json"
+          content: "{{ gke_buildbot_master_key }}"
         - filename: hyper.pass
           content: "{{ hyper_keys }}"
         - filename: github_oauth.pass
