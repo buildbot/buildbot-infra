@@ -135,6 +135,18 @@
     with_items: "{{ slave_master_allocations.obsolete }}"
     tags: bb-master
 
+  - name: activate service account
+    become: yes
+    become_user: "{{ bb_user }}"
+    command: "gcloud auth activate-service-account {{ gke_buildbot_master_key.client_email }} --key-file {{ bb_master_dir }}/{{ metabbotcfg_short }}/buildbot-master.json"
+    tags: bb-master
+
+  - name: activate service account to kube
+    become: yes
+    become_user: "{{ bb_user }}"
+    command: "gcloud container clusters get-credentials metabuildbot --zone {{ gke_zone }} --project {{ gke_project }}"
+    tags: bb-master
+
   # It's important to get the config and passwords before trying to upgrade the database.
   - name: Ensure latest schema of the database
     become: yes
