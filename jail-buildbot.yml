@@ -27,6 +27,8 @@
     - node
     - npm
     - yarn
+    - google-cloud-sdk
+    - kubectl
     venv_python_packages:
     - "twisted[tls]"
     - mock        # setup.py for www packages need to be fixed not to require mock at the very beginning.
