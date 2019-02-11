@@ -6,7 +6,7 @@
   become: yes
   vars:
     # sphinx is installed into a separate virtual environment
-    env_name: doctools
+    env_name: doctools3
     # This needs to be changed to `docs.buildbot.net` together with DNS change.
     web_host_name: "docs.buildbot.net"
     bbdocs_dir: "bbdocs"
@@ -16,13 +16,12 @@
   - role: user
     user_id: "{{ worker_account }}"
     user_name: Buildbot Worker Account
-  - role: virtualenv
+  - role: virtualenv3
     venv_user: "{{ worker_account }}"
     venv_home_dir: "{{ getent_passwd[worker_account].4 }}"
     venv_name: "{{ env_name }}"
     venv_python_packages:
     - pip
-    - "git+https://github.com/tardyp/towncrier#egg=towncrier"
     venv_packages:
     - gmake
     - jpeg
