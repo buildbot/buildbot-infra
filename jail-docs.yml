@@ -40,7 +40,7 @@
     # `command` module does not allow to set env variables, nor expands them,
     # so let's use make's variables.
     - "{{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin/pip install -Ur requirements-cidocs.txt -e master"
-    - "gmake -C master/docs PATH:={{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin:$(PATH) VERSION=latest"
+    - "bash -c 'export LC_ALL=en_US.UTF-8;  export LANG=en_US.UTF-8; gmake -C master/docs PATH:={{ getent_passwd[worker_account].4 }}/{{ env_name }}/bin:$PATH VERSION=latest'"
     - "git checkout HEAD master/docs/relnotes/index.rst"
     - "find master/docs/_build/html -name '*.html' -exec python2 {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/add-tracking.py {} ;"
     - "rm -rf {{ getent_passwd[worker_account].4 }}/{{ bbdocs_dir }}/docs/latest"
