@@ -15,7 +15,11 @@ $TTL            86400
 @               IN      A       140.211.10.238
 
 {% for name, ip in hosts_ips.items() %}
+{% if name == "www" -%}
+{{name}}              IN      CNAME   buildbot.net.
+{% else -%}
 {{name}}              IN      A       {{external_network}}.{{ip}}
+{% endif -%}
 {% endfor %}
 
 pr-docs         IN      CNAME   pr-docs.buildbot.net.s3-website-us-east-1.amazonaws.com.
