@@ -10,5 +10,9 @@
 @               7200    IN      NS      ns1.darkbeer.org.   ; usa
 
 {% for name, ip in hosts_ips.items() %}
-{{ip}}     86400   IN       PTR     {{name}}.buildbot.net
+{% if name == "www" -%}
+{{ip}      86400   IN       PTR     buildbot.net.
+{% else -%}
+{{ip}}     86400   IN       PTR     {{name}}.buildbot.net.
+{% endif -%}
 {% endfor %}
