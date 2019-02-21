@@ -11,7 +11,7 @@
 
 {% for name, ip in hosts_ips.items() %}
 {% if name == "www" -%}
-{{ip}      86400   IN       PTR     buildbot.net.
+{{ip}}     86400   IN       PTR     buildbot.net.
 {% else -%}
 {{ip}}     86400   IN       PTR     {{name}}.buildbot.net.
 {% endif -%}
