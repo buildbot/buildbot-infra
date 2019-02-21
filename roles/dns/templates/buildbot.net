@@ -14,6 +14,11 @@ $TTL            86400
 @               IN      MX      10 mx.buildbot.net.
 @               IN      A       140.211.10.238
 
+mail._domainkey       IN      TXT     ( "v=DKIM1; h=rsa-sha256; k=rsa; s=email; "
+          "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAolCoI83GECBEUCEXswQaMbf+n8ORtxpbyHwQh+7nSpzFPkO6yJrNhfFcUwYn83njd+cLkVphUlKsjsC/NfPWenVifDfJP1BH7V/D6gwZr3aTJRUc1uFNyq5N0clKhy/tuyHUTsyYmAGTnn9uqr8gLhLJr7SV88I0GnLychEadaGuwefyqTOrIyp4s6vQjJK8edfDISjA5W3ZNv"
+          "5RrZ9jcdPdbCng9r5GpIPth5K0nu196lEMoOf8Twy0NVQ9Oe/aKyS/aym0n1uI0Y9s13PanMQf9YD9QJGcziFuuKt0VpgiMHMKRLDvReQGjtRMBk3h09t3fPYNWketVgh4PrJasQIDAQAB" )  ; ----- DKIM key 201901 for buildbot.net
+
+
 {% for name, ip in hosts_ips.items() %}
 {% if name == "www" -%}
 {{name}}              IN      CNAME   buildbot.net.
