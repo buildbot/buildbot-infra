@@ -16,13 +16,11 @@
 - import_playbook: "jail-docs.yml"
 - import_playbook: "jail-ftp.yml"
 - import_playbook: "jail-lists.yml"
-- import_playbook: "jail-nine.yml"
 - import_playbook: "jail-trac.yml"
 - import_playbook: "jail-www.yml"
 - import_playbook: "jail-supybot.yml"
 
 - import_playbook: "host-service3.yml"
-- import_playbook: "jail-bslave1.yml"
 - import_playbook: "jail-buildbot.yml"
 - import_playbook: "jail-mysql.yml"
 - import_playbook: "jail-events.yml"
