@@ -7,12 +7,6 @@
   roles:
   - role: jail
     vars:
-      name: bslave1
-      hostname: bslave1.int.buildbot.net
-      ip_address:
-        - 'vlan0|192.168.80.226'
-  - role: jail
-    vars:
       name: buildbot
       hostname: buildbot.buildbot.net
       ip_address:

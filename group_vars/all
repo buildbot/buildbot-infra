@@ -82,10 +82,6 @@ root_email_destination: "sysadmin@buildbot.net"
 
 # This structure refers to `build_slaves` in `secrets.yml`
 slave_master_allocations:
-  nine:
-  - buildbot-linux4
-  - bslave1
-  - bdbaddog-nine
   master:
   - automan
   - bghimi4-2
@@ -169,12 +165,10 @@ hosts_ips:
     lists   : 241
     bot     : 242
     ftp     : 243
-    nine    : 244
     supybot : 245
     syslog : 211
 
     backup : 212
-    bslave1: 226
     build1 : 210
 
 # vars are lazily evaluated so ansible_hostname will be valid at the time of evaluation (via gatherfacts)
