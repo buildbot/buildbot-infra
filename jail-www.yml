@@ -23,8 +23,8 @@
     target_user: "{{ worker_account }}"
     target_dir: "{{ getent_passwd[worker_account].4 }}/{{ build_dir }}"
     target_commands:
-    - "npm install"
-    - "npm run compile"
+    - "yarn install"
+    - "yarn run compile"
   - role: nginx
     nginx_template: static
     server_name: "{{ web_host_name }}"
