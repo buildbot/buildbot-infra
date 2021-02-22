@@ -2,7 +2,9 @@
 # repo.
 ---
 - name: 'Check for running master'
-  shell: "curl  http://{{ web_host_name }}/"
+  get_url:
+    url: http://{{ web_host_name }}/
+    dest: /dev/null
   register: master_ping
   ignore_errors: True
 
@@ -10,10 +12,10 @@
   shell: "curl  http://{{ web_host_name }}/api/v2/builds?complete=false |grep '\"total\": 0'"
   ignore_errors: True
   register: master_building
-  when: master_ping.rc == 0
+  when: master_ping.status_code == 200
 
 # only upgrade master when not busy
-- when: master_ping.rc != 0 or master_building.rc == 0
+- when: master_ping.status_code != 200 or master_building.rc == 0
   block:
   - name: Make sure we have an updated copy of Buildbot repository
     become: yes
