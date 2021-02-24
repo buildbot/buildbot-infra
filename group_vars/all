@@ -28,6 +28,8 @@ admin_users:
   state: present
 - username: tardyp
   state: present
+- username: p12tic
+  state: present
 
 
 # proxy configuration is found automatically given the host's environment
