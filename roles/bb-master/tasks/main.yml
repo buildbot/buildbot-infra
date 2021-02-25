@@ -4,8 +4,12 @@
 - name: 'Check for running master'
   get_url:
     url: http://{{ web_host_name }}/
-    dest: /dev/null
+    dest: "{{ bb_user_home }}/.tmp-buildbot-master-check"
   register: master_ping
+  ignore_errors: True
+
+- name: 'Remove downloaded file'
+  shell: "rm -f {{ bb_user_home }}/.tmp-buildbot-master-check"
   ignore_errors: True
 
 - name: 'Check for busy master'
