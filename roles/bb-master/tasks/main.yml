@@ -160,6 +160,6 @@
   - name: restart Supervisor service
     command: "supervisorctl restart {{ bb_service }}"
     ignore_errors: True
-    when: "bb_repo_state is changed or mbb_repo_state is changed"
+    when: "bb_repo_state is changed or bbt_repo_state is changed or mbb_repo_state is changed"
     tags: bb-master
 # vim:ts=2:sw=2:noai:nosi
