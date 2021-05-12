@@ -19,7 +19,7 @@
     name: "{{ item }}"
     editable: false
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
-    virtualenv_command: "/usr/local/bin/python3.6 -m venv"
+    virtualenv_command: "/usr/local/bin/python3 -m venv"
   environment: "{{ proxy_env }}"
   with_items: "{{ venv_python_packages }}"
 
