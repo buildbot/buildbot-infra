@@ -1,10 +1,10 @@
 # This file defines all kind of global parameters and defaults
 ---
-# Use non-fully qualified name of python2
-# On FreeBSD machines it's available as /usr/local/bin/python2, on most Linux
-# machines it's available as /usr/bin/python2
-ansible_python_interpreter: python2
-pkg_ansible_version: py27-ansible25
+# Use non-fully qualified name of python3
+# On FreeBSD machines it's available as /usr/local/bin/python3, on most Linux
+# machines it's available as /usr/bin/python3
+ansible_python_interpreter: python3
+pkg_ansible_version: py38-ansible27
 
 # admin users have administrative access to all systems (but they know better
 # than to change things by hand).  They will be added to the 'wheel' group.
