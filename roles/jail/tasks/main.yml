@@ -7,7 +7,7 @@
 
 - name: create jail
   tags: jail
-  command: "python2 /usr/local/bin/create_jail.py  {{ ezjail_default_flavour }} {{ name }} {{ hosts_ips[name] }} {{ internal_network }} {{ external_network}} {{ internet_visible }} '{{internal_if}}' '{{ external_if }}'"
+  command: "python3 /usr/local/bin/create_jail.py  {{ ezjail_default_flavour }} {{ name }} {{ hosts_ips[name] }} {{ internal_network }} {{ external_network}} {{ internet_visible }} '{{internal_if}}' '{{ external_if }}'"
   args:
     creates: "{{ ezjail_conf_dir }}/{{ name }}"
   register: jail_created

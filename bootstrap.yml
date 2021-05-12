@@ -29,7 +29,7 @@
   # There's an overlap here with run-once script.  I (sa2ajj) could not think
   # of any "nicer" way though.
   - name: install ansible
-    raw: "pkg install --yes python2 {{ pkg_ansible_version }}"
+    raw: "pkg install --yes python3 {{ pkg_ansible_version }}"
 
   - name: prepare bootstrap script
     template:
