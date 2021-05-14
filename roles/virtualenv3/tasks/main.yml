@@ -1,7 +1,7 @@
 ---
-- name: make sure we have python3.6
+- name: make sure we have python3
   pkgng:
-    name: python38
+    name: python3
     state: present
   environment: "{{ proxy_env }}"
 
