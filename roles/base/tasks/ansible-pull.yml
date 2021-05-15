@@ -65,7 +65,7 @@
     name: ansible-pull
     job: "/home/{{ service_account }}/run-ansible-pull.sh"
     user: "{{ service_account }}"
-    minute: "{{ ansible_fqdn|seeded_range(60) }}"
+    minute: "{{ 60 | random(seed=ansible_fqdn) }}"
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
   when: not is_vagrant
 # vim:ft=yaml:nosi:noai:ts=2:sw=2

@@ -1,7 +1,7 @@
 ---
 - name: install supervisor package
   pkgng:
-    name: py37-supervisor
+    name: py38-supervisor
     state: present
   environment: "{{ proxy_env }}"
 

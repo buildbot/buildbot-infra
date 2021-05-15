@@ -22,33 +22,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 import os
-from hashlib import new as new_hash
-from random import Random
-
-
-def seeded_range(seed, start, stop=None, step=1, extra=None):
-    """
-    A filter to produce deterministic random numbers.
-
-    Produce a random item from range(start, stop[, step]), use the value and
-    optional ``extra`` value to set the seed for the random number generator.
-
-    Basic usage::
-
-        ansible_fqdn|seeded_range(60)
-
-        "hello"|seeded_range(1, 10, extra="world")
-    """
-    hashed_seed = new_hash('sha1')
-    hashed_seed.update(seed)
-
-    if extra is not None:
-        hashed_seed.update(extra)
-
-    hashed_seed = hashed_seed.digest()
-
-    # We rely on randrange's interpretation of parameters
-    return Random(hashed_seed).randrange(start, stop, step)
 
 
 def proxies_from_env(ret):
@@ -65,6 +38,5 @@ class FilterModule(object):
 
     def filters(self):
         return {
-            'seeded_range': seeded_range,
             'proxies_from_env': proxies_from_env
         }

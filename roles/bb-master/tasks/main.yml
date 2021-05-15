@@ -1,25 +1,14 @@
 # Create and configure a Buildbot master to watch changes in Buildbot's git
 # repo.
 ---
-- name: 'Check for running master'
-  get_url:
-    url: http://{{ web_host_name }}/
-    dest: "{{ bb_user_home }}/.tmp-buildbot-master-check"
-  register: master_ping
-  ignore_errors: True
-
-- name: 'Remove downloaded file'
-  shell: "rm -f {{ bb_user_home }}/.tmp-buildbot-master-check"
-  ignore_errors: True
-
 - name: 'Check for busy master'
-  shell: "curl  http://{{ web_host_name }}/api/v2/builds?complete=false |grep '\"total\": 0'"
+  uri:
+    url: "http://{{ web_host_name }}/api/v2/builds?complete=false"
   ignore_errors: True
   register: master_building
-  when: master_ping.status_code == 200
 
 # only upgrade master when not busy
-- when: master_ping.status_code != 200 or master_building.rc == 0
+- when: master_building.status != 200 or master_building.json.meta.total == 0
   block:
   - name: Make sure we have an updated copy of Buildbot repository
     become: yes

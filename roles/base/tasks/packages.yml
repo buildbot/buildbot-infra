@@ -1,31 +1,11 @@
-- name: install mandatory packages (FreeBSD)
-  pkgng:
-    name: "{{item}}"
+- name: install mandatory packages
+  package:
+    name: "{{ mandatory_packages[ansible_distribution] }}"
     state: present
-  with_items: "{{ mandatory_packages[ansible_distribution] }}"
-  when: ansible_distribution == "FreeBSD"
   environment: "{{ proxy_env }}"
 
-- name: install utility packages (FreeBSD)
-  pkgng:
-    name: "{{item}}"
+- name: install utility packages
+  package:
+    name: "{{ utility_packages[ansible_distribution] }}"
     state: present
-  with_items: "{{ utility_packages[ansible_distribution] }}"
-  when: ansible_distribution == "FreeBSD"
-  environment: "{{ proxy_env }}"
-
-- name: install mandatory packages (Debian)
-  apt:
-    name: "{{item}}"
-    state: present
-  with_items: "{{ mandatory_packages[ansible_distribution] }}"
-  when: ansible_distribution == "Debian"
-  environment: "{{ proxy_env }}"
-
-- name: install utility packages (Debian)
-  apt:
-    name: "{{item}}"
-    state: present
-  with_items: "{{ utility_packages[ansible_distribution] }}"
-  when: ansible_distribution == "Debian"
   environment: "{{ proxy_env }}"
