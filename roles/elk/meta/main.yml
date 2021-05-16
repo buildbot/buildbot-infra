@@ -4,9 +4,9 @@ dependencies:
 
 - role: packages
   packages:
-    - elasticsearch5
+    - elasticsearch6
     - logstash
-    - kibana5
+    - kibana6
     - go  # for oauth2-proxy
 
 - role: user
