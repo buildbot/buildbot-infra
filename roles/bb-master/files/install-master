@@ -24,7 +24,8 @@ fi
 PATH=${env_dir}/bin:$PATH
 pip install --quiet --upgrade pip
 
-make frontend_deps
+# Buildbot makefile uses GNU make
+gmake -C ${base_dir} frontend_deps
 
 for name in master pkg www/base www/codeparameter www/console_view www/waterfall_view ../buildbot_travis
 do
