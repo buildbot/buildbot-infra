@@ -5,7 +5,7 @@ dependencies:
 - role: packages
   packages:
     - elasticsearch6
-    - logstash
+    - logstash6
     - kibana6
     - go  # for oauth2-proxy
 

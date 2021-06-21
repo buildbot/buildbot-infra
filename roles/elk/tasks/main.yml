@@ -32,6 +32,9 @@
     group: "wheel"
   notify: restart supervisor
 
+- name: remove
+  shell: 'rm -rf "{{ logstash_tmp_dir }}"'
+
 - name: enable elk
   lineinfile:
     dest: "/etc/rc.conf"
@@ -48,6 +51,13 @@
     value: "YES"
   - option: "logstash_log_file"
     value: "/var/log/logstash.log"
+  # workaround logstash6 apparent incompatibility with FreeBSD. Note that the directory needs to be
+  # removed before each startup. Unfortunately this does not work, but apparently logstash ignores
+  # the JAVA_OPTS environment variable set by the service startup file and requires LS_JAVA_OPTS.
+  # So the service startup script was modified by hand to force
+  # LS_JAVA_OPTS=-Djava.io.tmpdir=/tmp/logstashdir
+  - option: "logstash_java_opts"
+    value: "-Djava.io.tmpdir={{ logstash_tmp_dir }}"
   - option: "kibana_enable"
     value: "YES"
 
