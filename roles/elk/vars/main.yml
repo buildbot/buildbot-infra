@@ -6,5 +6,5 @@ logstash_port: 8080
 oauth2_proxy_port: 8081
 elastic_configuration: /usr/local/etc/elasticsearch/elasticsearch.yml
 logstash_configuration: /usr/local/etc/logstash/logstash.conf
-kibana_configuration: /usr/local/etc/kibana.yml
+kibana_configuration: /usr/local/etc/kibana/kibana.yml
 oauth2_proxy_configuration: /usr/local/etc/oauth2_proxy.conf
