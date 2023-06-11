@@ -1,0 +1,181 @@
+# Create and configure a Buildbot master to watch changes in Buildbot's git repo.
+---
+- name: 'Check for busy master'
+  uri:
+    url: "https://{{ web_host_name }}/api/v2/builds?complete=false"
+  ignore_errors: True
+  register: master_building
+
+# only upgrade master when not busy
+- when: master_building.status != 200 or master_building.json is not defined or master_building.json.meta.total == 0
+  block:
+  - name: Make sure we have an updated copy of Buildbot repository
+    # Note that buildbot container has its own copy of the repository
+    become: yes
+    become_user: "{{ service_account }}"
+    git:
+      repo: "https://github.com/buildbot/buildbot.git"
+      dest: "{{ bb_root }}/buildbot"
+      update: yes
+      version: "master"
+      accept_hostkey: True
+    register: bb_repo_state
+    tags: bb-master
+
+  - name: Make sure we have an updated copy of Buildbot travis repository
+    # Note that buildbot container has its own copy of the repository
+    become: yes
+    become_user: "{{ service_account }}"
+    git:
+      repo: "https://github.com/buildbot/buildbot_travis.git"
+      dest: "{{ bb_root }}/buildbot_travis"
+      update: yes
+      version: "master"
+      accept_hostkey: True
+    register: bbt_repo_state
+    tags: bb-master
+
+  - name: Make sure we have an updated copy of metabbotcfg repository
+    # Note that buildbot container has its own copy of the repository
+    become: yes
+    become_user: "{{ service_account }}"
+    git:
+      repo: "https://github.com/buildbot/metabbotcfg.git"
+      dest: "{{ bb_root }}/metabotcfg"
+      update: yes
+      version: "master"
+      accept_hostkey: True
+    register: mbb_repo_state
+    environment: "{{ proxy_env }}"
+    tags: bb-master
+
+  - name: Create directories
+    become: yes
+    become_user: "{{ service_account }}"
+    file:
+      path: "{{ item }}"
+      state: directory
+    loop:
+    - "{{ bb_root }}/docker"
+    - "{{ bb_root }}/docker/volume_postgres"
+    - "{{ bb_root }}/secrets"
+    - "{{ bb_root }}/secrets/buildbot"
+    - "{{ bb_root }}/secrets/docker"
+    - "{{ bb_root }}/secrets/other"
+    tags: bb-master
+
+  # Secrets have their owner explicitly set to the same numeric ID as the bbuser account in the
+  # docker container. The secrets will be mounted to the docker container and must be readable
+  - name: Make sure we have latest build worker passwords
+    become: yes
+    copy:
+      dest: "{{ bb_root }}/secrets/buildbot/{{ item }}.pass"
+      content: "{{ build_slaves[item].password }}"
+      mode: "0600"
+      owner: 1000
+    with_items: "{{ slave_master_allocations[\"master\"] }}"
+    # NOTE(sa2ajj): in case a password changes, a restart is also required, but
+    # this is for future improvements.
+    no_log: true
+    tags: bb-master
+
+  - name: Make sure we have latest JSON creds
+    become: yes
+    copy:
+      dest: "{{ bb_root }}/secrets/{{item.filename}}"
+      content: "{{ item.content | to_json}}"
+      mode: "0600"
+      owner: 1000
+    with_items:
+        - filename: "other/buildbot-master.json"
+          content: "{{ gke_buildbot_master_key }}"
+        - filename: "buildbot/github_oauth.pass"
+          content: "{{ github_oauth_keys[\"buildbot\"] | default({}) }}"
+    no_log: true
+    tags: bb-master
+
+  - name: Make sure we have latest raw creds
+    become: yes
+    copy:
+      dest: "{{ bb_root }}/secrets/{{item.filename}}"
+      content: "{{ item.content }}"
+      mode: "0600"
+      owner: 1000
+    with_items:
+        - filename: "buildbot/db_url"
+          content: "postgresql+psycopg2://bb:{{ database_password }}@postgres_buildbot/bb"
+        - filename: "buildbot/github_token"
+          content: "{{ github_api_token }}"
+        - filename: "other/gke_buildbot_master_key_client_email.pass"
+          content: "{{ gke_buildbot_master_key.client_email }}"
+        - filename: "other/gke_zone.pass"
+          content: "{{ gke_zone }}"
+        - filename: "other/gke_project.pass"
+          content: "{{ gke_project }}"
+    no_log: true
+    tags: bb-master
+
+  - name: Add database environment file
+    become: yes
+    become_user: "{{ service_account }}"
+    ansible.builtin.copy:
+      dest: "{{ bb_root }}/secrets/docker/postgres_db.env"
+      content: |
+            POSTGRES_PASSWORD={{ database_password }}
+            POSTGRES_USER=bb
+            POSTGRES_DB=bb
+      # This will be read by docker, thus owner is not set
+      mode: "0600"
+    no_log: true
+    tags: bb-master
+
+  - name: Remove passwords for obsolete slaves
+    become: yes
+    become_user: "{{ service_account }}"
+    file:
+      dest: "{{ bb_root }}/secrets/buildbot/{{ item }}.pass"
+      state: absent
+    with_items: "{{ slave_master_allocations.obsolete }}"
+    tags: bb-master
+
+  - name: Copy docker files
+    become: yes
+    become_user: "{{ service_account }}"
+    copy:
+      dest: "{{ bb_root }}/docker/{{ item }}"
+      src: "{{ role_path }}/files/{{ item }}"
+      mode: preserve
+    loop:
+    - docker-compose.yml
+    - Dockerfile
+    - Dockerfile.deps
+    - run_buildbot.sh
+    - .dockerignore
+    tags: bb-master
+
+  - name: Rebuild buildbot deps container
+    become: yes
+    become_user: "{{ service_account }}"
+    ansible.builtin.command: "docker build -f Dockerfile.deps -t nopush/buildbot-master-deps ."
+    args:
+      chdir: "{{ bb_root }}/docker"
+    when: "master_building.status != 200 or bb_repo_state is changed or bbt_repo_state is changed or mbb_repo_state is changed"
+    tags: bb-master
+
+  - name: Rebuild buildbot container
+    become: yes
+    become_user: "{{ service_account }}"
+    ansible.builtin.command: "docker-compose build --no-cache buildbot"
+    args:
+      chdir: "{{ bb_root }}/docker"
+    when: "master_building.status != 200 or bb_repo_state is changed or bbt_repo_state is changed or mbb_repo_state is changed"
+    tags: bb-master
+
+  - name: Restart buildbot container
+    become: yes
+    become_user: "{{ service_account }}"
+    ansible.builtin.shell: "docker-compose down && docker-compose up -d"
+    args:
+      chdir: "{{ bb_root }}/docker"
+    when: "master_building.status != 200 or bb_repo_state is changed or bbt_repo_state is changed or mbb_repo_state is changed"
+    tags: bb-master

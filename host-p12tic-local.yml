@@ -1,0 +1,13 @@
+---
+- name: configure p12tic-local
+  hosts: s-bw2
+  gather_facts: no
+  connection: local
+  become: yes
+  roles:
+  - role: base
+  - role: bb-master-docker
+    vars:
+      bb_root: "/home/{{ service_account }}/bb-docker"
+      web_host_name: "buildbot.buildbot.net"
+      nginx_proxy_root: "/home/{{ service_account }}/nginx-docker"

@@ -1,0 +1,36 @@
+version: "3.5"
+
+services:
+  buildbot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nopush/buildbot-master
+    ports:
+      - 9989:9989
+    restart: unless-stopped
+    volumes:
+      - ../secrets:/home/bbuser/secrets
+    environment:
+      - VIRTUAL_HOST=buildbot.buildbot.net
+      - VIRTUAL_PORT=8010
+      - BB_LISTEN_PORT=tcp:8010
+      - BB_URL=https://buildbot.buildbot.net/
+    networks:
+      - buildbot
+      - httpproxy
+
+  postgres_buildbot:
+    image: postgres:15.3
+    env_file:
+      - ../secrets/docker/postgres_db.env
+    restart: unless-stopped
+    volumes:
+      - ./volume_postgres:/var/lib/postgresql/data
+    networks:
+      - buildbot
+
+networks:
+  buildbot:
+  httpproxy:
+    external: true
