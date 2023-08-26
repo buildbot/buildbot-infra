@@ -1,6 +1,5 @@
 *devel.yml
 *.retry
-.vagrant
 .*.swp
 dev-hosts
 dev-secrets.yml

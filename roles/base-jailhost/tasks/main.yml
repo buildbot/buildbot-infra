@@ -6,7 +6,7 @@
     state: present
   environment: "{{ proxy_env }}"
 
-- name: enable jail networking on vagrant box
+- name: enable jail networking
   lineinfile:
     dest: "/etc/rc.conf"
     line: "{{item.option}}=\"{{item.value}}\""
@@ -66,17 +66,6 @@
   - "{{ ezjail_default_flavour }}/etc/make.conf"
   - "{{ ezjail_default_flavour }}/etc/periodic.conf"
   - "{{ ezjail_default_flavour }}/etc/rc.conf"
-
-- name: enable sshd on vagrant boxes'jail
-  lineinfile:
-    dest: "{{ ezjail_jaildir }}/flavours/{{ ezjail_default_flavour }}/etc/rc.conf"
-    line: "{{item.option}}=\"{{item.value}}\""
-    regexp: "^{{item.option}}=.*"
-    state: present
-  with_items:
-  - option: "sshd_enable"
-    value: "YES"
-  when: "is_vagrant"
 
 - name: Enable jails
   tags: jail

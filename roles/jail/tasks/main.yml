@@ -39,11 +39,6 @@
   with_items:
   - resolv.conf
 
-- name: Copy some ssh authorized_keys
-  tags: jail
-  command: "cp -rf '/home/vagrant/.ssh' '{{ ezjail_jaildir }}/{{ name }}/root/'"
-  when: is_vagrant
-
 - name: prepare bootstrap script
   tags: jail
   template:

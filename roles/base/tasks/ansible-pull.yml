@@ -67,5 +67,3 @@
     user: "{{ service_account }}"
     minute: "{{ 60 | random(seed=ansible_fqdn) }}"
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
-  when: not is_vagrant
-# vim:ft=yaml:nosi:noai:ts=2:sw=2
