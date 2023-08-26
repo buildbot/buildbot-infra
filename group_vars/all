@@ -144,7 +144,6 @@ ssh_host_keys:
 internal_network: 192.168.80
 external_network: 140.211.10
 
-# those prod defaults are overriden by vagrant.yml
 nat_if: lagg0
 internal_if: vlan0
 external_if: lagg0
@@ -177,6 +176,3 @@ hosts_ips:
 
 # vars are lazily evaluated so ansible_hostname will be valid at the time of evaluation (via gatherfacts)
 internal_ip: "{{ internal_network }}.{{ hosts_ips[ansible_hostname] }}"
-
-# Default is not using Vagrant. It will be overriden in vagrant.yml.
-is_vagrant: false
