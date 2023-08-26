@@ -15,6 +15,10 @@ if ! [ -d ".git" ]; then
     git init
 fi
 
+# Prevent "detected dubious ownership" error in case the repository is modified
+# by other users.
+git config --global --add safe.directory "${dir}" || true
+
 # unconditionally update the config as necessary
 git config user.email "{{ track_config['default_author_email'] }}"
 git config user.name "{{ track_config['default_author_name'] }}"
