@@ -1,8 +1,8 @@
 # Configure Buildbot DNS service
 ---
-- name: install BIND v9.10
+- name: install BIND v9.16
   pkgng:
-    name: bind910
+    name: bind916
     state: present
   environment: "{{ proxy_env }}"
 
