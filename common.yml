@@ -26,7 +26,6 @@
 - import_playbook: "jail-events.yml"
 
 - import_playbook: "host-vm1.yml"
-- import_playbook: "vm-build1.yml"
 
 - import_playbook: "track-config.yml"
   vars:
