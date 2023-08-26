@@ -17,12 +17,13 @@ $TTL            86400
 {% for name, ip in hosts_ips.items() %}
 {% if name == "www" -%}
 {{name}}              IN      CNAME   buildbot.net.
+{% elif name == "buildbot" -%}
+{{name}}              IN      A       87.247.79.15
 {% else -%}
 {{name}}              IN      A       {{external_network}}.{{ip}}
 {% endif -%}
 {% endfor %}
 
-pr-docs         IN      CNAME   pr-docs.buildbot.net.s3-website-us-east-1.amazonaws.com.
 status          IN      CNAME   status.buildbot.net.s3-website-us-east-1.amazonaws.com.
 
 ; dont forget to update the serial in 3rd line when adding new records!
