@@ -24,7 +24,6 @@ $TTL            86400
 {% endif -%}
 {% endfor %}
 
-pr-docs         IN      CNAME   pr-docs.buildbot.net.s3-website-us-east-1.amazonaws.com.
 status          IN      CNAME   status.buildbot.net.s3-website-us-east-1.amazonaws.com.
 
 ; dont forget to update the serial in 3rd line when adding new records!
