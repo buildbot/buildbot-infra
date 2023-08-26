@@ -17,6 +17,8 @@ $TTL            86400
 {% for name, ip in hosts_ips.items() %}
 {% if name == "www" -%}
 {{name}}              IN      CNAME   buildbot.net.
+{% elif name == "buildbot" -%}
+{{name}}              IN      A       87.247.79.15
 {% else -%}
 {{name}}              IN      A       {{external_network}}.{{ip}}
 {% endif -%}
