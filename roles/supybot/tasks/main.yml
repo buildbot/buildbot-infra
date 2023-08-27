@@ -96,6 +96,3 @@
     job: "cd {{ supybot_user_home }}/web/meetings; sh mkindex.sh"
     user: "{{ supybot_user }}"
     minute: 5
-
-
-# vim:ts=2:sw=2:noai:nosi

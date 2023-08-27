@@ -20,5 +20,3 @@
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
     virtualenv_command: "/usr/local/bin/python3 -m venv"
   environment: "{{ proxy_env }}"
-
-# vim:ts=2:sw=2:noai:nosi

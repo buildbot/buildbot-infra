@@ -6,5 +6,3 @@
   become: yes
   roles:
   - base-servicehost
-
-# vim:ts=2:sw=2:noai:nosi

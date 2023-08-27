@@ -37,5 +37,3 @@
     server_names:
     - www.buildbot.net
     target_url: "http://{{ web_host_name }}"
-
-# vim:ts=2:sw=2:noai:nosi

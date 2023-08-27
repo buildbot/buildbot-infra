@@ -34,5 +34,3 @@
     editable: false
     virtualenv: "{{ venv_home_dir }}/{{ venv_name }}"
   environment: "{{ proxy_env }}"
-
-# vim:ts=2:sw=2:noai:nosi

@@ -5,5 +5,3 @@
   command: "{{ bb_env_dir }}/bin/buildslave create-slave {{ bb_slave_dir }} {{ build_slaves[bb_slave_name].master }} {{ bb_slave_name }} {{ build_slaves[bb_slave_name].password }}"
   args:
     creates: "{{ bb_slave_dir }}/buildbot.tac"
-
-# vim:ts=2:sw=2:noai:nosi
