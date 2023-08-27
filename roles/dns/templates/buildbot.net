@@ -18,7 +18,7 @@ $TTL            86400
 {% if name == "www" -%}
 {{name}}              IN      CNAME   buildbot.net.
 {% elif name == "buildbot" -%}
-{{name}}              IN      A       87.247.79.15
+{{name}}     3600     IN      A       87.247.79.15
 {% else -%}
 {{name}}              IN      A       {{external_network}}.{{ip}}
 {% endif -%}
