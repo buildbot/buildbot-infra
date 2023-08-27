@@ -24,5 +24,3 @@
     user_name: Buildbot Uploader
     authorized_key: |
       ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNZ3JHrBueI3OvmDTIJXMcUxyjadRYb2+44n8kBgxgU9Da6mQv2j02OH3MbOhLZoMhxqRC5GVeqmDYjcEw+vcIQ= bbinfra@bslave1.int.buildbot.net
-
-# vim:ts=2:sw=2:noai:nosi

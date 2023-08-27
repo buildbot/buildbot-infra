@@ -42,5 +42,3 @@
   when:
     - repo_state is changed
     - command_result is failed
-
-# vim:ts=2:sw=2:noai:nosi

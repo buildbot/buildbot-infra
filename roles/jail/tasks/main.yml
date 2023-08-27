@@ -78,5 +78,3 @@
   tags: jail
   command: "ezjail-admin start {{ name }}"
   when: jail_running is failed
-
-# vim:ts=2:sw=2:noai:nosi

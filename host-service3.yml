@@ -26,5 +26,3 @@
       ip_address:
       - 'lagg0|140.211.10.227'
       - 'vlan0|192.168.80.227'
-
-# vim:ts=2:sw=2:noai:nosi

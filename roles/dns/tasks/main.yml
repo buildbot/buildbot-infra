@@ -60,5 +60,3 @@
     name: named
     enabled: true
     state: started
-
-# vim:ft=yaml:nosi:noai:ts=2:sw=2
