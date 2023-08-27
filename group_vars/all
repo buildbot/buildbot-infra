@@ -149,7 +149,7 @@ internal_if: vlan0
 external_if: lagg0
 
 # needs to be changed each time the dns config is updated
-dns_serial: 2023082601  # YYYYMMDD01
+dns_serial: 2023082701  # YYYYMMDD01
 
 # IP addresses for all hosts in the network
 hosts_ips:
