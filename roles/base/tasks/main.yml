@@ -1,11 +1,13 @@
 ---
 - import_tasks: sudo.yml
 - import_tasks: hosts.yml
+  when: ansible_hostname != "s-bw2"
 - include_tasks: syslog.yml
   when: ansible_distribution == "FreeBSD"
 - include_tasks: sendmail.yml
   when: ansible_distribution == "FreeBSD"
 - import_tasks: rootpw.yml
+  when: ansible_hostname != "s-bw2"
 - import_tasks: ansible-pull.yml
 - include_tasks: periodic.yml
   when: ansible_distribution == "FreeBSD"

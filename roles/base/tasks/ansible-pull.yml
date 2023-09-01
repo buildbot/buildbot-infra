@@ -23,6 +23,18 @@
     groups: wheel
     home: "/home/{{ service_account }}"
     state: present
+  when: ansible_distribution == "FreeBSD"
+
+- name: create service account
+  user:
+    name: "{{ service_account }}"
+    groups:
+    - wheel
+    - sudo
+    - docker
+    home: "/home/{{ service_account }}"
+    state: present
+  when: ansible_distribution == "Debian"
 
 - name: add mail alias for service account to root
   lineinfile:
