@@ -31,7 +31,7 @@ RUN \
     && gpg --no-default-keyring --keyring "$KEYRING" --list-keys \
     && chmod a+r "$KEYRING" \
     && echo "deb [signed-by=$KEYRING] https://packages.cloud.google.com/apt cloud-sdk main" >> /etc/apt/sources.list.d/google-cloud-sdk.list \
-    $$ cat /etc/apt/sources.list.d/google-cloud-sdk.list
+    && cat /etc/apt/sources.list.d/google-cloud-sdk.list
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get -y install -q \
