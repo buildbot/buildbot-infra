@@ -19,4 +19,4 @@ gcloud container clusters get-credentials metabuildbot \
     --zone $(cat "$OTHER_SECRETS_ROOT/gke_zone.pass") \
     --project $(cat "$OTHER_SECRETS_ROOT/gke_project.pass")
 
-exec /home/bbuser/buildbot_venv/bin/twistd -ny buildbot.tac
+exec /home/bbuser/buildbot_venv/bin/twistd --pidfile= -ny buildbot.tac
