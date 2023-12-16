@@ -75,7 +75,7 @@
   tags: ansible-pull
   cron:
     name: ansible-pull
-    job: "/home/{{ service_account }}/run-ansible-pull.sh"
+    job: "flock /home/{{ service_account }}/ansible-pull.lock /home/{{ service_account }}/run-ansible-pull.sh"
     user: "{{ service_account }}"
     minute: "{{ 60 | random(seed=ansible_fqdn) }}"
     state: "{{ 'absent' if no_ansible_pull|default('false')|bool else 'present' }}"
