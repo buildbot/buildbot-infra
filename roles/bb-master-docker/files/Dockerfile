@@ -11,7 +11,7 @@ RUN git clone https://github.com/buildbot/buildbot_travis.git /home/bbuser/workd
 RUN git clone https://github.com/buildbot/metabbotcfg.git /home/bbuser/workdir/metabbotcfg
 
 RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
-    && /home/bbuser/buildbot_venv/bin/pip install -U pip \
+    && /home/bbuser/buildbot_venv/bin/pip install -U pip setuptools \
     && make -C /home/bbuser/workdir/buildbot frontend_deps \
     && cd /home/bbuser/workdir/buildbot \
     && /home/bbuser/buildbot_venv/bin/pip install \

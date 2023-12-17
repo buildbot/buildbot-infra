@@ -16,6 +16,7 @@ services:
       - VIRTUAL_PORT=8010
       - BB_LISTEN_PORT=tcp:8010
       - BB_URL=https://buildbot.buildbot.net/
+    hostname: buildbot.buildbot.net
     networks:
       - buildbot
       - httpproxy
@@ -26,7 +27,7 @@ services:
       - ../secrets/docker/postgres_db.env
     restart: unless-stopped
     volumes:
-      - ./volume_postgres:/var/lib/postgresql/data
+      - ./volumes/postgres:/var/lib/postgresql/data
     networks:
       - buildbot
 

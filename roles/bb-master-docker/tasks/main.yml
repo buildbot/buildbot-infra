@@ -57,7 +57,8 @@
       state: directory
     loop:
     - "{{ bb_root }}/docker"
-    - "{{ bb_root }}/docker/volume_postgres"
+    - "{{ bb_root }}/docker/volumes"
+    - "{{ bb_root }}/docker/volumes/postgres"
     - "{{ bb_root }}/secrets"
     - "{{ bb_root }}/secrets/buildbot"
     - "{{ bb_root }}/secrets/docker"
