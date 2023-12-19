@@ -89,6 +89,30 @@ root_email_destination: "sysadmin@buildbot.net"
 slave_master_allocations:
   master:
   - buildbot.net
+  - p12-pd-0
+  - p12-pd-1
+  - p12-pd-2
+  - p12-pd-3
+  - p12-pd-4
+  - p12-pd-5
+  - p12-pd-6
+  - p12-pd-7
+  - p12-ep2-0
+  - p12-ep2-1
+  - p12-ep2-2
+  - p12-ep2-3
+  - p12-ep2-4
+  - p12-ep2-5
+  - p12-ep2-6
+  - p12-ep2-7
+  - p12-ep2-8
+  - p12-ep2-9
+  - p12-ep2-10
+  - p12-ep2-11
+  - p12-ep2-12
+  - p12-ep2-13
+  - p12-ep2-14
+  - p12-ep2-15
   obsolete:
   - cm-bbot-leopard-001
   - cm-bbot-leopard-002
