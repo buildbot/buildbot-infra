@@ -7,6 +7,7 @@ RUN mkdir /home/bbuser/workdir
 WORKDIR /home/bbuser/workdir
 
 RUN git clone https://github.com/buildbot/buildbot.git /home/bbuser/workdir/buildbot
+RUN cd /home/bbuser/workdir/buildbot && git checkout metabuildbot || git checkout master
 RUN git clone https://github.com/buildbot/buildbot_travis.git /home/bbuser/workdir/buildbot_travis
 RUN git clone https://github.com/buildbot/metabbotcfg.git /home/bbuser/workdir/metabbotcfg
 
