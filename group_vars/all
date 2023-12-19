@@ -88,7 +88,6 @@ root_email_destination: "sysadmin@buildbot.net"
 # This structure refers to `build_slaves` in `secrets.yml`
 slave_master_allocations:
   master:
-  - buildbot.net
   - p12-pd-any
   - p12-ep2-any
   obsolete:
