@@ -20,6 +20,8 @@ services:
     networks:
       - buildbot
       - httpproxy
+    depends_on:
+      - postgres_buildbot
 
   postgres_buildbot:
     image: postgres:15.3
