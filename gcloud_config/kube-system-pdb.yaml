@@ -1,0 +1,17 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: kube-system-pdb
+  namespace: kube-system
+spec:
+  selector:
+    matchExpressions:
+      - key: k8s-app
+        operator: In
+        values:
+        - kube-dns
+        - kube-dns-autoscaler
+        - metrics-server
+        - event-exporter
+        - glbc
+  maxUnavailable: 1

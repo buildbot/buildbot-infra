@@ -1,12 +1,3 @@
-At Mozilla
-==========
-
-buildbot-linux4.community.scl3.mozilla.com
-------------------------------------------
-
-This host is running a buildslave, complete with configuration for testing
-databases.
-
 At OSUOSL
 =========
 
