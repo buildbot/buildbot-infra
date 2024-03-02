@@ -19,6 +19,9 @@ $TTL            86400
 {{name}}              IN      CNAME   buildbot.net.
 {% elif name == "buildbot" -%}
 {{name}}     3600     IN      A       87.247.79.15
+{% elif name == "docs" -%}
+; Point some services to vm1.buildbot.net
+{{name}}     3600     IN      A       {{external_network}}.233
 {% else -%}
 {{name}}              IN      A       {{external_network}}.{{ip}}
 {% endif -%}
