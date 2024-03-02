@@ -6,8 +6,10 @@
   become: yes
   roles:
   - role: base
+  - role: nginx-proxy
+    vars:
+      nginx_proxy_root: "/home/{{ service_account }}/nginx-docker"
   - role: bb-master-docker
     vars:
       bb_root: "/home/{{ service_account }}/bb-docker"
       web_host_name: "buildbot.buildbot.net"
-      nginx_proxy_root: "/home/{{ service_account }}/nginx-docker"
