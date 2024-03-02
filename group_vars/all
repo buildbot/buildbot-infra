@@ -59,6 +59,8 @@ mandatory_packages:
   - git       # this is a mandatory package since we rely on ansible-pull
   - coreutils # this contains timeout command which is used to avoid ansible-pull to be too long
   - nano      # this helps ad-hoc debugging
+  - docker.io
+  - docker-compose
 
 # Utility packages are the ones that must be installed on service host only (at
 # least, at the moment).
