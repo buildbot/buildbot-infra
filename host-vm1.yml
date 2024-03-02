@@ -1,8 +1,14 @@
 ---
-- name: configure vm1
+- name: configure p12tic-local
   hosts: vm1
   gather_facts: no
   connection: local
   become: yes
   roles:
-  - base-servicehost
+  - role: base
+  - role: nginx-proxy-letsencrypt
+    vars:
+      nginx_proxy_root: "/home/{{ service_account }}/nginx-docker"
+  - role: docs
+    vars:
+      compose_root: "/home/{{ service_account }}/docs"

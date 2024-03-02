@@ -1,0 +1,34 @@
+---
+- name: Create directories
+  become: yes
+  become_user: "{{ service_account }}"
+  file:
+    path: "{{ compose_root }}/{{ item }}"
+    state: directory
+  with_items:
+  - content
+
+- name: Copy docker files
+  become: yes
+  become_user: "{{ service_account }}"
+  copy:
+    dest: "{{ compose_root }}/{{ item }}"
+    src: "{{ role_path }}/files/{{ item }}"
+    mode: preserve
+  loop:
+  - docker-compose.yml
+  - refresh_data.sh
+
+- name: Restart docs container
+  become: yes
+  become_user: "{{ service_account }}"
+  ansible.builtin.command: "docker-compose up -d"
+  args:
+    chdir: "{{ compose_root }}"
+
+- name: Install data refresh crontask
+  ansible.builtin.cron:
+    name: refresh-docs-data
+    job: "{{ compose_root }}/refresh_data.sh"
+    user: "{{ service_account }}"
+    minute: "*/5"

@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  docs:
+    image: docker.io/nginx:1.25-bookworm
+    restart: always
+    # exposes port 80
+    environment:
+      - VIRTUAL_HOST=docs.buildbot.net
+      - CERT_NAME=buildbot.net
+    networks:
+      - httpproxy
+    volumes:
+      - ./content:/usr/share/nginx/html:ro
+
+networks:
+  httpproxy:
+    external: true
