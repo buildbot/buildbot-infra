@@ -1,0 +1,5 @@
+FROM docker.io/nginx:1.25-bookworm
+
+ADD nginx.conf /etc/nginx/nginx.conf
+
+VOLUME /data
