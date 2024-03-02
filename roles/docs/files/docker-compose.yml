@@ -2,7 +2,10 @@ version: "3"
 
 services:
   docs:
-    image: docker.io/nginx:1.25-bookworm
+    image: nopush/nginx-bbdocs
+    build:
+      context: build_run
+      dockerfile: Dockerfile.run
     restart: always
     # exposes port 80
     environment:
@@ -11,7 +14,7 @@ services:
     networks:
       - httpproxy
     volumes:
-      - ./content:/usr/share/nginx/html:ro
+      - ./content:/data:ro
 
 networks:
   httpproxy:

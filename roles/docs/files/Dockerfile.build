@@ -1,0 +1,26 @@
+FROM docker.io/python:3.9-bookworm
+
+RUN apt-get update \
+    && apt-get install -y \
+        curl \
+        gcc \
+        git \
+        make \
+        libbz2-dev \
+        libdb-dev \
+        libexpat1-dev \
+        libffi-dev \
+        liblzma-dev \
+        libncursesw5-dev \
+        libreadline-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        locales-all \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN adduser --home /home/user --disabled-password --gecos "" user
+
+USER user
+
+ADD build_docs.sh /build_docs.sh
