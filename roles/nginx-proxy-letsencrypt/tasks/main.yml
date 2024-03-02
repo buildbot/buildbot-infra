@@ -1,0 +1,43 @@
+---
+- name: Create volume vhost directory
+  become: yes
+  become_user: "{{ service_account }}"
+  file:
+    path: "{{ nginx_proxy_root }}/vhost"
+    state: directory
+  tags: bb-master
+
+- name: Create volume certs directory
+  become: yes
+  become_user: "{{ service_account }}"
+  file:
+    path: "{{ nginx_proxy_root }}/certs"
+    state: directory
+  tags: bb-master
+
+- name: Copy docker files
+  become: yes
+  become_user: "{{ service_account }}"
+  copy:
+    dest: "{{ nginx_proxy_root }}/{{ item }}"
+    src: "{{ role_path }}/files/{{ item }}"
+    mode: preserve
+  loop:
+  - docker-compose.yml
+  - refresh_certs.sh
+  tags: bb-master
+
+- name: Restart nginx-proxy container
+  become: yes
+  become_user: "{{ service_account }}"
+  ansible.builtin.command: "docker-compose up -d"
+  args:
+    chdir: "{{ nginx_proxy_root }}"
+
+- name: install cert refresh crontask
+  ansible.builtin.cron:
+    name: refresh-nginx-proxy-certs
+    job: "{{ nginx_proxy_root }}/refresh_certs.sh"
+    user: "{{ service_account }}"
+    minute: "0"
+    hour: "12"

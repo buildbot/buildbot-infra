@@ -1,0 +1,45 @@
+version: '3'
+services:
+  nginx-proxy:
+    restart: always
+    image: docker.io/nginxproxy/nginx-proxy:1.5.1
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./vhost:/etc/nginx/vhost.d
+      # The only things that ./certs contains are links to certificates in ./letsencrypt
+      - ./certs:/etc/nginx/certs:ro
+      - ./letsencrypt:/etc/nginx/letsencrypt:ro
+      - ./acme_root:/usr/share/nginx/html:ro
+    networks:
+      - httpproxy
+
+  certbot:
+    image: docker.io/certbot/certbot:v2.6.0
+    # Useful arguments:
+    # --force-renew
+    # --test-cert
+    # --break-my-certs
+    command: >
+      certonly
+        --keep-until-expiring
+        --agree-tos
+        --preferred-challenges=http
+        --verbose
+        --webroot
+        --webroot-path /acme_webroot/
+        -m povilas@radix.lt
+        -d docs.buildbot.net
+    restart: "no"
+    volumes:
+      - "./letsencrypt:/etc/letsencrypt"
+      - "./acme_root:/acme_webroot"
+    environment:
+      - TERM=xterm
+
+networks:
+  httpproxy:
+    name: httpproxy

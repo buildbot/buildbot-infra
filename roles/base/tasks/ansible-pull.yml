@@ -36,12 +36,6 @@
     state: present
   when: ansible_distribution == "Debian"
 
-- name: add mail alias for service account to root
-  lineinfile:
-    dest: "{{ '/etc/mail/aliases' if ansible_distribution == 'FreeBSD' else '/etc/aliases' }}"
-    line: "{{ service_account }}: root"
-  notify: newaliases
-
 - name: install vault password
   copy:
     content: "{{ vault_password }}"
