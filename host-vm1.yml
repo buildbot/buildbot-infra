@@ -1,5 +1,5 @@
 ---
-- name: configure p12tic-local
+- name: configure vm1
   hosts: vm1
   gather_facts: no
   connection: local
