@@ -39,7 +39,6 @@ nine        = JailBuildbot(service2,    "140.211.10.244",   "192.168.80.244")
 trac        = JailBuildbot(service2,    "140.211.10.240",   "192.168.80.240")
 www         = JailBuildbot(service2,    "140.211.10.238",   "192.168.80.238")
 
-buildbot    = JailBuildbot(service3,    "140.211.10.239",   "192.168.80.239")
 mysql       = JailBuildbot(service3,    None,               "192.168.80.215")
 pgsql       = JailBuildbot(service3,    None,               "192.168.80.216")
 bslave1     = JailBuildbot(service3,    None,               "192.168.80.226")

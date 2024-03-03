@@ -167,7 +167,6 @@ hosts_ips:
     ns1     : 236
     docs    : 237
     www     : 238
-    buildbot: 239
     trac    : 240
     lists   : 241
     bot     : 242
