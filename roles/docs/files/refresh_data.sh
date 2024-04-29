@@ -60,6 +60,8 @@ if [ "$NEED_UPDATE" != "0" ]; then
     rm -rf content/new_html
     cp -ar bbdocs/docs content/new_html
     cp -ar build_current/last_content content/new_html/latest
+
+    # Use mv to swap data quickly
     if [ -d "content/html" ]; then
         mv content/html content/old_html
     fi
