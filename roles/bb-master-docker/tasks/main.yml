@@ -3,6 +3,8 @@
 - name: 'Check for busy master'
   uri:
     url: "https://{{ web_host_name }}/api/v2/builds?complete=false"
+    headers:
+      Accept: application/json
   ignore_errors: True
   register: master_building
 
@@ -176,6 +178,8 @@
     - name: 'Check for busy master again'
       uri:
         url: "https://{{ web_host_name }}/api/v2/builds?complete=false"
+        headers:
+          Accept: application/json
       ignore_errors: True
       register: master_building2
 
