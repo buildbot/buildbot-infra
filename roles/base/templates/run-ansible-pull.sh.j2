@@ -18,7 +18,9 @@ RETRY=0
 while [[ $RETRY -lt $RETRIES ]]; do
     RETRY=$((RETRY + 1))
 
-    # run ansible-pull from the directory containing the repository (and, thus, the inventory file)
+    # Run ansible-pull from the directory containing the repository (and, thus, the inventory file)
+    # When running manually from custom branch, add "--skip-tags ansible-pull" to not revert to
+    # master branch mid-execution.
     cd /home/{{ service_account}}/repo
     set +e
     timeout -k 2m 40m ansible-pull  \
