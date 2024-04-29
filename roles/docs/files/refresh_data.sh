@@ -24,6 +24,10 @@ else
     NEED_UPDATE=1
 fi
 
+mkdir -p build_current
+mkdir -p build_current/scripts
+mkdir -p build_current/results
+mkdir -p build_current/work
 pushd build_current
 
 # container may have different user IDs inside

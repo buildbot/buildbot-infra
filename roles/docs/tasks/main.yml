@@ -8,9 +8,6 @@
   with_items:
   - content
   - build_current
-  - build_current/scripts
-  - build_current/results
-  - build_current/work
   - build_run
 
 - name: Copy docker files
