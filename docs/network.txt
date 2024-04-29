@@ -27,9 +27,9 @@ The format for jails is Jail(<service machine>, <public>, <internal>):
 
 backup      = JailBuildbot(service1,    None,               "192.168.80.212")
 ldap        = JailBuildbot(service1,    None,               "192.168.80.214")
-mx          = JailBuildbot(service1,    "140.211.10.235",   "192.168.80.235")
-ns1         = JailBuildbot(service1,    "140.211.10.236",   "192.168.80.236")
-syslog      = JailBuildbot(service1,    None,               "192.168.80.211")
+mx          = JailBuildbot(service2,    "140.211.10.235",   "192.168.80.235")
+ns1         = JailBuildbot(service2,    "140.211.10.236",   "192.168.80.236")
+syslog      = JailBuildbot(service2,    None,               "192.168.80.211")
 
 bot         = JailBuildbot(service2,    "140.211.10.242",   "192.168.80.242")
 ftp         = JailBuildbot(service2,    "140.211.10.243",   "192.168.80.243")
