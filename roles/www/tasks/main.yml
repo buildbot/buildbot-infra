@@ -8,6 +8,9 @@
   with_items:
   - content
   - build_current
+  - build_current/scripts
+  - build_current/results
+  - build_current/work
   - build_run
 
 - name: Copy docker files
@@ -30,7 +33,7 @@
     mode: preserve
   loop:
   - Dockerfile.build
-  - build_docs.sh
+  - build_www.sh
 
 - name: Copy docker files for run container building
   become: yes
@@ -43,7 +46,7 @@
   - Dockerfile.run
   - nginx.conf
 
-- name: Restart docs container
+- name: Restart www container
   become: yes
   become_user: "{{ service_account }}"
   ansible.builtin.command: "docker-compose up -d --build"
@@ -52,7 +55,7 @@
 
 - name: Install data refresh crontask
   ansible.builtin.cron:
-    name: refresh-docs-data
+    name: refresh-www-data
     job: "{{ compose_root }}/refresh_data.sh"
     user: "{{ service_account }}"
     minute: "*/5"

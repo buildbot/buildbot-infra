@@ -1,0 +1,13 @@
+FROM docker.io/python:3.9-bookworm
+
+RUN apt-get update \
+    && apt-get install -y \
+        git \
+        yarnpkg \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN adduser --home /home/user --disabled-password --gecos "" user
+
+USER user
+
+ADD build_www.sh /build_www.sh

@@ -47,6 +47,7 @@
 # ansible-pull expects the inventory file to exist already, even before it
 # clones the repo, so we clone the repo explicitly.
 - name: clone ansible git repository
+  tags: ansible-pull
   become: yes
   become_user: "{{ service_account }}"
   git:

@@ -12,3 +12,6 @@
   - role: docs
     vars:
       compose_root: "/home/{{ service_account }}/docs"
+  - role: www
+    vars:
+      compose_root: "/home/{{ service_account }}/www"

@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  docs:
+    image: nopush/nginx-buildbot-www
+    build:
+      context: build_run
+      dockerfile: Dockerfile.run
+    restart: always
+    # exposes port 80
+    environment:
+      - VIRTUAL_HOST=buildbot.net,www.buildbot.net
+      # TODO: use buildbot.net once www DNS has been fully migrated
+      - CERT_NAME=www.buildbot.net
+    networks:
+      - httpproxy
+    volumes:
+      - ./content:/data:ro
+
+networks:
+  httpproxy:
+    external: true
