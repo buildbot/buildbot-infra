@@ -12,7 +12,7 @@ $TTL            86400
 @               IN      NS      ns1.rtems.org.      ; usa
 @               IN      NS      ns1.darkbeer.org.   ; usa
 @               IN      MX      10 mx.buildbot.net.
-@               IN      A       140.211.10.238
+@               IN      A       140.211.10.233
 
 {% for name, ip in hosts_ips.items() %}
 {% if name == "www" -%}
