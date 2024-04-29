@@ -1,0 +1,61 @@
+---
+- name: Create directories
+  become: yes
+  become_user: "{{ service_account }}"
+  file:
+    path: "{{ compose_root }}/{{ item }}"
+    state: directory
+  with_items:
+  - content
+  - build_current
+  - build_current/scripts
+  - build_current/results
+  - build_current/work
+  - build_run
+
+- name: Copy docker files
+  become: yes
+  become_user: "{{ service_account }}"
+  copy:
+    dest: "{{ compose_root }}/{{ item }}"
+    src: "{{ role_path }}/files/{{ item }}"
+    mode: preserve
+  loop:
+  - docker-compose.yml
+  - refresh_data.sh
+
+- name: Copy docker files for current version building
+  become: yes
+  become_user: "{{ service_account }}"
+  copy:
+    dest: "{{ compose_root }}/build_current/{{ item }}"
+    src: "{{ role_path }}/files/{{ item }}"
+    mode: preserve
+  loop:
+  - Dockerfile.build
+  - build_www.sh
+
+- name: Copy docker files for run container building
+  become: yes
+  become_user: "{{ service_account }}"
+  copy:
+    dest: "{{ compose_root }}/build_run/{{ item }}"
+    src: "{{ role_path }}/files/{{ item }}"
+    mode: preserve
+  loop:
+  - Dockerfile.run
+  - nginx.conf
+
+- name: Restart www container
+  become: yes
+  become_user: "{{ service_account }}"
+  ansible.builtin.command: "docker-compose up -d --build"
+  args:
+    chdir: "{{ compose_root }}"
+
+- name: Install data refresh crontask
+  ansible.builtin.cron:
+    name: refresh-www-data
+    job: "{{ compose_root }}/refresh_data.sh"
+    user: "{{ service_account }}"
+    minute: "*/5"
