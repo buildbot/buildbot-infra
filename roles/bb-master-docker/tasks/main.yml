@@ -173,10 +173,29 @@
         chdir: "{{ bb_root }}/docker"
       tags: bb-master
 
+    - name: 'Check for busy master again'
+      uri:
+        url: "https://{{ web_host_name }}/api/v2/builds?complete=false"
+      ignore_errors: True
+      register: master_building2
+
     - name: Restart buildbot container
       become: yes
       become_user: "{{ service_account }}"
       ansible.builtin.shell: "docker-compose down && docker-compose up -d"
       args:
         chdir: "{{ bb_root }}/docker"
+      when: "master_building2.status != 200 or master_building2.json is not defined or master_building2.json.meta.total == 0"
+      tags: bb-master
+
+    - name: Schedule restart for next iteration
+      become: yes
+      become_user: "{{ service_account }}"
+      git:
+        repo: "https://github.com/buildbot/buildbot_travis.git"
+        dest: "{{ bb_root }}/buildbot_travis"
+        update: yes
+        version: "master^"
+        accept_hostkey: True
+      when: "not (master_building2.status != 200 or master_building2.json is not defined or master_building2.json.meta.total == 0)"
       tags: bb-master
