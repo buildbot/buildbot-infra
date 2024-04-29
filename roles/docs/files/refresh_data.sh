@@ -31,7 +31,7 @@ chmod 777 scripts
 chmod 777 results
 chmod 777 work
 
-OLD_BUILDBOT_CONTENT_DATE=$(cat build_current/results/date 2> /dev/null || echo "no such file")
+OLD_BUILDBOT_CONTENT_DATE=$(cat results/date 2> /dev/null || echo "no such file")
 
 cp ../bbdocs/add-tracking.py scripts/
 sudo docker build -f Dockerfile.build -t nopush/bbdocs .
@@ -41,7 +41,7 @@ sudo docker run --rm \
     -v "$(pwd)/work:/home/user/work" \
     nopush/bbdocs /build_docs.sh
 
-NEW_BUILDBOT_CONTENT_DATE=$(cat build_current/results/date 2> /dev/null || echo "no such file")
+NEW_BUILDBOT_CONTENT_DATE=$(cat results/date 2> /dev/null || echo "no such file")
 
 if [ "$OLD_BUILDBOT_CONTENT_DATE" != "$NEW_BUILDBOT_CONTENT_DATE" ]; then
     rm -rf last_content
