@@ -10,8 +10,7 @@ services:
     # exposes port 80
     environment:
       - VIRTUAL_HOST=buildbot.net,www.buildbot.net
-      # TODO: use buildbot.net once www DNS has been fully migrated
-      - CERT_NAME=www.buildbot.net
+      - CERT_NAME=buildbot.net
     networks:
       - httpproxy
     volumes:

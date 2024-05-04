@@ -33,6 +33,8 @@ services:
         --webroot-path /acme_webroot/
         -m povilas@radix.lt
         -d docs.buildbot.net
+        -d buildbot.net
+        -d www.buildbot.net
     restart: "no"
     volumes:
       - "./letsencrypt:/etc/letsencrypt"
