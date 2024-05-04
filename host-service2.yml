@@ -38,13 +38,6 @@
       - 'vlan0|192.168.80.241'
   - role: jail
     vars:
-      name: trac
-      hostname: trac.buildbot.net
-      ip_address:
-      - 'lagg0|140.211.10.240'
-      - 'vlan0|192.168.80.240'
-  - role: jail
-    vars:
       name: www
       hostname: www.buildbot.net
       ip_address:

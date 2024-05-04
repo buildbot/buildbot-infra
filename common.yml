@@ -14,7 +14,6 @@
 - import_playbook: "host-service2.yml"
 - import_playbook: "jail-ftp.yml"
 - import_playbook: "jail-lists.yml"
-- import_playbook: "jail-trac.yml"
 - import_playbook: "jail-www.yml"
 - import_playbook: "jail-supybot.yml"
 
