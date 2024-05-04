@@ -165,11 +165,8 @@ hosts_ips:
     mac1    : 234
     mx      : 235
     ns1     : 236
-    www     : 238
     lists   : 241
-    bot     : 242
     ftp     : 243
-    supybot : 245
     syslog : 211
 
     backup : 212
