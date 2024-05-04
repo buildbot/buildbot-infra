@@ -14,17 +14,12 @@ $TTL            86400
 @               IN      MX      10 mx.buildbot.net.
 @               IN      A       140.211.10.233
 
+www             IN      CNAME   buildbot.net.
+docs   3600     IN      A       {{external_network}}.233
+buildbot 3600   IN      A       87.247.79.15
+
 {% for name, ip in hosts_ips.items() %}
-{% if name == "www" -%}
-{{name}}              IN      CNAME   buildbot.net.
-{% elif name == "buildbot" -%}
-{{name}}     3600     IN      A       87.247.79.15
-{% elif name == "docs" -%}
-; Point some services to vm1.buildbot.net
-{{name}}     3600     IN      A       {{external_network}}.233
-{% else -%}
-{{name}}              IN      A       {{external_network}}.{{ip}}
-{% endif -%}
+{{name}}        IN      A       {{external_network}}.{{ip}}
 {% endfor %}
 
 status          IN      CNAME   status.buildbot.net.s3-website-us-east-1.amazonaws.com.

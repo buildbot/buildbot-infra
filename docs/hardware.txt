@@ -30,7 +30,6 @@ service2
 ix1104 with one quad-core Xeon E3 3.3GHz CPU, 16GB RAM, 100GB SSD
 
 Hosting:
- * trac.buildbot.net
  * lists.buildbot.net
 
     the configs are all in /usr/local/mailman/configs (git repo)

@@ -1,9 +1,0 @@
----
-# TODO: actually manage configuration (#3154)
-- name: configure bot
-  hosts: bot
-  gather_facts: no
-  connection: local
-  become: yes
-  roles:
-  - base

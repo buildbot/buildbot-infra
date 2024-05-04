@@ -1,4 +1,0 @@
----
-- name: restart supybot
-  command: "supervisorctl restart {{ supybot_service }}"
-  ignore_errors: True
