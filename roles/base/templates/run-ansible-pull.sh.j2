@@ -7,7 +7,8 @@ export HOME=/home/{{ service_account }}
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/home/{{ service_account }}/bin
 
 # set up to gather output
-OUTPUT_DIR=$(mktemp -d /tmp/ansible-pull.XXXXXXXX) || exit 1
+OUTPUT_DIR=/tmp/ansible-pull.$(date --iso-8601=seconds)
+mkdir $OUTPUT_DIR || exit 1
 RETRY_LOG=$OUTPUT_DIR/retries.$$.log
 ANSIBLE_LOG=$OUTPUT_DIR/ansible-pull.log
 
