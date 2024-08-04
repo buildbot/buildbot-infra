@@ -32,7 +32,7 @@ while [[ $RETRY -lt $RETRIES ]]; do
         -i localhost \
         --vault-password-file=/home/{{ service_account }}/.vault-password \
         -l "localhost,$(hostname),127.0.0.1" \
-        local.yml 2>&1 | tee $ANSIBLE_LOG
+        local.yml 2>&1 | tee -a $ANSIBLE_LOG
     RESULT=$?
     set -e
 
