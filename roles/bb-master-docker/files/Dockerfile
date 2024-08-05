@@ -24,7 +24,6 @@ RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
         www/react-grid_view \
         www/react-console_view \
         www/react-waterfall_view \
-        ../buildbot_travis \
         ; \
         do \
             /home/bbuser/buildbot_venv/bin/pip install -e $name ; \
