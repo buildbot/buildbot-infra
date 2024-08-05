@@ -20,11 +20,10 @@ RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
     && /home/bbuser/buildbot_venv/bin/pip install -e pkg \
     && for name in \
         master \
-        www/react-base \
-        www/react-grid_view \
-        www/react-console_view \
-        www/react-waterfall_view \
-        ../buildbot_travis \
+        www/base \
+        www/grid_view \
+        www/console_view \
+        www/waterfall_view \
         ; \
         do \
             /home/bbuser/buildbot_venv/bin/pip install -e $name ; \
