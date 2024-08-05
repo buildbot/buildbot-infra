@@ -161,7 +161,7 @@
     - name: Rebuild buildbot container
       become: yes
       become_user: "{{ service_account }}"
-      ansible.builtin.command: "docker-compose build --no-cache buildbot"
+      ansible.builtin.command: "docker-compose build --build-arg BUILDBOT_REVISION={{ bb_repo_state.after }} --build-arg METABBOTCFG_REVISION={{ mbb_repo_state.after }} buildbot"
       args:
         chdir: "{{ bb_root }}/docker"
       tags: bb-master

@@ -6,9 +6,9 @@ USER bbuser
 RUN mkdir /home/bbuser/workdir
 WORKDIR /home/bbuser/workdir
 
+ARG BUILDBOT_REVISION=unknown
 RUN git clone https://github.com/buildbot/buildbot.git /home/bbuser/workdir/buildbot
 RUN cd /home/bbuser/workdir/buildbot && git checkout metabuildbot || git checkout master
-RUN git clone https://github.com/buildbot/metabbotcfg.git /home/bbuser/workdir/metabbotcfg
 
 RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
     && /home/bbuser/buildbot_venv/bin/pip install -U pip setuptools \
@@ -30,6 +30,9 @@ RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
         done
 
 RUN /home/bbuser/buildbot_venv/bin/buildbot create-master /home/bbuser/workdir
+
+ARG METABBOTCFG_REVISION=unknown
+RUN git clone https://github.com/buildbot/metabbotcfg.git /home/bbuser/workdir/metabbotcfg
 
 RUN ln -s /home/bbuser/workdir/metabbotcfg/master.cfg /home/bbuser/workdir/master.cfg
 
