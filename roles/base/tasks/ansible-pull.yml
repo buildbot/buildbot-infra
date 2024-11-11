@@ -55,7 +55,6 @@
     dest: "/home/{{ service_account }}/repo"
     version: master
     accept_hostkey: yes
-  register: infra_repo_state
   environment: "{{ proxy_env }}"
 
 - name: install ansible-pull cronscript

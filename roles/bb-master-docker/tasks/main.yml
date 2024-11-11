@@ -40,9 +40,9 @@
 
   - name: Print current state
     ansible.builtin.debug:
-      msg: "Master building status: {{ master_building.status }} infra_repo_state: {{ infra_repo_state }} bb_repo_state: {{ bb_repo_state }} mbb_repo_state: {{ mbb_repo_state }}"
+      msg: "Master building status: {{ master_building.status }} bb_repo_state: {{ bb_repo_state }} mbb_repo_state: {{ mbb_repo_state }}"
 
-  - when: master_building.status != 200 or infra_repo_state is changed or bb_repo_state is changed or mbb_repo_state is changed
+  - when: master_building.status != 200 or bb_repo_state is changed or mbb_repo_state is changed
     block:
 
     - name: Create directories
