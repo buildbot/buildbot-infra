@@ -30,7 +30,7 @@
     become_user: "{{ service_account }}"
     git:
       repo: "https://github.com/buildbot/metabbotcfg.git"
-      dest: "{{ bb_root }}/metabotcfg"
+      dest: "{{ bb_root }}/metabbotcfg"
       update: yes
       version: "master"
       accept_hostkey: True
