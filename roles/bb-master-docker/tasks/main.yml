@@ -105,8 +105,6 @@
             content: "{{ github_api_token }}"
           - filename: "other/gke_buildbot_master_key_client_email.pass"
             content: "{{ gke_buildbot_master_key.client_email }}"
-          - filename: "other/gke_zone.pass"
-            content: "{{ gke_zone }}"
           - filename: "other/gke_project.pass"
             content: "{{ gke_project }}"
       no_log: true
