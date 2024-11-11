@@ -1,4 +1,4 @@
-FROM debian:11-slim
+FROM debian:12-slim
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y \
@@ -20,7 +20,7 @@ RUN \
     && gpg --no-default-keyring --keyring "$KEYRING" --list-keys \
     && chmod a+r "$KEYRING" \
     && VERSION=node_18.x \
-    && DISTRO=bullseye \
+    && DISTRO=bookworm \
     && echo "deb [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION $DISTRO main" >> /etc/apt/sources.list.d/nodesource.list \
     && echo "deb-src [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION $DISTRO main" >> /etc/apt/sources.list.d/nodesource.list \
     && cat /etc/apt/sources.list.d/nodesource.list
