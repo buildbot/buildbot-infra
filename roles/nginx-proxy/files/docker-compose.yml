@@ -2,7 +2,7 @@ version: '3'
 services:
   nginx-proxy:
     restart: always
-    image: nginxproxy/nginx-proxy
+    image: docker.io/nginxproxy/nginx-proxy:1.6.4
     container_name: nginx-proxy
     ports:
       - "80:80"
