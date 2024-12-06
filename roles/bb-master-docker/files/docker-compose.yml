@@ -13,10 +13,12 @@ services:
     volumes:
       - ../secrets:/home/bbuser/secrets
     environment:
-      - VIRTUAL_HOST=buildbot.buildbot.net
-      - VIRTUAL_PORT=8010
-      - BB_LISTEN_PORT=tcp:8010
-      - BB_URL=https://buildbot.buildbot.net/
+      VIRTUAL_HOST_MULTIPORTS: |-
+        { "buildbot.buildbot.net": {
+          "/": { "port": 8010, "dest": "" },
+          "/workerws/": { "port": 9988, "dest": "/"} } }
+      BB_LISTEN_PORT: tcp:8010
+      BB_URL: https://buildbot.buildbot.net/
     hostname: buildbot.buildbot.net
     networks:
       - buildbot
