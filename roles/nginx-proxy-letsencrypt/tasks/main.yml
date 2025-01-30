@@ -37,7 +37,7 @@
 - name: install cert refresh crontask
   ansible.builtin.cron:
     name: refresh-nginx-proxy-certs
-    job: "{{ nginx_proxy_root }}/refresh_certs.sh"
+    job: "{{ nginx_proxy_root }}/refresh_certs.sh 2>&1 | systemd-cat -t crontab -p info"
     user: "{{ service_account }}"
     minute: "0"
     hour: "12"
