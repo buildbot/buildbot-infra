@@ -3,4 +3,4 @@
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
 docker-compose up certbot
-docker-compose exec nginx-proxy nginx -s reload
+docker-compose exec -T nginx-proxy nginx -s reload
