@@ -17,7 +17,6 @@ RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
     && /home/bbuser/buildbot_venv/bin/pip install \
         -r /home/bbuser/workdir/buildbot/requirements-ci.txt \
         psycopg2-binary==2.9.7 \
-    && /home/bbuser/buildbot_venv/bin/pip install -e pkg \
     && for name in \
         master \
         www/base \
