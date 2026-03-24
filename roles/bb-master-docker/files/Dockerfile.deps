@@ -19,10 +19,9 @@ RUN \
     && wget --quiet -O - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor > "$KEYRING" \
     && gpg --no-default-keyring --keyring "$KEYRING" --list-keys \
     && chmod a+r "$KEYRING" \
-    && VERSION=node_18.x \
-    && DISTRO=bookworm \
-    && echo "deb [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION $DISTRO main" >> /etc/apt/sources.list.d/nodesource.list \
-    && echo "deb-src [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION $DISTRO main" >> /etc/apt/sources.list.d/nodesource.list \
+    && VERSION=node_24.x \
+    && echo "deb [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION nodistro main" >> /etc/apt/sources.list.d/nodesource.list \
+    && echo "deb-src [signed-by=$KEYRING] https://deb.nodesource.com/$VERSION nodistro main" >> /etc/apt/sources.list.d/nodesource.list \
     && cat /etc/apt/sources.list.d/nodesource.list
 
 RUN \
