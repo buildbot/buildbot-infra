@@ -12,12 +12,11 @@ RUN cd /home/bbuser/workdir/buildbot && git checkout metabuildbot || git checkou
 
 RUN virtualenv --python=python3 /home/bbuser/buildbot_venv \
     && /home/bbuser/buildbot_venv/bin/pip install -U pip setuptools \
-    && make -C /home/bbuser/workdir/buildbot frontend_deps \
+    && make -C /home/bbuser/workdir/buildbot frontend \
     && cd /home/bbuser/workdir/buildbot \
     && /home/bbuser/buildbot_venv/bin/pip install \
         -r /home/bbuser/workdir/buildbot/requirements-ci.txt \
         psycopg2-binary==2.9.7 \
-    && /home/bbuser/buildbot_venv/bin/pip install -e pkg \
     && for name in \
         master \
         www/base \
